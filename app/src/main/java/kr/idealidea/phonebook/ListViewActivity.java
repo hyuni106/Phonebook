@@ -158,10 +158,14 @@ public class ListViewActivity extends AppCompatActivity {
             TextView txtvName = v.findViewById(R.id.txtvName);
             TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
             TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
+            TextView txtvContent = v.findViewById(R.id.txtvContent);
+
+            txtvContent.setVisibility(View.VISIBLE);
 
             txtvName.setText(address);
             txtvPhoneNum.setText(address);
             txtvTimeStamp.setText(timeToString(timestamp));
+            txtvContent.setText(body);
 
             layoutListView.addView(v);
         }
@@ -194,15 +198,14 @@ public class ListViewActivity extends AppCompatActivity {
                 while (curCallLog.isAfterLast() == false) {
                     StringBuffer sb = new StringBuffer();
 
-                    if (curCallLog.getString(curCallLog
-                            .getColumnIndex(CallLog.Calls.TYPE)).equals(MESSAGE_TYPE_INBOX)) {
+                    if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.INCOMING_TYPE) {
                         calltype = "수신";
-                    } else if (curCallLog.getString(curCallLog
-                            .getColumnIndex(CallLog.Calls.TYPE)).equals(MESSAGE_TYPE_SENT)) {
+                    } else if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.OUTGOING_TYPE) {
                         calltype = "발신";
-                    } else if (curCallLog.getString(curCallLog
-                            .getColumnIndex(CallLog.Calls.TYPE)).equals(MESSAGE_TYPE_CONVERSATIONS)) {
+                    } else if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.MISSED_TYPE) {
                         calltype = "부재중";
+                    } else {
+                        calltype = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE));
                     }
 
                     if (curCallLog.getString(curCallLog
@@ -233,7 +236,7 @@ public class ListViewActivity extends AppCompatActivity {
                     TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
                     TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
 
-                    txtvName.setText(callname);
+                    txtvName.setText(callname + " (" + calltype + ")");
                     txtvPhoneNum.setText(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER)));
                     txtvTimeStamp.setText(timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE))));
 
