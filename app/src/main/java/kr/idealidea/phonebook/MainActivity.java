@@ -73,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                    public void onPermissionDenied(List<String> deniedPermissions) {
                         Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
                     }
+
                 })
                 .setDeniedMessage("어플을 사용하려면 권한을 허용해야 합니다.")
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG
