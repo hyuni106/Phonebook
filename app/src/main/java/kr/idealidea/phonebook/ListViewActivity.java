@@ -235,10 +235,13 @@ public class ListViewActivity extends AppCompatActivity {
                     TextView txtvName = v.findViewById(R.id.txtvName);
                     TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
                     TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
+                    TextView txtvDuration = v.findViewById(R.id.txtvDuration);
 
+                    txtvDuration.setVisibility(View.VISIBLE);
                     txtvName.setText(callname + " (" + calltype + ")");
                     txtvPhoneNum.setText(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER)));
                     txtvTimeStamp.setText(timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE))));
+                    txtvDuration.setText(getStringTime(Integer.parseInt(callDuration)));
 
                     layoutListView.addView(v);
                 }
@@ -253,4 +256,16 @@ public class ListViewActivity extends AppCompatActivity {
         String date = simpleFormat.format(new Date(time));
         return date;
     }
-}
+
+    static public String getStringTime(int time) {
+        String res = null;
+        int hour = 0, min = 0, sec = 0;
+        if (time > 0) {
+            hour = time / 3600;
+            time %= 3600;
+            min = time / 60;
+            sec = time % 60;
+        }
+        res = String.format("%02d:%02d:%02d", hour, min, sec);
+        return res;
+    }}
