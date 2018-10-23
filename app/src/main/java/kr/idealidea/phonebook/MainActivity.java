@@ -1,6 +1,7 @@
 package kr.idealidea.phonebook;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,19 +21,27 @@ import android.widget.Toast;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import kr.idealidea.phonebook.utils.AppUtils;
+import kr.idealidea.phonebook.utils.ConnectServer;
+import kr.idealidea.phonebook.utils.ContextUtils;
 
 public class MainActivity extends AppCompatActivity {
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this;
 
         TedPermission.with(this)
                 .setPermissionListener(new PermissionListener() {
@@ -40,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                         Button phoneBookBtn = findViewById(R.id.phoneBookBtn);
                         Button callListBtn = findViewById(R.id.callListBtn);
                         Button smsListBtn = findViewById(R.id.smsListBtn);
+
+                        getPhoneNum();
 
                         phoneBookBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -80,7 +92,34 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setDeniedMessage("어플을 사용하려면 권한을 허용해야 합니다.")
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG
-                        , Manifest.permission.WRITE_CALL_LOG)
+                        , Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_SMS)
                 .check();
+    }
+
+    @SuppressLint("MissingPermission")
+    public void getPhoneNum() {
+        if (ContextUtils.getUserToken(mContext).equals("")) {
+            TelephonyManager telManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+            String phoneNum = "010-1234-5678";
+            if (telManager != null) {
+                phoneNum = telManager.getLine1Number();
+            }
+            if (phoneNum.startsWith("+82")) {
+                phoneNum = phoneNum.replace("+82", "0");
+            }
+
+            ConnectServer.putRequestSignUp(mContext, phoneNum, new ConnectServer.JsonResponseHandler() {
+                @Override
+                public void onResponse(JSONObject json) {
+                    try {
+                        if (json.getInt("code") == 200) {
+                            ContextUtils.setUserToken(mContext, json.getJSONObject("data").getString("token"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 }

