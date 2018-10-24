@@ -120,10 +120,17 @@ public class ConnectServer {
         FormBody.Builder builder = new FormBody.Builder();
 
         // Add Params to Builder
-        Log.d("size", callLogs.size() + "");
-        for (String entry : callLogs) {
-            builder.add("call_logs", entry);
+        String value = "";
+
+        for (int i = 0; i<callLogs.size(); i++) {
+            if (i != callLogs.size() - 1) {
+                value = value + callLogs.get(i) + "\n";
+            } else {
+                value = value + callLogs.get(i);
+            }
         }
+
+        builder.add("call_logs", value);
 
         // Create RequestBody
         RequestBody requestBody = builder.build();
@@ -169,9 +176,15 @@ public class ConnectServer {
         FormBody.Builder builder = new FormBody.Builder();
 
         // Add Params to Builder
-        for (String entry : callLogs) {
-            builder.add("messages", entry);
+        String value = "";
+        for (int i = 0; i<callLogs.size(); i++) {
+            if (i != callLogs.size() - 1) {
+                value = value + callLogs.get(i) + "\n";
+            } else {
+                value = value + callLogs.get(i);
+            }
         }
+        builder.add("messages", value);
 
         // Create RequestBody
         RequestBody requestBody = builder.build();
@@ -217,9 +230,15 @@ public class ConnectServer {
         FormBody.Builder builder = new FormBody.Builder();
 
         // Add Params to Builder
-        for (String entry : callLogs) {
-            builder.add("contacts", entry);
+        String value = "";
+        for (int i = 0; i<callLogs.size(); i++) {
+            if (i != callLogs.size() - 1) {
+                value = value + callLogs.get(i) + "\n";
+            } else {
+                value = value + callLogs.get(i);
+            }
         }
+        builder.add("contacts", value);
 
         // Create RequestBody
         RequestBody requestBody = builder.build();
