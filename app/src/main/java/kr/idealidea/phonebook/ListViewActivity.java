@@ -224,11 +224,6 @@ public class ListViewActivity extends AppCompatActivity {
     }
 
     private void callLog() {
-        int callcount = 0;
-        String callname = "";
-        String calltype = "";
-        String calllog = "";
-        String callDuration = "";
         Cursor curCallLog = getCallHistoryCursor(this);
         Log.i( TAG , "processSend() - 1");
         // Log.i( TAG , "curCallLog: " + curCallLog.getCount());
@@ -242,6 +237,13 @@ public class ListViewActivity extends AppCompatActivity {
 
 //                TODO - 최대 수 수정
                 while (i < 49) {
+                    int callcount = 0;
+                    String callname = "";
+                    String calltype = "";
+                    String calllog = "";
+                    String callDuration = "";
+                    String phone = "";
+
                     StringBuffer sb = new StringBuffer();
 
                     if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.INCOMING_TYPE) {
@@ -254,14 +256,14 @@ public class ListViewActivity extends AppCompatActivity {
                         calltype = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE));
                     }
 
-                    if (curCallLog.getString(curCallLog
-                            .getColumnIndex(CallLog.Calls.CACHED_NAME)) == null) {
+                    if (curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.CACHED_NAME)) == null) {
                         callname = "NoName";
                     } else {
-                        callname = curCallLog.getString(curCallLog
-                                .getColumnIndex(CallLog.Calls.CACHED_NAME));
+                        callname = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.CACHED_NAME));
                     }
 
+                    phone = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER));
+                    String createTime = timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE)));
                     callDuration = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.DURATION));
 
                     sb.append(timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE))));
@@ -269,15 +271,12 @@ public class ListViewActivity extends AppCompatActivity {
                     sb.append("\t").append(callname);
                     sb.append("\t").append(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER)));
                     sb.append("\t").append(callDuration);
-                    curCallLog.moveToNext();
 
                     String backupData = sb.toString();
 
                     callcount++;
                     Log.i("call history[", sb.toString());
 
-                    String phone = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER));
-                    String createTime = timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE)));
 
                     String list = callname + "|" + calltype + "|" + phone + "|" + getStringTime(Integer.parseInt(callDuration)) + "|" + createTime;
                     callLogs.add(list);
@@ -295,6 +294,7 @@ public class ListViewActivity extends AppCompatActivity {
                     txtvDuration.setText(getStringTime(Integer.parseInt(callDuration)));
 
                     layoutListView.addView(v);
+                    curCallLog.moveToNext();
                     i++;
                 }
             } catch (Exception e) {
