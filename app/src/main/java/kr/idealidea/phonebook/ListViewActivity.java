@@ -194,7 +194,7 @@ public class ListViewActivity extends AppCompatActivity {
 
             Log.d("heylee", string);
 
-            String contact = address + "|" + body + "|" + timeToString(timestamp);
+            String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + timeToString(timestamp);
             callLogs.add(contact);
 
             final View v = inf.inflate(R.layout.row_phone_book, null);
@@ -240,7 +240,8 @@ public class ListViewActivity extends AppCompatActivity {
                 callLogs.clear();
                 int i = 0;
 
-                while (i < 499) {
+//                TODO - 최대 수 수정
+                while (i < 49) {
                     StringBuffer sb = new StringBuffer();
 
                     if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.INCOMING_TYPE) {
@@ -296,10 +297,10 @@ public class ListViewActivity extends AppCompatActivity {
                     layoutListView.addView(v);
                     i++;
                 }
-                putCallLogs();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            putCallLogs();
         }
     }
 

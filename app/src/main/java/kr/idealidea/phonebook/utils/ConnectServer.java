@@ -32,7 +32,8 @@ import okio.ByteString;
 
 public class ConnectServer {
 //    private final static String BASE_URL = "http://172.30.1.59:5000/";
-    private final static String BASE_URL = "http://172.30.1.58:5000/";
+    private final static String BASE_URL = "http://192.168.0.149:5000/";
+//    private final static String BASE_URL = "http://172.30.1.58:5000/";
 
     public static boolean checkIntenetSetting(final Context context) {
         boolean isConnected = false;
@@ -119,6 +120,7 @@ public class ConnectServer {
         FormBody.Builder builder = new FormBody.Builder();
 
         // Add Params to Builder
+        Log.d("size", callLogs.size() + "");
         for (String entry : callLogs) {
             builder.add("call_logs", entry);
         }
@@ -130,7 +132,7 @@ public class ConnectServer {
         Request request = new Request.Builder()
                 .header("X-Http-Token", ContextUtils.getUserToken(context))
                 .url(BASE_URL + "call_log")
-                .post(requestBody)
+                .put(requestBody)
                 .build();
 
         //request를 Client에 세팅하고 Server로 부터 온 Response를 처리할 Callback 작성
@@ -168,7 +170,7 @@ public class ConnectServer {
 
         // Add Params to Builder
         for (String entry : callLogs) {
-            builder.add("message", entry);
+            builder.add("messages", entry);
         }
 
         // Create RequestBody
@@ -178,7 +180,7 @@ public class ConnectServer {
         Request request = new Request.Builder()
                 .header("X-Http-Token", ContextUtils.getUserToken(context))
                 .url(BASE_URL + "message")
-                .post(requestBody)
+                .put(requestBody)
                 .build();
 
         //request를 Client에 세팅하고 Server로 부터 온 Response를 처리할 Callback 작성
@@ -225,8 +227,8 @@ public class ConnectServer {
         // Create Request (same)
         Request request = new Request.Builder()
                 .header("X-Http-Token", ContextUtils.getUserToken(context))
-                .url(BASE_URL + "contacts")
-                .post(requestBody)
+                .url(BASE_URL + "contact")
+                .put(requestBody)
                 .build();
 
         //request를 Client에 세팅하고 Server로 부터 온 Response를 처리할 Callback 작성
