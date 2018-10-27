@@ -15,6 +15,7 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/txtvSearchPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="010-1234-5678"
@@ -24,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="저장된 내역 없음"
+            android:text="저장된 내역"
             android:textColor="@color/black_dark"
             android:layout_marginTop="10dp"
             android:textSize="16sp"/>
@@ -32,25 +33,99 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="총 30명 저장"
+            android:text="총 00명 저장"
             android:textColor="@color/black_dark"
             android:layout_marginTop="10dp"
             android:textSize="16sp"/>
 
     </LinearLayout>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:layout_height="40dp"
+        android:orientation="horizontal">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+        <FrameLayout
+            android:id="@+id/frameSearchTab1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="연락처"
+                android:textColor="@color/black_dark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/lineSearchTab1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryDark"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameSearchTab2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="통화기록"
+                android:textColor="@color/black_dark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/lineSearchTab2"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryDark"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameSearchTab3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="메시지"
+                android:textColor="@color/black_dark"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/lineSearchTab3"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryDark"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/layoutSearchList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

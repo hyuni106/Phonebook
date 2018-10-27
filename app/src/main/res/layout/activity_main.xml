@@ -17,10 +17,11 @@
         android:paddingRight="15dp">
 
         <EditText
+            android:id="@+id/editMainSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="검색할 번호를 입력해주세요"
+            android:hint="검색할 번호를 입력해주세요('-' 제외)"
             android:textSize="16sp" />
 
         <TextView

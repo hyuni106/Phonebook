@@ -15,6 +15,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         Button smsListBtn = findViewById(R.id.smsListBtn);
 
                         TextView txtvMainSearch = findViewById(R.id.txtvMainSearch);
+                        final EditText editMainSearch = findViewById(R.id.editMainSearch);
 
 //                        TODO - 업로드 시 토큰 변경
                         getPhoneNum();
@@ -90,7 +92,14 @@ public class MainActivity extends AppCompatActivity {
                         txtvMainSearch.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                String search = editMainSearch.getText().toString();
+                                if (search.equals("")) {
+                                    Toast.makeText(mContext, "검색할 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
                                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                                intent.putExtra("phone", search);
                                 startActivity(intent);
                             }
                         });

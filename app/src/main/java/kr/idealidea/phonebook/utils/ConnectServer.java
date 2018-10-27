@@ -68,6 +68,130 @@ public class ConnectServer {
         void onResponse(JSONObject json);
     }
 
+
+    public static void getRequestAllContact(Context context, String phone, final JsonResponseHandler handler) {
+        if (!checkIntenetSetting(context)) {
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        //URL에 포함할 Query문 작성 Name&Value
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "contact").newBuilder();
+        urlBuilder.addEncodedQueryParameter("phone", phone);
+        String requestUrl = urlBuilder.build().toString();
+
+        //Query문이 들어간 URL을 토대로 Request 생성
+        Request request = new Request.Builder()
+                .header("X-Http-Token", ContextUtils.getUserToken(context))
+                .url(requestUrl)
+                .build();
+
+        //만들어진 Request를 서버로 요청할 Client 생성
+        //Callback을 통해 비동기 방식으로 통신을 하여 서버로부터 받은 응답을 어떻게 처리 할 지 정의함
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("error", "Connect Server Error is " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String body = response.body().string();
+                Log.d("log", "서버에서 응답한 Body:" + body);
+                try {
+                    JSONObject json = new JSONObject(body);
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void getRequestAllCallLogs(Context context, String phone, final JsonResponseHandler handler) {
+        if (!checkIntenetSetting(context)) {
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        //URL에 포함할 Query문 작성 Name&Value
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "call_log").newBuilder();
+        urlBuilder.addEncodedQueryParameter("phone", phone);
+        String requestUrl = urlBuilder.build().toString();
+
+        //Query문이 들어간 URL을 토대로 Request 생성
+        Request request = new Request.Builder()
+                .header("X-Http-Token", ContextUtils.getUserToken(context))
+                .url(requestUrl)
+                .build();
+
+        //만들어진 Request를 서버로 요청할 Client 생성
+        //Callback을 통해 비동기 방식으로 통신을 하여 서버로부터 받은 응답을 어떻게 처리 할 지 정의함
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("error", "Connect Server Error is " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String body = response.body().string();
+                Log.d("log", "서버에서 응답한 Body:" + body);
+                try {
+                    JSONObject json = new JSONObject(body);
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void getRequestAllMessage(Context context, String phone, final JsonResponseHandler handler) {
+        if (!checkIntenetSetting(context)) {
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        //URL에 포함할 Query문 작성 Name&Value
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "message").newBuilder();
+        urlBuilder.addEncodedQueryParameter("phone", phone);
+        String requestUrl = urlBuilder.build().toString();
+
+        //Query문이 들어간 URL을 토대로 Request 생성
+        Request request = new Request.Builder()
+                .header("X-Http-Token", ContextUtils.getUserToken(context))
+                .url(requestUrl)
+                .build();
+
+        //만들어진 Request를 서버로 요청할 Client 생성
+        //Callback을 통해 비동기 방식으로 통신을 하여 서버로부터 받은 응답을 어떻게 처리 할 지 정의함
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("error", "Connect Server Error is " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String body = response.body().string();
+                Log.d("log", "서버에서 응답한 Body:" + body);
+                try {
+                    JSONObject json = new JSONObject(body);
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public static void putRequestSignUp(Context context, String user_id, final JsonResponseHandler handler) {
         if (!checkIntenetSetting(context)) {
             return;
