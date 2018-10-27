@@ -109,7 +109,10 @@ public class ListViewActivity extends AppCompatActivity {
             try {
                 String v_id = cursor.getString(0);
                 String v_display_name = cursor.getString(1);
-                String v_phone = contactsPhone(v_id);
+                String v_phone = contactsPhone(v_id).replaceAll("-", "");
+                if (v_phone.startsWith("+82")) {
+                    v_phone = v_phone.replace("+82", "0");
+                }
                 String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
 
                 System.out.println("id = " + v_id);
@@ -117,24 +120,25 @@ public class ListViewActivity extends AppCompatActivity {
                 System.out.println("phone = " + v_phone);
                 System.out.println("updateTime = " + updateTime);
 
-                String contact = v_display_name + "|" + v_phone + "|" + updateTime;
-                callLogs.add(contact);
+                if (v_phone != null && !v_phone.equals("")) {
+                    String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
+                    callLogs.add(contact);
 
-                final View v = inf.inflate(R.layout.row_phone_book, null);
-                TextView txtvName = v.findViewById(R.id.txtvName);
-                TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
-                TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
+                    final View v = inf.inflate(R.layout.row_phone_book, null);
+                    TextView txtvName = v.findViewById(R.id.txtvName);
+                    TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
+                    TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
 
-                txtvName.setText(v_display_name);
-                txtvPhoneNum.setText(v_phone);
-                txtvTimeStamp.setText(timeToString(Long.parseLong(updateTime)));
-
-                layoutListView.addView(v);
+                    txtvName.setText(v_display_name);
+                    txtvPhoneNum.setText(v_phone);
+                    txtvTimeStamp.setText(timeToString(Long.parseLong(updateTime)));
+                    layoutListView.addView(v);
+                }
             }catch(Exception e) {
                 System.out.println(e.toString());
             }
         }
-        putContact();
+//        putContact();
         cursor.close();
     }
 
@@ -277,23 +281,25 @@ public class ListViewActivity extends AppCompatActivity {
                     callcount++;
                     Log.i("call history[", sb.toString());
 
+                    if (phone != null) {
+                        String list = callname + "|" + calltype + "|" + phone + "|" + getStringTime(Integer.parseInt(callDuration)) + "|" + createTime;
+                        callLogs.add(list);
 
-                    String list = callname + "|" + calltype + "|" + phone + "|" + getStringTime(Integer.parseInt(callDuration)) + "|" + createTime;
-                    callLogs.add(list);
+                        final View v = inf.inflate(R.layout.row_phone_book, null);
+                        TextView txtvName = v.findViewById(R.id.txtvName);
+                        TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
+                        TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
+                        TextView txtvDuration = v.findViewById(R.id.txtvDuration);
 
-                    final View v = inf.inflate(R.layout.row_phone_book, null);
-                    TextView txtvName = v.findViewById(R.id.txtvName);
-                    TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
-                    TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
-                    TextView txtvDuration = v.findViewById(R.id.txtvDuration);
+                        txtvDuration.setVisibility(View.VISIBLE);
+                        txtvName.setText(callname + " (" + calltype + ")");
+                        txtvPhoneNum.setText(phone);
+                        txtvTimeStamp.setText(timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE))));
+                        txtvDuration.setText(getStringTime(Integer.parseInt(callDuration)));
 
-                    txtvDuration.setVisibility(View.VISIBLE);
-                    txtvName.setText(callname + " (" + calltype + ")");
-                    txtvPhoneNum.setText(phone);
-                    txtvTimeStamp.setText(timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE))));
-                    txtvDuration.setText(getStringTime(Integer.parseInt(callDuration)));
+                        layoutListView.addView(v);
+                    }
 
-                    layoutListView.addView(v);
                     curCallLog.moveToNext();
                     i++;
                 }

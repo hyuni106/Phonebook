@@ -51,9 +51,11 @@ public class MainActivity extends AppCompatActivity {
                         Button callListBtn = findViewById(R.id.callListBtn);
                         Button smsListBtn = findViewById(R.id.smsListBtn);
 
+                        TextView txtvMainSearch = findViewById(R.id.txtvMainSearch);
+
 //                        TODO - 업로드 시 토큰 변경
-//                        getPhoneNum();
-                        ContextUtils.setUserToken(mContext, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwidXNlcl9pZCI6IjAxMC05OTkxLTgzODcifQ.99qdzaFILadWf2RQS9xfkJ3gvjvKWX_ZFB50caRCx8W8KE-vYWjsGbHpTLJwPwoRUHS2kzMttlOYxPQ_IuHnjg");
+                        getPhoneNum();
+//                        ContextUtils.setUserToken(mContext, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwidXNlcl9pZCI6IjAxMC05OTkxLTgzODcifQ.99qdzaFILadWf2RQS9xfkJ3gvjvKWX_ZFB50caRCx8W8KE-vYWjsGbHpTLJwPwoRUHS2kzMttlOYxPQ_IuHnjg");
 
                         phoneBookBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -81,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
 //                                readSMSMessage();
                                 Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
                                 intent.putExtra("intent", "message");
+                                startActivity(intent);
+                            }
+                        });
+
+                        txtvMainSearch.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                                 startActivity(intent);
                             }
                         });
