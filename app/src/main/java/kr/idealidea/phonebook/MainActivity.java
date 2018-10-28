@@ -44,72 +44,57 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
-        TedPermission.with(this)
-                .setPermissionListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-                        Button phoneBookBtn = findViewById(R.id.phoneBookBtn);
-                        Button callListBtn = findViewById(R.id.callListBtn);
-                        Button smsListBtn = findViewById(R.id.smsListBtn);
+        Button phoneBookBtn = findViewById(R.id.phoneBookBtn);
+        Button callListBtn = findViewById(R.id.callListBtn);
+        Button smsListBtn = findViewById(R.id.smsListBtn);
 
-                        TextView txtvMainSearch = findViewById(R.id.txtvMainSearch);
-                        final EditText editMainSearch = findViewById(R.id.editMainSearch);
+        TextView txtvMainSearch = findViewById(R.id.txtvMainSearch);
+        final EditText editMainSearch = findViewById(R.id.editMainSearch);
 
-                        phoneBookBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+        phoneBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                                contacts();
-                                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
-                                intent.putExtra("intent", "book");
-                                startActivity(intent);
-                            }
-                        });
+                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                intent.putExtra("intent", "book");
+                startActivity(intent);
+            }
+        });
 
-                        callListBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+        callListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                                callLog();
-                                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
-                                intent.putExtra("intent", "log");
-                                startActivity(intent);
-                            }
-                        });
+                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                intent.putExtra("intent", "log");
+                startActivity(intent);
+            }
+        });
 
-                        smsListBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+        smsListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                                readSMSMessage();
-                                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
-                                intent.putExtra("intent", "message");
-                                startActivity(intent);
-                            }
-                        });
+                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                intent.putExtra("intent", "message");
+                startActivity(intent);
+            }
+        });
 
-                        txtvMainSearch.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String search = editMainSearch.getText().toString();
-                                if (search.equals("")) {
-                                    Toast.makeText(mContext, "검색할 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
+        txtvMainSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = editMainSearch.getText().toString();
+                if (search.equals("")) {
+                    Toast.makeText(mContext, "검색할 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                                intent.putExtra("phone", search);
-                                startActivity(intent);
-                            }
-                        });
-                    }
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                intent.putExtra("phone", search);
+                startActivity(intent);
+            }
+        });
 
-                    @Override
-                    public void onPermissionDenied(List<String> deniedPermissions) {
-                        Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                    }
-
-                })
-                .setDeniedMessage("어플을 사용하려면 권한을 허용해야 합니다.")
-                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG
-                        , Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_SMS)
-                .check();
     }
 }

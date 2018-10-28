@@ -1,5 +1,6 @@
 package kr.idealidea.phonebook;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
@@ -7,9 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
@@ -22,24 +29,40 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        TedPermission.with(this)
+                .setPermissionListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
 //               TODO - 업로드 시 토큰 변경
-                getPhoneNum();
+                                getPhoneNum();
 //                ContextUtils.setUserToken(SplashActivity.this, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwidXNlcl9pZCI6IjAxMC05OTkxLTgzODcifQ.99qdzaFILadWf2RQS9xfkJ3gvjvKWX_ZFB50caRCx8W8KE-vYWjsGbHpTLJwPwoRUHS2kzMttlOYxPQ_IuHnjg");
 
-                Intent intent = null;
-                if (ContextUtils.getUserToken(SplashActivity.this).equals("")) {
-                    intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    intent.putExtra("phone", finalPhoneNum);
-                } else {
-                    intent = new Intent(SplashActivity.this, MainActivity.class);
-                }
-                startActivity(intent);
-                finish();
-            }
-        }, 1000);
+                                Intent intent = null;
+                                if (ContextUtils.getUserToken(SplashActivity.this).equals("")) {
+                                    intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                    intent.putExtra("phone", finalPhoneNum);
+                                } else {
+                                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                                }
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, 1000);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(List<String> deniedPermissions) {
+                        Toast.makeText(SplashActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    }
+
+                })
+                .setDeniedMessage("어플을 사용하려면 권한을 허용해야 합니다.")
+                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG
+                        , Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_SMS)
+                .check();
     }
 
 
