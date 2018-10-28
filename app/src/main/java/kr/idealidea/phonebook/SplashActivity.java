@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     public void getPhoneNum() {
         TelephonyManager telManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        String phoneNum = "010-9991-8387";
+        String phoneNum = "";
         if (telManager != null) {
             phoneNum = telManager.getLine1Number();
         }
@@ -55,6 +55,8 @@ public class SplashActivity extends AppCompatActivity {
                 phoneNum = phoneNum.replace("+82", "0");
             }
             phoneNum = phoneNum.replace("-", "");
+        } else {
+            phoneNum = "01099918387";
         }
         finalPhoneNum = phoneNum;
 
