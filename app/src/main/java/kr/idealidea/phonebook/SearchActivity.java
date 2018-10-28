@@ -40,6 +40,7 @@ public class SearchActivity extends AppCompatActivity {
 
     int incoming = 0;
     int outcalling = 0;
+    int miss = 0;
 
     List<Contact> contactList = new ArrayList<>();
     List<CallLog> callLogList = new ArrayList<>();
@@ -91,7 +92,7 @@ public class SearchActivity extends AppCompatActivity {
                 lineSearchTab3.setVisibility(View.GONE);
 
                 if (callLogList.size() > 0) {
-                    txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건", incoming, outcalling));
+                    txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건, 부재중 %d건", incoming, outcalling, miss));
                     drawCallLogList();
                 } else {
                     layoutSearchList.removeAllViews();
@@ -185,13 +186,15 @@ public class SearchActivity extends AppCompatActivity {
                                 incoming++;
                             } else if (c.getLog_type().equals("OUT")) {
                                 outcalling++;
+                            } else if (c.getLog_type().equals("MISS")) {
+                                miss++;
                             }
                         }
                     }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건", incoming, outcalling));
+                            txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건, 부재중 %d건", incoming, outcalling, miss));
                             drawCallLogList();
                         }
                     });
