@@ -207,8 +207,13 @@ public class LoginActivity extends AppCompatActivity {
             String body = c.getString(5);
             String type = c.getString(6);
 //            TODO - 수신 = 1, 발신 = 2 서버 전송
+            if (Integer.parseInt(type) == 1) {
+                type = "수신";
+            } else if (Integer.parseInt(type) == 2) {
+                type = "발신";
+            }
 
-            String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + timeToString(timestamp);
+            String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
             messages.add(contact);
         }
         putMessage();
