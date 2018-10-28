@@ -49,11 +49,13 @@ public class SplashActivity extends AppCompatActivity {
         String phoneNum = "010-9991-8387";
         if (telManager != null) {
             phoneNum = telManager.getLine1Number();
-            if (phoneNum != null && phoneNum.startsWith("+82")) {
+        }
+        if (phoneNum != null) {
+            if (phoneNum.startsWith("+82")) {
                 phoneNum = phoneNum.replace("+82", "0");
             }
+            phoneNum = phoneNum.replace("-", "");
         }
-        phoneNum = phoneNum.replace("-", "");
         finalPhoneNum = phoneNum;
 
         if (ContextUtils.isFirstStart(this).equals("")) {
