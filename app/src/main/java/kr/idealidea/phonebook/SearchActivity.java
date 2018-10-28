@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import kr.idealidea.phonebook.data.CallLog;
 import kr.idealidea.phonebook.data.Contact;
@@ -30,10 +31,15 @@ public class SearchActivity extends AppCompatActivity {
     TextView lineSearchTab1;
     TextView lineSearchTab2;
     TextView lineSearchTab3;
+    TextView txtvSearchShopName;
+    TextView txtvSearchCount;
     FrameLayout frameSearchTab1;
     FrameLayout frameSearchTab2;
     FrameLayout frameSearchTab3;
     LinearLayout layoutSearchList;
+
+    int incoming = 0;
+    int outcalling = 0;
 
     List<Contact> contactList = new ArrayList<>();
     List<CallLog> callLogList = new ArrayList<>();
@@ -55,6 +61,8 @@ public class SearchActivity extends AppCompatActivity {
         lineSearchTab2 = findViewById(R.id.lineSearchTab2);
         lineSearchTab3 = findViewById(R.id.lineSearchTab3);
         layoutSearchList = findViewById(R.id.layoutSearchList);
+        txtvSearchShopName = findViewById(R.id.txtvSearchShopName);
+        txtvSearchCount = findViewById(R.id.txtvSearchCount);
 
         txtvSearchPhone.setText(search);
 
@@ -125,6 +133,8 @@ public class SearchActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            txtvSearchShopName.setText(contactList.get(0).getShop_name());
+                            txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
                             drawCallList();
                         }
                     });
@@ -146,6 +156,7 @@ public class SearchActivity extends AppCompatActivity {
             TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
 
             txtvName.setText("저장명 : " + contact.getName());
+            txtvPhoneNum.setText(contact.getShop_name());
             txtvTimeStamp.setText(myDateFormat.format(contact.getCreated_at().getTime()));
 
             layoutSearchList.addView(v);
@@ -163,11 +174,17 @@ public class SearchActivity extends AppCompatActivity {
                         for (int i=0; i<contacts.length(); i++) {
                             CallLog c = CallLog.getCallLogsFromJson(contacts.getJSONObject(i));
                             callLogList.add(c);
+                            if (c.getLog_type().equals("IN")) {
+                                incoming++;
+                            } else if (c.getLog_type().equals("OUT")) {
+                                outcalling++;
+                            }
                         }
                     }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건", incoming, outcalling));
                             drawCallLogList();
                         }
                     });
@@ -191,6 +208,7 @@ public class SearchActivity extends AppCompatActivity {
 
             txtvType.setText(callLog.getLog_type());
             txtvDuration.setText(callLog.getTime());
+            txtvPhoneNum.setText(callLog.getShop_name());
             txtvTimeStamp.setText(myDateFormat.format(callLog.getCreated_at().getTime()));
 
             layoutSearchList.addView(v);
@@ -213,6 +231,7 @@ public class SearchActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            txtvSearchCount.setText(String.format(Locale.KOREA, "문자메시지 %d건", messagesList.size()));
                             drawMessageList();
                         }
                     });
@@ -231,8 +250,10 @@ public class SearchActivity extends AppCompatActivity {
             final View v = inf.inflate(R.layout.search_message_list_item, null);
             TextView txtvMessage = v.findViewById(R.id.txtvMessage);
             TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
+            TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
 
             txtvMessage.setText(message.getContent());
+            txtvPhoneNum.setText(message.getShop_name());
             txtvTimeStamp.setText(myDateFormat.format(message.getCreated_at().getTime()));
 
             layoutSearchList.addView(v);

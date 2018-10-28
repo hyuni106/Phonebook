@@ -52,7 +52,9 @@ public class LoginActivity extends AppCompatActivity {
         editLoginPhone = findViewById(R.id.editLoginPhone);
         editLoginAuth = findViewById(R.id.editLoginAuth);
 
-        contacts();
+        if (ContextUtils.isFirstStart(LoginActivity.this).equals("")) {
+            contacts();
+        }
 
         editLoginPhone.setText(phone);
 
@@ -101,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         ConnectServer.putRequestMessage(this, messages, new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
-
+                ContextUtils.setFirstStart(LoginActivity.this);
             }
         });
     }

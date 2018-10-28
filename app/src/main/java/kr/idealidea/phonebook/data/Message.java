@@ -13,6 +13,7 @@ public class Message implements Serializable {
     private int uid;
     private String phone;
     private String content;
+    private String shop_name;
     private Calendar created_at;
 
     public static Message getContactFromJson(JSONObject json) {
@@ -23,6 +24,7 @@ public class Message implements Serializable {
             m.setUid(json.getInt("uid"));
             m.setPhone(json.getString("phone"));
             m.setContent(json.getString("content"));
+            m.setShop_name(json.getString("shop_name"));
 
             SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Calendar createdTime = Calendar.getInstance();
@@ -86,5 +88,13 @@ public class Message implements Serializable {
 
     public void setCreated_at(Calendar created_at) {
         this.created_at = created_at;
+    }
+
+    public String getShop_name() {
+        return shop_name;
+    }
+
+    public void setShop_name(String shop_name) {
+        this.shop_name = shop_name;
     }
 }

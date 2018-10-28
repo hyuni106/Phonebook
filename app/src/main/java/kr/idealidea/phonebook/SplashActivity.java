@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,8 +29,13 @@ public class SplashActivity extends AppCompatActivity {
                 getPhoneNum();
 //                ContextUtils.setUserToken(SplashActivity.this, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwidXNlcl9pZCI6IjAxMC05OTkxLTgzODcifQ.99qdzaFILadWf2RQS9xfkJ3gvjvKWX_ZFB50caRCx8W8KE-vYWjsGbHpTLJwPwoRUHS2kzMttlOYxPQ_IuHnjg");
 
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                intent.putExtra("phone", finalPhoneNum);
+                Intent intent = null;
+                if (ContextUtils.getUserToken(SplashActivity.this).equals("")) {
+                    intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    intent.putExtra("phone", finalPhoneNum);
+                } else {
+                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                }
                 startActivity(intent);
                 finish();
             }
@@ -50,7 +56,7 @@ public class SplashActivity extends AppCompatActivity {
         phoneNum = phoneNum.replace("-", "");
         finalPhoneNum = phoneNum;
 
-        if (ContextUtils.getUserToken(this).equals("")) {
+        if (ContextUtils.isFirstStart(this).equals("")) {
             ConnectServer.putRequestSignUp(this, phoneNum, new ConnectServer.JsonResponseHandler() {
                 @Override
                 public void onResponse(JSONObject json) {

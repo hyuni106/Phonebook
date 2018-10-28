@@ -9,13 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class CallLog implements Serializable {
-    int id;
-    int uid;
-    String name;
-    String log_type;
-    String phone;
-    String time;
-    Calendar created_at;
+    private int id;
+    private int uid;
+    private String name;
+    private String log_type;
+    private String phone;
+    private String time;
+    private String shop_name;
+    private Calendar created_at;
 
     public static CallLog getCallLogsFromJson(JSONObject json) {
         CallLog c = new CallLog();
@@ -27,6 +28,7 @@ public class CallLog implements Serializable {
             c.setPhone(json.getString("phone"));
             c.setName(json.getString("name"));
             c.setTime(json.getString("time"));
+            c.setShop_name(json.getString("shop_name"));
 
             SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Calendar createdTime = Calendar.getInstance();
@@ -108,5 +110,13 @@ public class CallLog implements Serializable {
 
     public void setCreated_at(Calendar created_at) {
         this.created_at = created_at;
+    }
+
+    public String getShop_name() {
+        return shop_name;
+    }
+
+    public void setShop_name(String shop_name) {
+        this.shop_name = shop_name;
     }
 }
