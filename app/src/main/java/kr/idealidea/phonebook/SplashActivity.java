@@ -47,9 +47,9 @@ public class SplashActivity extends AppCompatActivity {
     public void getPhoneNum() {
         TelephonyManager telManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         String phoneNum = "010-9991-8387";
-        if (telManager.getLine1Number() != null) {
+        if (telManager != null) {
             phoneNum = telManager.getLine1Number();
-            if (phoneNum.startsWith("+82")) {
+            if (phoneNum != null && phoneNum.startsWith("+82")) {
                 phoneNum = phoneNum.replace("+82", "0");
             }
         }
