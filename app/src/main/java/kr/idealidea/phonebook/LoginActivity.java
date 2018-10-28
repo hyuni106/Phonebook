@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String phone = getIntent().getStringExtra("phone");
+        final String phone = getIntent().getStringExtra("phone");
 
         btnLogin = findViewById(R.id.btnLogin);
         editLoginPhone = findViewById(R.id.editLoginPhone);
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectServer.postRequestLogin(LoginActivity.this, editLoginPhone.getText().toString(), editLoginAuth.getText().toString(), new ConnectServer.JsonResponseHandler() {
+                ConnectServer.postRequestLogin(LoginActivity.this, phone, editLoginAuth.getText().toString(), new ConnectServer.JsonResponseHandler() {
                     @Override
                     public void onResponse(final JSONObject json) {
                         try {
