@@ -55,10 +55,6 @@ public class MainActivity extends AppCompatActivity {
                         TextView txtvMainSearch = findViewById(R.id.txtvMainSearch);
                         final EditText editMainSearch = findViewById(R.id.editMainSearch);
 
-//                        TODO - 업로드 시 토큰 변경
-                        getPhoneNum();
-//                        ContextUtils.setUserToken(mContext, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwidXNlcl9pZCI6IjAxMC05OTkxLTgzODcifQ.99qdzaFILadWf2RQS9xfkJ3gvjvKWX_ZFB50caRCx8W8KE-vYWjsGbHpTLJwPwoRUHS2kzMttlOYxPQ_IuHnjg");
-
                         phoneBookBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -115,32 +111,5 @@ public class MainActivity extends AppCompatActivity {
                 .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG
                         , Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_SMS)
                 .check();
-    }
-
-    @SuppressLint("MissingPermission")
-    public void getPhoneNum() {
-        if (ContextUtils.getUserToken(mContext).equals("")) {
-            TelephonyManager telManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-            String phoneNum = "010-1234-5678";
-            if (telManager != null) {
-                phoneNum = telManager.getLine1Number();
-            }
-            if (phoneNum.startsWith("+82")) {
-                phoneNum = phoneNum.replace("+82", "0");
-            }
-
-            ConnectServer.putRequestSignUp(mContext, phoneNum, new ConnectServer.JsonResponseHandler() {
-                @Override
-                public void onResponse(JSONObject json) {
-                    try {
-                        if (json.getInt("code") == 200) {
-                            ContextUtils.setUserToken(mContext, json.getJSONObject("data").getString("token"));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
     }
 }

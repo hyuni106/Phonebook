@@ -138,7 +138,7 @@ public class ListViewActivity extends AppCompatActivity {
                 System.out.println(e.toString());
             }
         }
-//        putContact();
+        putContact();
         cursor.close();
     }
 
@@ -176,7 +176,7 @@ public class ListViewActivity extends AppCompatActivity {
     public int readSMSMessage() {
         Uri allMessage = Uri.parse("content://sms");
         ContentResolver cr = getContentResolver();
-        Cursor c = cr.query(allMessage, new String[] { "_id", "thread_id", "address", "person", "date", "body" }, null, null, "date DESC");
+        Cursor c = cr.query(allMessage, new String[] { "_id", "thread_id", "address", "person", "date", "body", "type" }, null, null, "date DESC");
 
         String string = "";
         int count = 0;
@@ -193,6 +193,8 @@ public class ListViewActivity extends AppCompatActivity {
             String contactId_string = String.valueOf(contactId);
             long timestamp = c.getLong(4);
             String body = c.getString(5);
+            String type = c.getString(6);
+//            TODO - 수신 = 1, 발신 = 2 서버 전송
 
             string = String.format("address:%s, timestamp:%d, body:%s", address, timestamp, body);
 
@@ -209,7 +211,7 @@ public class ListViewActivity extends AppCompatActivity {
 
             txtvContent.setVisibility(View.VISIBLE);
 
-            txtvName.setText(address);
+            txtvName.setText(address + "(" + type + ")");
             txtvPhoneNum.setText(address);
             txtvTimeStamp.setText(timeToString(timestamp));
             txtvContent.setText(body);
