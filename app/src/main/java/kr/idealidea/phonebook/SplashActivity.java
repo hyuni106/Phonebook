@@ -46,9 +46,8 @@ public class SplashActivity extends AppCompatActivity {
             if (phoneNum.startsWith("+82")) {
                 phoneNum = phoneNum.replace("+82", "0");
             }
-            phoneNum = phoneNum.replace("-", "");
         }
-
+        phoneNum = phoneNum.replace("-", "");
         finalPhoneNum = phoneNum;
 
         if (ContextUtils.getUserToken(this).equals("")) {

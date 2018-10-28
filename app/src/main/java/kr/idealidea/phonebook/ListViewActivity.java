@@ -329,4 +329,5 @@ public class ListViewActivity extends AppCompatActivity {
         }
         res = String.format("%02d:%02d:%02d", hour, min, sec);
         return res;
-    }}
+    }
+}
