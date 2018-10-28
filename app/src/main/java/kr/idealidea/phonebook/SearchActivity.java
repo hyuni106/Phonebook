@@ -74,6 +74,7 @@ public class SearchActivity extends AppCompatActivity {
                 lineSearchTab3.setVisibility(View.GONE);
 
                 if (contactList.size() > 0) {
+                    txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
                     drawCallList();
                 } else {
                     layoutSearchList.removeAllViews();
@@ -90,6 +91,7 @@ public class SearchActivity extends AppCompatActivity {
                 lineSearchTab3.setVisibility(View.GONE);
 
                 if (callLogList.size() > 0) {
+                    txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건", incoming, outcalling));
                     drawCallLogList();
                 } else {
                     layoutSearchList.removeAllViews();
@@ -106,6 +108,7 @@ public class SearchActivity extends AppCompatActivity {
                 lineSearchTab1.setVisibility(View.GONE);
 
                 if (messagesList.size() > 0) {
+                    txtvSearchCount.setText(String.format(Locale.KOREA, "문자메시지 %d건", messagesList.size()));
                     drawMessageList();
                 } else {
                     layoutSearchList.removeAllViews();
@@ -133,7 +136,11 @@ public class SearchActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            txtvSearchShopName.setText(contactList.get(0).getShop_name());
+                            if (contactList.size() > 0) {
+                                txtvSearchShopName.setText(contactList.get(0).getShop_name());
+                            } else {
+                                txtvSearchShopName.setText("");
+                            }
                             txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
                             drawCallList();
                         }
