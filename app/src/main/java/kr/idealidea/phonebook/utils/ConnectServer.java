@@ -31,7 +31,7 @@ import okio.ByteString;
 
 
 public class ConnectServer {
-    private final static String BASE_URL = "http://172.30.1.12:5000/";
+    private final static String BASE_URL = "http://172.30.1.3:5000/";
 //    private final static String BASE_URL = "http://192.168.0.149:5000/";
 //    private final static String BASE_URL = "http://172.30.1.11:5000/";
 
@@ -66,6 +66,46 @@ public class ConnectServer {
     //    JSON 처리 부분 인터페이스
     public interface JsonResponseHandler {
         void onResponse(JSONObject json);
+    }
+
+    public static void getRequestUserInfo(Context context, final JsonResponseHandler handler) {
+        if (!checkIntenetSetting(context)) {
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        //URL에 포함할 Query문 작성 Name&Value
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "auth").newBuilder();
+        String requestUrl = urlBuilder.build().toString();
+
+        //Query문이 들어간 URL을 토대로 Request 생성
+        Request request = new Request.Builder()
+                .header("X-Http-Token", ContextUtils.getUserToken(context))
+                .url(requestUrl)
+                .build();
+
+        //만들어진 Request를 서버로 요청할 Client 생성
+        //Callback을 통해 비동기 방식으로 통신을 하여 서버로부터 받은 응답을 어떻게 처리 할 지 정의함
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("error", "Connect Server Error is " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String body = response.body().string();
+                Log.d("log", "서버에서 응답한 Body:" + body);
+                try {
+                    JSONObject json = new JSONObject(body);
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 
@@ -179,6 +219,48 @@ public class ConnectServer {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String body = response.body().string();
+                Log.d("log", "서버에서 응답한 Body:" + body);
+                try {
+                    JSONObject json = new JSONObject(body);
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void postRequestCallNumInfo(Context context, String phone, final JsonResponseHandler handler) {
+        if (!checkIntenetSetting(context)) {
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        //Request Body에 서버에 보낼 데이터 작성
+        RequestBody requestBody = new FormBody.Builder()
+                .add("phone", phone)
+                .build();
+
+        //작성한 Request Body와 데이터를 보낼 url을 Request에 붙임
+        Request request = new Request.Builder()
+                .header("X-Http-Token", ContextUtils.getUserToken(context))
+                .url(BASE_URL + "popup")
+                .post(requestBody)
+                .build();
+
+        //request를 Client에 세팅하고 Server로 부터 온 Response를 처리할 Callback 작성
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("error", "Connect Server Error is " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
                 Log.d("log", "서버에서 응답한 Body:" + body);
                 try {

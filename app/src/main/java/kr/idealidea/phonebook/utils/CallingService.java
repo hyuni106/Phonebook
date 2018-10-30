@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import kr.idealidea.phonebook.R;
 
 public class CallingService extends Service  {
@@ -20,10 +23,12 @@ public class CallingService extends Service  {
     protected View rootView;
 
 
-//    @InjectView(R.id.tv_call_number)
-    TextView tv_call_number;
-
-    String call_number;
+    TextView txtvPopupPhone;
+    TextView txtvPopupShopName;
+    TextView txtvPopupCount;
+    String call_number = "";
+    String shopName = "";
+    int count = 0;
 
     WindowManager.LayoutParams params;
     private WindowManager windowManager;
@@ -55,17 +60,13 @@ public class CallingService extends Service  {
                 PixelFormat.TRANSLUCENT);
 
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-//        rootView = layoutInflater.inflate(R.layout.call_popup_top, null);
-//        ButterKnife.inject(this, rootView);
+        rootView = layoutInflater.inflate(R.layout.view_call_popup, null);
         setDraggable();
-
-
     }
 
 
 
     private void setDraggable() {
-
         rootView.setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
             private int initialY;
@@ -94,41 +95,52 @@ public class CallingService extends Service  {
                 return false;
             }
         });
-
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         windowManager.addView(rootView, params);
         setExtra(intent);
 
-
         if (!TextUtils.isEmpty(call_number)) {
-            tv_call_number.setText(call_number);
+            txtvPopupPhone.setText(call_number);
+            txtvPopupShopName.setText(shopName);
+            txtvPopupCount.setText(String.format("%d 건", count));
         }
-
 
         return START_REDELIVER_INTENT;
     }
 
     private void setExtra(Intent intent) {
         if (intent == null) {
-//            removePopup();
+            removePopup();
             return;
         }
 
         call_number = intent.getStringExtra(EXTRA_CALL_NUMBER);
+
+        ConnectServer.postRequestCallNumInfo(this, call_number, new ConnectServer.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+                try {
+                    if (json.getInt("code") == 200) {
+                        shopName = json.getJSONObject("data").getString("name");
+                        count = json.getJSONObject("data").getInt("total");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        removePopup();
+        removePopup();
     }
 
-//    @OnClick(R.id.btn_close)
-//    public void removePopup() {
-//        if (rootView != null && windowManager != null) windowManager.removeView(rootView);
-//    }
+    public void removePopup() {
+        if (rootView != null && windowManager != null) windowManager.removeView(rootView);
+    }
 }

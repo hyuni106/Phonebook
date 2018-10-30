@@ -35,6 +35,24 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+        <TextView
+            android:id="@+id/txtvMainPeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서비스 이용 만료 기간은 입니다."
+            android:textColor="@color/black_dark"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/phoneBookBtn"
         android:layout_width="match_parent"

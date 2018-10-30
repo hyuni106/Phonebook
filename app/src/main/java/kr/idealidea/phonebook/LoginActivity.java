@@ -25,8 +25,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import kr.idealidea.phonebook.data.Period;
+import kr.idealidea.phonebook.data.User;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
+import kr.idealidea.phonebook.utils.GlobalData;
 
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
@@ -68,6 +71,12 @@ public class LoginActivity extends AppCompatActivity {
                             if (json.getInt("code") == 200) {
                                 String token = json.getJSONObject("data").getString("token");
                                 ContextUtils.setUserToken(LoginActivity.this, token);
+
+                                JSONObject user = json.getJSONObject("data").getJSONObject("user");
+                                GlobalData.loginUser = User.getUserFromJson(user);
+                                JSONObject period = user.getJSONObject("period");
+                                GlobalData.loginUser.setUserPeriod(Period.getPeriodFromJson(period));
+                                GlobalData.loginUser.setAdmin(json.getJSONObject("data").getBoolean("is_admin"));
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);

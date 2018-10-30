@@ -18,8 +18,11 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import kr.idealidea.phonebook.data.Period;
+import kr.idealidea.phonebook.data.User;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
+import kr.idealidea.phonebook.utils.GlobalData;
 
 public class SplashActivity extends AppCompatActivity {
     String finalPhoneNum;
@@ -40,15 +43,38 @@ public class SplashActivity extends AppCompatActivity {
                                 getPhoneNum();
 //                ContextUtils.setUserToken(SplashActivity.this, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwidXNlcl9pZCI6IjAxMC05OTkxLTgzODcifQ.99qdzaFILadWf2RQS9xfkJ3gvjvKWX_ZFB50caRCx8W8KE-vYWjsGbHpTLJwPwoRUHS2kzMttlOYxPQ_IuHnjg");
 
-                                Intent intent = null;
                                 if (ContextUtils.getUserToken(SplashActivity.this).equals("")) {
-                                    intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                                     intent.putExtra("phone", finalPhoneNum);
+                                    startActivity(intent);
+                                    finish();
                                 } else {
-                                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                                    ConnectServer.getRequestUserInfo(SplashActivity.this, new ConnectServer.JsonResponseHandler() {
+                                        @Override
+                                        public void onResponse(JSONObject json) {
+                                            try {
+                                                if (json.getInt("code") == 200) {
+                                                    JSONObject user = json.getJSONObject("data").getJSONObject("user");
+                                                    GlobalData.loginUser = User.getUserFromJson(user);
+                                                    JSONObject period = user.getJSONObject("period");
+                                                    GlobalData.loginUser.setUserPeriod(Period.getPeriodFromJson(period));
+                                                    GlobalData.loginUser.setAdmin(json.getJSONObject("data").getBoolean("is_admin"));
+//                                                    GlobalData.userPeriod = Period.getPeriodFromJson(period);
+                                                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else {
+                                                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                                    intent.putExtra("phone", finalPhoneNum);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
                                 }
-                                startActivity(intent);
-                                finish();
                             }
                         }, 1000);
                     }

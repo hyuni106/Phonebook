@@ -33,9 +33,12 @@ import java.util.List;
 import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
+import kr.idealidea.phonebook.utils.GlobalData;
 
 public class MainActivity extends AppCompatActivity {
     Context mContext;
+
+    TextView txtvMainPeriod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         Button phoneBookBtn = findViewById(R.id.phoneBookBtn);
         Button callListBtn = findViewById(R.id.callListBtn);
         Button smsListBtn = findViewById(R.id.smsListBtn);
+        txtvMainPeriod = findViewById(R.id.txtvMainPeriod);
+
+        txtvMainPeriod.setText(String.format("서비스 이용 만료일은 %s 입니다.", GlobalData.loginUser.getUserPeriod().getEnd()));
 
         TextView txtvMainSearch = findViewById(R.id.txtvMainSearch);
         final EditText editMainSearch = findViewById(R.id.editMainSearch);
