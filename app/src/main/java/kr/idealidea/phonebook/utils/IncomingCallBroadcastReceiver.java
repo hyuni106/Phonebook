@@ -26,9 +26,9 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
         if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
             String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
             final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
-//            Intent serviceIntent = new Intent(context, CallingService.class);
-//            serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
-//            context.startService(serviceIntent);
+            Intent serviceIntent = new Intent(context, CallingService.class);
+            serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
+            context.startService(serviceIntent);
         }
     }
 }
