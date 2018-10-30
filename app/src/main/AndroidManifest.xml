@@ -13,6 +13,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <application
         android:allowBackup="true"
@@ -36,9 +39,13 @@
 
         <service android:name=".utils.CallingService"/>
 
-        <receiver android:name=".utils.IncomingCallBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE"/>
+        <receiver android:name=".utils.IncomingCallBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:exported="true">
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>
