@@ -138,7 +138,7 @@ public class SearchActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             if (contactList.size() > 0) {
-                                txtvSearchShopName.setText(contactList.get(0).getShop_name());
+                                txtvSearchShopName.setText(contactList.get(contactList.size() - 1).getName());
                             } else {
                                 txtvSearchShopName.setText("");
                             }

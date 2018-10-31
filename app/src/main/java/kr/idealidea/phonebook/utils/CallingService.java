@@ -1,5 +1,6 @@
 package kr.idealidea.phonebook.utils;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -44,6 +45,7 @@ public class CallingService extends Service  {
     @Override
     public void onCreate() {
         super.onCreate();
+        startForeground(1,new Notification());
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
