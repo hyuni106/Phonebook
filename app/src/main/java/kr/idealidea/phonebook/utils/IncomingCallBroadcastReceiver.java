@@ -3,6 +3,7 @@ package kr.idealidea.phonebook.utils;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.telephony.PhoneNumberUtils;
@@ -55,7 +56,12 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
                 final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
                 Intent serviceIntent = new Intent(context, CallingService.class);
                 serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
-                context.startService(serviceIntent);
+//                context.startService(serviceIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(serviceIntent);
+                } else {
+                    context.startService(serviceIntent);
+                }
 
             }
 
