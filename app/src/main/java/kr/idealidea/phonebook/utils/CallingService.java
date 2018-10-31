@@ -21,6 +21,8 @@ import kr.idealidea.phonebook.R;
 public class CallingService extends Service  {
 
     public static final String EXTRA_CALL_NUMBER = "call_number";
+    public static final String EXTRA_SHOP_NAME = "shop_name";
+    public static final String EXTRA_COUNT = "count";
     protected View rootView;
 
 
@@ -120,20 +122,22 @@ public class CallingService extends Service  {
         }
 
         call_number = intent.getStringExtra(EXTRA_CALL_NUMBER);
+        shopName = intent.getStringExtra(EXTRA_SHOP_NAME);
+        count = intent.getIntExtra(EXTRA_COUNT, 0);
 
-        ConnectServer.postRequestCallNumInfo(this, call_number, new ConnectServer.JsonResponseHandler() {
-            @Override
-            public void onResponse(JSONObject json) {
-                try {
-                    if (json.getInt("code") == 200) {
-                        shopName = json.getJSONObject("data").getString("name");
-                        count = json.getJSONObject("data").getInt("total");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        ConnectServer.postRequestCallNumInfo(this, call_number, new ConnectServer.JsonResponseHandler() {
+//            @Override
+//            public void onResponse(JSONObject json) {
+//                try {
+//                    if (json.getInt("code") == 200) {
+//                        shopName = json.getJSONObject("data").getString("name");
+//                        count = json.getJSONObject("data").getInt("total");
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     @Override

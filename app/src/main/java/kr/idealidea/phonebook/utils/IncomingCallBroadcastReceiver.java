@@ -44,8 +44,6 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 //            User user = (User) intent.getSerializableExtra("user");
 
             if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-                Toast.makeText(context, "Incoming Call State", Toast.LENGTH_SHORT).show();
-                Toast.makeText(context, "Ringing State Number is -" + incomingNumber, Toast.LENGTH_SHORT).show();
 //                if (incomingNumber.equals(user.getUserPhoneNum())) {
 //                    Toast.makeText(context, "전화한사람 이름" + user.getUserName(), Toast.LENGTH_SHORT).show();
 //                }
@@ -54,14 +52,32 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 //                }
 
                 final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
-                Intent serviceIntent = new Intent(context, CallingService.class);
-                serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
+
+                ConnectServer.postRequestCallNumInfo(context, phone_number.replaceAll("-", ""), new ConnectServer.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+                        try {
+                            if (json.getInt("code") == 200) {
+                                String shopName = json.getJSONObject("data").getString("name");
+                                int count = json.getJSONObject("data").getInt("total");
+
+                                Intent serviceIntent = new Intent(context, CallingService.class);
+                                serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
+                                serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, shopName);
+                                serviceIntent.putExtra(CallingService.EXTRA_COUNT, count);
 //                context.startService(serviceIntent);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.startForegroundService(serviceIntent);
-                } else {
-                    context.startService(serviceIntent);
-                }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    context.startForegroundService(serviceIntent);
+                                } else {
+                                    context.startService(serviceIntent);
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
             }
 
