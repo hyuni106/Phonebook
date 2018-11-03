@@ -26,8 +26,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".ListViewActivity" />
-        <activity android:name=".LoginActivity">
-        </activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".SearchActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -37,9 +36,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".utils.CallingService"/>
+        <service android:name=".utils.CallingService" />
 
-        <receiver android:name=".utils.IncomingCallBroadcastReceiver"
+        <receiver
+            android:name=".utils.IncomingCallBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:exported="true">
@@ -48,6 +48,9 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".CallPopupActivity"
+            android:theme="@style/mytheme" />
     </application>
 
 </manifest>

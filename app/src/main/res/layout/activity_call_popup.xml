@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".CallPopupActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txtvPopupPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="010-1234-5678"
+            android:textColor="@color/black_dark"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/txtvPopupShopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저장된 내역"
+            android:textColor="@color/black_dark"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/txtvPopupCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="총 00명 저장"
+            android:textColor="@color/black_dark"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

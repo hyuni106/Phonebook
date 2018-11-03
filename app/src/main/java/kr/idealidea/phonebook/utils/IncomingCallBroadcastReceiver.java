@@ -14,6 +14,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import kr.idealidea.phonebook.CallPopupActivity;
+
 public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
     public static final String TAG = "PHONE STATE";
     private static String mLastState;
@@ -61,16 +63,17 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
                                 String shopName = json.getJSONObject("data").getString("name");
                                 int count = json.getJSONObject("data").getInt("total");
 
-                                Intent serviceIntent = new Intent(context, CallingService.class);
+                                Intent serviceIntent = new Intent(context, CallPopupActivity.class);
                                 serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
                                 serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, shopName);
                                 serviceIntent.putExtra(CallingService.EXTRA_COUNT, count);
 //                context.startService(serviceIntent);
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    context.startForegroundService(serviceIntent);
-                                } else {
-                                    context.startService(serviceIntent);
-                                }
+                                context.startActivity(serviceIntent);
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                                    context.startForegroundService(serviceIntent);
+//                                } else {
+//                                    context.startService(serviceIntent);
+//                                }
 
                             }
                         } catch (JSONException e) {
