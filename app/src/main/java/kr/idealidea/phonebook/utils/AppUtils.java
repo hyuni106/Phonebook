@@ -68,4 +68,24 @@ public class AppUtils {
 
         return trans_date.getTime();
     }
+
+
+    public static String timeToString(Long time) {
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = simpleFormat.format(new Date(time));
+        return date;
+    }
+
+    static public String getStringTime(int time) {
+        String res = null;
+        int hour = 0, min = 0, sec = 0;
+        if (time > 0) {
+            hour = time / 3600;
+            time %= 3600;
+            min = time / 60;
+            sec = time % 60;
+        }
+        res = String.format("%02d:%02d:%02d", hour, min, sec);
+        return res;
+    }
 }

@@ -9,6 +9,8 @@ public class ContextUtils {
     private final static String USER_TOKEN = "USER_TOKEN";
     private final static String START_APP = "START_APP";
 
+    private final static String LAST_SAVE_DATE = "LAST_SAVE_DATE";
+
     public static void setUserToken(Context context, String token) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
 
@@ -29,5 +31,17 @@ public class ContextUtils {
     public static String isFirstStart(Context context) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return pref.getString(START_APP, "");
+    }
+
+
+    public static void setLastSaveDate(Context context, Long milliTime) {
+        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+
+        pref.edit().putLong(LAST_SAVE_DATE, milliTime).commit();
+    }
+
+    public static Long getLastSaveDate(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        return pref.getLong(LAST_SAVE_DATE, 0);
     }
 }

@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,9 @@ import kr.idealidea.phonebook.data.User;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
 import kr.idealidea.phonebook.utils.GlobalData;
+
+import static kr.idealidea.phonebook.utils.AppUtils.getStringTime;
+import static kr.idealidea.phonebook.utils.AppUtils.timeToString;
 
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
@@ -112,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         ConnectServer.putRequestMessage(this, messages, new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
+                ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
                 ContextUtils.setFirstStart(LoginActivity.this);
             }
         });
@@ -293,22 +298,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private String timeToString(Long time) {
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = simpleFormat.format(new Date(time));
-        return date;
-    }
-
-    static public String getStringTime(int time) {
-        String res = null;
-        int hour = 0, min = 0, sec = 0;
-        if (time > 0) {
-            hour = time / 3600;
-            time %= 3600;
-            min = time / 60;
-            sec = time % 60;
-        }
-        res = String.format("%02d:%02d:%02d", hour, min, sec);
-        return res;
-    }
 }
