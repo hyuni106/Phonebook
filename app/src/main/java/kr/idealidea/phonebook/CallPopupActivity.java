@@ -147,7 +147,7 @@ public class CallPopupActivity extends AppCompatActivity {
             }
         }
         putContact();
-        contactsCursor.close();
+//        contactsCursor.close();
     }
 
     /**
@@ -176,7 +176,7 @@ public class CallPopupActivity extends AppCompatActivity {
                 System.out.println(e.toString());
             }
         }
-        phoneCursor.close();
+//        phoneCursor.close();
 
         return reuslt;
     }
