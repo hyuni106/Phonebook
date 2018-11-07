@@ -1,6 +1,7 @@
 package kr.idealidea.phonebook.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 import kr.idealidea.phonebook.R;
+import kr.idealidea.phonebook.SearchActivity;
 
 public class RecentAdapter extends BaseAdapter {
 
@@ -48,9 +50,18 @@ public class RecentAdapter extends BaseAdapter {
         View row = inf.inflate(R.layout.recent_list_item, viewGroup, false);
         TextView txtvRecentPhoneNum = row.findViewById(R.id.txtvRecentPhoneNum);
 
-        String number = mList.get(position);
+        final String number = mList.get(position);
 
         txtvRecentPhoneNum.setText(number);
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, SearchActivity.class);
+                intent.putExtra("phone", number);
+                mContext.startActivity(intent);
+            }
+        });
 
         return row;
     }
