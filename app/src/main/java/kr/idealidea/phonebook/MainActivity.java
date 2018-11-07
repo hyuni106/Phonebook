@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity {
     EditText editMainSearch;
     ListView listMainRecentNum;
     LinearLayout layoutMainNoItem;
+    LinearLayout layoutMainSearch;
 
     List<String> recentList = new ArrayList<>();
     RecentAdapter mAdapter;
@@ -110,6 +111,12 @@ public class MainActivity extends BaseActivity {
         txtvMainPeriod.setText(String.format("서비스 이용 만료일은 %s 입니다.", GlobalData.loginUser.getUserPeriod().getEnd()));
         listMainRecentNum.setEmptyView(layoutMainNoItem);
 
+        if (GlobalData.loginUser.isAdmin()) {
+            layoutMainSearch.setVisibility(View.VISIBLE);
+        } else {
+            layoutMainSearch.setVisibility(View.GONE);
+        }
+
         recentList.clear();
         recentList = AppUtils.getRecentNumList(mContext);
         mAdapter = new RecentAdapter(mContext, recentList);
@@ -133,5 +140,6 @@ public class MainActivity extends BaseActivity {
         editMainSearch = findViewById(R.id.editMainSearch);
         listMainRecentNum = findViewById(R.id.listMainRecentNum);
         layoutMainNoItem = findViewById(R.id.layoutMainNoItem);
+        layoutMainSearch = findViewById(R.id.layoutMainSearch);
     }
 }
