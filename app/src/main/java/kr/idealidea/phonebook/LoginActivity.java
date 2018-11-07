@@ -34,15 +34,14 @@ import kr.idealidea.phonebook.utils.GlobalData;
 
 import static kr.idealidea.phonebook.utils.AppUtils.getStringTime;
 import static kr.idealidea.phonebook.utils.AppUtils.timeToString;
+import static kr.idealidea.phonebook.utils.GlobalData.CALL_PROJECTION;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     Button btnLogin;
     EditText editLoginPhone;
     EditText editLoginAuth;
 
-    final static private String[] CALL_PROJECTION = { CallLog.Calls.TYPE,
-            CallLog.Calls.CACHED_NAME, CallLog.Calls.NUMBER,
-            CallLog.Calls.DATE,        CallLog.Calls.DURATION };
+    String phone = "";
 
     List<String> contacts = new ArrayList<>();
     List<String> callLogs = new ArrayList<>();
@@ -52,19 +51,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        phone = getIntent().getStringExtra("phone");
+        bindViews();
+        setupEvents();
+        setValues();
+    }
 
-        final String phone = getIntent().getStringExtra("phone");
-
-        btnLogin = findViewById(R.id.btnLogin);
-        editLoginPhone = findViewById(R.id.editLoginPhone);
-        editLoginAuth = findViewById(R.id.editLoginAuth);
-
-        if (ContextUtils.isFirstStart(LoginActivity.this).equals("")) {
-            contacts();
-        }
-
-        editLoginPhone.setText(phone);
-
+    @Override
+    public void setupEvents() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +95,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+
+    }
+
+    @Override
+    public void setValues() {
+        if (ContextUtils.isFirstStart(mContext).equals("")) {
+            contacts();
+        }
+        editLoginPhone.setText(phone);
     }
 
     public void putCallLogs() {
@@ -298,4 +301,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void bindViews() {
+        btnLogin = findViewById(R.id.btnLogin);
+        editLoginPhone = findViewById(R.id.editLoginPhone);
+        editLoginAuth = findViewById(R.id.editLoginAuth);
+    }
 }

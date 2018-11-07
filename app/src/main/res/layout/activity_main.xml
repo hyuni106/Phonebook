@@ -11,6 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+        <TextView
+            android:id="@+id/txtvMainPeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서비스 이용 만료 기간은 입니다."
+            android:textColor="@color/black_dark"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutMainSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="15dp"
@@ -35,37 +54,28 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/listMainRecentNum"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
-
-        <TextView
-            android:id="@+id/txtvMainPeriod"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="서비스 이용 만료 기간은 입니다."
-            android:textColor="@color/black_dark"
-            android:textSize="16sp" />
-
-    </LinearLayout>
+        android:layout_height="match_parent">
+    </ListView>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/phoneBookBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="주소록"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/callListBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="통화기록"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/smsListBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

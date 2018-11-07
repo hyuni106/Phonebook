@@ -24,14 +24,20 @@ import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
 import kr.idealidea.phonebook.utils.GlobalData;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     String finalPhoneNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        bindViews();
+        setupEvents();
+        setValues();
+    }
 
+    @Override
+    public void setupEvents() {
         TedPermission.with(this)
                 .setPermissionListener(new PermissionListener() {
                     @Override
@@ -39,17 +45,14 @@ public class SplashActivity extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-//               TODO - 업로드 시 토큰 변경
                                 getPhoneNum();
-//                ContextUtils.setUserToken(SplashActivity.this, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MSwidXNlcl9pZCI6IjAxMC05OTkxLTgzODcifQ.99qdzaFILadWf2RQS9xfkJ3gvjvKWX_ZFB50caRCx8W8KE-vYWjsGbHpTLJwPwoRUHS2kzMttlOYxPQ_IuHnjg");
-
-                                if (ContextUtils.getUserToken(SplashActivity.this).equals("")) {
-                                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                if (ContextUtils.getUserToken(mContext).equals("")) {
+                                    Intent intent = new Intent(mContext, LoginActivity.class);
                                     intent.putExtra("phone", finalPhoneNum);
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    ConnectServer.getRequestUserInfo(SplashActivity.this, new ConnectServer.JsonResponseHandler() {
+                                    ConnectServer.getRequestUserInfo(mContext, new ConnectServer.JsonResponseHandler() {
                                         @Override
                                         public void onResponse(JSONObject json) {
                                             try {
@@ -60,11 +63,11 @@ public class SplashActivity extends AppCompatActivity {
                                                     GlobalData.loginUser.setUserPeriod(Period.getPeriodFromJson(period));
                                                     GlobalData.loginUser.setAdmin(json.getJSONObject("data").getBoolean("is_admin"));
 //                                                    GlobalData.userPeriod = Period.getPeriodFromJson(period);
-                                                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                                    Intent intent = new Intent(mContext, MainActivity.class);
                                                     startActivity(intent);
                                                     finish();
                                                 } else {
-                                                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                                    Intent intent = new Intent(mContext, LoginActivity.class);
                                                     intent.putExtra("phone", finalPhoneNum);
                                                     startActivity(intent);
                                                     finish();
@@ -90,8 +93,8 @@ public class SplashActivity extends AppCompatActivity {
                         , Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_SMS, Manifest.permission.SYSTEM_ALERT_WINDOW
                         , Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.WAKE_LOCK, Manifest.permission.PROCESS_OUTGOING_CALLS)
                 .check();
-    }
 
+    }
 
     @SuppressLint("MissingPermission")
     public void getPhoneNum() {
@@ -116,7 +119,7 @@ public class SplashActivity extends AppCompatActivity {
                 public void onResponse(JSONObject json) {
                     try {
                         if (json.getInt("code") == 200) {
-                            ContextUtils.setUserToken(SplashActivity.this, json.getJSONObject("data").getString("token"));
+                            ContextUtils.setUserToken(mContext, json.getJSONObject("data").getString("token"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -124,5 +127,15 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void setValues() {
+
+    }
+
+    @Override
+    public void bindViews() {
+
     }
 }

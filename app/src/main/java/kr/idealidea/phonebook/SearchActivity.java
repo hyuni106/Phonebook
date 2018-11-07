@@ -24,7 +24,7 @@ import kr.idealidea.phonebook.data.Contact;
 import kr.idealidea.phonebook.data.Message;
 import kr.idealidea.phonebook.utils.ConnectServer;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
     String search = "";
 
     TextView txtvSearchPhone;
@@ -51,22 +51,14 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
         search = getIntent().getStringExtra("phone").replaceAll("-", "");
+        bindViews();
+        setupEvents();
+        setValues();
+    }
 
-        txtvSearchPhone = findViewById(R.id.txtvSearchPhone);
-        frameSearchTab1 = findViewById(R.id.frameSearchTab1);
-        frameSearchTab2 = findViewById(R.id.frameSearchTab2);
-        frameSearchTab3 = findViewById(R.id.frameSearchTab3);
-        lineSearchTab1 = findViewById(R.id.lineSearchTab1);
-        lineSearchTab2 = findViewById(R.id.lineSearchTab2);
-        lineSearchTab3 = findViewById(R.id.lineSearchTab3);
-        layoutSearchList = findViewById(R.id.layoutSearchList);
-        txtvSearchShopName = findViewById(R.id.txtvSearchShopName);
-        txtvSearchCount = findViewById(R.id.txtvSearchCount);
-
-        txtvSearchPhone.setText(search);
-
+    @Override
+    public void setupEvents() {
         frameSearchTab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +110,11 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void setValues() {
+        txtvSearchPhone.setText(search);
         getSearchContact();
     }
 
@@ -270,4 +267,17 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void bindViews() {
+        txtvSearchPhone = findViewById(R.id.txtvSearchPhone);
+        frameSearchTab1 = findViewById(R.id.frameSearchTab1);
+        frameSearchTab2 = findViewById(R.id.frameSearchTab2);
+        frameSearchTab3 = findViewById(R.id.frameSearchTab3);
+        lineSearchTab1 = findViewById(R.id.lineSearchTab1);
+        lineSearchTab2 = findViewById(R.id.lineSearchTab2);
+        lineSearchTab3 = findViewById(R.id.lineSearchTab3);
+        layoutSearchList = findViewById(R.id.layoutSearchList);
+        txtvSearchShopName = findViewById(R.id.txtvSearchShopName);
+        txtvSearchCount = findViewById(R.id.txtvSearchCount);
+    }
 }

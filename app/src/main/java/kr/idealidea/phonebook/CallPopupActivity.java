@@ -20,11 +20,12 @@ import java.util.List;
 
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
+import kr.idealidea.phonebook.utils.GlobalData;
 
 import static kr.idealidea.phonebook.utils.AppUtils.getStringTime;
 import static kr.idealidea.phonebook.utils.AppUtils.timeToString;
 
-public class CallPopupActivity extends AppCompatActivity {
+public class CallPopupActivity extends BaseActivity {
 
     public static final String EXTRA_CALL_NUMBER = "call_number";
     public static final String EXTRA_SHOP_NAME = "shop_name";
@@ -43,11 +44,6 @@ public class CallPopupActivity extends AppCompatActivity {
     Cursor messageCursor;
     Cursor curCallLog;
 
-
-    final static private String[] CALL_PROJECTION = { CallLog.Calls.TYPE,
-            CallLog.Calls.CACHED_NAME, CallLog.Calls.NUMBER,
-            CallLog.Calls.DATE,        CallLog.Calls.DURATION };
-
     List<String> contacts = new ArrayList<>();
     List<String> callLogs = new ArrayList<>();
     List<String> messages = new ArrayList<>();
@@ -56,15 +52,18 @@ public class CallPopupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_popup);
-
         call_number = getIntent().getStringExtra(EXTRA_CALL_NUMBER);
         shopName = getIntent().getStringExtra(EXTRA_SHOP_NAME);
         count = getIntent().getIntExtra(EXTRA_COUNT, 0);
+    }
 
-        txtvPopupPhone = findViewById(R.id.txtvPopupPhone);
-        txtvPopupShopName = findViewById(R.id.txtvPopupShopName);
-        txtvPopupCount = findViewById(R.id.txtvPopupCount);
+    @Override
+    public void setupEvents() {
 
+    }
+
+    @Override
+    public void setValues() {
         txtvPopupPhone.setText(call_number);
         txtvPopupShopName.setText(shopName);
         txtvPopupCount.setText(String.format("%d 건", count));
@@ -72,7 +71,7 @@ public class CallPopupActivity extends AppCompatActivity {
         contacts();
         callLog();
         readSMSMessage();
-        ContextUtils.setLastSaveDate(CallPopupActivity.this, Calendar.getInstance().getTimeInMillis());
+        ContextUtils.setLastSaveDate(mContext, Calendar.getInstance().getTimeInMillis());
     }
 
     public void putCallLogs() {
@@ -215,7 +214,7 @@ public class CallPopupActivity extends AppCompatActivity {
 
     private Cursor getCallHistoryCursor(Context context) {
         Cursor cursor = context.getContentResolver().query(
-                CallLog.Calls.CONTENT_URI, CALL_PROJECTION,
+                CallLog.Calls.CONTENT_URI, GlobalData.CALL_PROJECTION,
                 null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
         return cursor;
     }
@@ -294,4 +293,10 @@ public class CallPopupActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void bindViews() {
+        txtvPopupPhone = findViewById(R.id.txtvPopupPhone);
+        txtvPopupShopName = findViewById(R.id.txtvPopupShopName);
+        txtvPopupCount = findViewById(R.id.txtvPopupCount);
+    }
 }

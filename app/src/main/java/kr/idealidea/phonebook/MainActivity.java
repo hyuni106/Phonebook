@@ -35,33 +35,29 @@ import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
 import kr.idealidea.phonebook.utils.GlobalData;
 
-public class MainActivity extends AppCompatActivity {
-    Context mContext;
-
+public class MainActivity extends BaseActivity {
     TextView txtvMainPeriod;
+    Button phoneBookBtn;
+    Button callListBtn;
+    Button smsListBtn;
+    TextView txtvMainSearch;
+    EditText editMainSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bindViews();
+        setupEvents();
+        setValues();
+    }
 
-        mContext = this;
-
-        Button phoneBookBtn = findViewById(R.id.phoneBookBtn);
-        Button callListBtn = findViewById(R.id.callListBtn);
-        Button smsListBtn = findViewById(R.id.smsListBtn);
-        txtvMainPeriod = findViewById(R.id.txtvMainPeriod);
-
-        txtvMainPeriod.setText(String.format("서비스 이용 만료일은 %s 입니다.", GlobalData.loginUser.getUserPeriod().getEnd()));
-
-        TextView txtvMainSearch = findViewById(R.id.txtvMainSearch);
-        final EditText editMainSearch = findViewById(R.id.editMainSearch);
-
+    @Override
+    public void setupEvents() {
         phoneBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                                contacts();
-                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                Intent intent = new Intent(mContext, ListViewActivity.class);
                 intent.putExtra("intent", "book");
                 startActivity(intent);
             }
@@ -70,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
         callListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                                callLog();
-                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                Intent intent = new Intent(mContext, ListViewActivity.class);
                 intent.putExtra("intent", "log");
                 startActivity(intent);
             }
@@ -80,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
         smsListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                                readSMSMessage();
-                Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+                Intent intent = new Intent(mContext, ListViewActivity.class);
                 intent.putExtra("intent", "message");
                 startActivity(intent);
             }
@@ -96,11 +90,25 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Intent intent = new Intent(mContext, SearchActivity.class);
                 intent.putExtra("phone", search);
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    public void setValues() {
+        txtvMainPeriod.setText(String.format("서비스 이용 만료일은 %s 입니다.", GlobalData.loginUser.getUserPeriod().getEnd()));
+    }
+
+    @Override
+    public void bindViews() {
+        phoneBookBtn = findViewById(R.id.phoneBookBtn);
+        callListBtn = findViewById(R.id.callListBtn);
+        smsListBtn = findViewById(R.id.smsListBtn);
+        txtvMainPeriod = findViewById(R.id.txtvMainPeriod);
+        txtvMainSearch = findViewById(R.id.txtvMainSearch);
+        editMainSearch = findViewById(R.id.editMainSearch);
     }
 }
