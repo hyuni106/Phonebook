@@ -97,4 +97,9 @@ public class RecentAdapter extends BaseAdapter {
 
         return row;
     }
+
+    public void updateList(List<String> list) {
+        this.mList = list;
+        notifyDataSetChanged();
+    }
 }

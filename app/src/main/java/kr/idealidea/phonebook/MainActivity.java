@@ -117,6 +117,13 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        Log.d("onResume", "onResume");
+        mAdapter.updateList(AppUtils.getRecentNumList(mContext));
+        super.onResume();
+    }
+
+    @Override
     public void bindViews() {
         phoneBookBtn = findViewById(R.id.phoneBookBtn);
         callListBtn = findViewById(R.id.callListBtn);
