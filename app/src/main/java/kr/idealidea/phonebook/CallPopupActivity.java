@@ -204,9 +204,9 @@ public class CallPopupActivity extends BaseActivity {
 //            TODO - 수신 = 1, 발신 = 2 서버 전송
             if (timestamp > ContextUtils.getLastSaveDate(CallPopupActivity.this)) {
                 if (Integer.parseInt(type) == 1) {
-                    type = "수신";
+                    type = "IN";
                 } else if (Integer.parseInt(type) == 2) {
-                    type = "발신";
+                    type = "OUT";
                 }
 
                 String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
