@@ -38,6 +38,7 @@ public class CallPopupActivity extends BaseActivity {
 
     String call_number = "";
     String shopName = "";
+    Boolean isCall = true;
     int count = 0;
 
     Cursor contactsCursor;
@@ -56,6 +57,7 @@ public class CallPopupActivity extends BaseActivity {
         call_number = getIntent().getStringExtra(EXTRA_CALL_NUMBER);
         shopName = getIntent().getStringExtra(EXTRA_SHOP_NAME);
         count = getIntent().getIntExtra(EXTRA_COUNT, 0);
+        isCall = getIntent().getBooleanExtra("isCall", true);
         bindViews();
         setupEvents();
         setValues();
@@ -73,10 +75,12 @@ public class CallPopupActivity extends BaseActivity {
         txtvPopupCount.setText(String.format("%d 건", count));
         AppUtils.setRecentNumArrayString(mContext, call_number);
 
-        contacts();
-        callLog();
-        readSMSMessage();
-        ContextUtils.setLastSaveDate(mContext, Calendar.getInstance().getTimeInMillis());
+        if (isCall) {
+            contacts();
+            callLog();
+            readSMSMessage();
+            ContextUtils.setLastSaveDate(mContext, Calendar.getInstance().getTimeInMillis());
+        }
     }
 
     public void putCallLogs() {

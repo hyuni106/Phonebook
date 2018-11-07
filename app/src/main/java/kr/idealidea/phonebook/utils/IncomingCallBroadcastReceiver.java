@@ -67,6 +67,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
                                 serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
                                 serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, shopName);
                                 serviceIntent.putExtra(CallingService.EXTRA_COUNT, count);
+                                serviceIntent.putExtra("isCall", true);
 //                context.startService(serviceIntent);
                                 context.startActivity(serviceIntent);
 //                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

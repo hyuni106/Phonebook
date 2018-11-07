@@ -99,13 +99,21 @@ public class AppUtils {
 
         if (numString.contains("/")) {
             if (numString.contains(num)) {
-                numString = numString.replace(num + "/", "");
+                if (numString.contains(num + "/")) {
+                    numString = numString.replace(num + "/", "");
+                } else {
+                    numString = numString.replace("/" + num, "");
+                }
             }
             numString = numString + "/" + num;
         } else if (numString.equals("")) {
             numString = num;
         } else {
             numString = numString + "/" + num;
+        }
+
+        if (numString.contains("//")) {
+            numString = numString.replace("//", "/");
         }
 
         ContextUtils.setRecentSearchNum(context, numString);
@@ -115,6 +123,9 @@ public class AppUtils {
         List<String> numList = new ArrayList<>();
 
         String numString = ContextUtils.getRecentSearchNum(context);
+        if (numString.contains("//")) {
+            numString = numString.replace("//", "/");
+        }
         Log.d("numString", numString);
 
         if (numString.contains("/")) {
