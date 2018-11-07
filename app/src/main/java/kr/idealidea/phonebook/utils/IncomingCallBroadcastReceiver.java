@@ -85,10 +85,10 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
             }
 
             if ((state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK))) {
-                Toast.makeText(context, "Call Received State", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Call Received State", Toast.LENGTH_SHORT).show();
             }
             if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
-                Toast.makeText(context, "Call Idle State", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Call Idle State", Toast.LENGTH_SHORT).show();
 //                CallRecevierActivity.act.finish();
             }
         } catch (Exception e) {

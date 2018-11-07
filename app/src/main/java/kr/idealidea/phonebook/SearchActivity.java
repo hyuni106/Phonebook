@@ -22,6 +22,7 @@ import java.util.Locale;
 import kr.idealidea.phonebook.data.CallLog;
 import kr.idealidea.phonebook.data.Contact;
 import kr.idealidea.phonebook.data.Message;
+import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
 
 public class SearchActivity extends BaseActivity {
@@ -115,6 +116,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void setValues() {
         txtvSearchPhone.setText(search);
+        AppUtils.setRecentNumArrayString(mContext, search);
         getSearchContact();
     }
 

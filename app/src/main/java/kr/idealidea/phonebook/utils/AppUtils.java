@@ -1,9 +1,14 @@
 package kr.idealidea.phonebook.utils;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AppUtils {
@@ -87,5 +92,40 @@ public class AppUtils {
         }
         res = String.format("%02d:%02d:%02d", hour, min, sec);
         return res;
+    }
+
+    public static void setRecentNumArrayString(Context context, String num) {
+        String numString = ContextUtils.getRecentSearchNum(context);
+
+        if (numString.contains("/")) {
+            if (numString.contains(num)) {
+                numString = numString.replace(num + "/", "");
+            }
+            numString = numString + "/" + num;
+        } else if (numString.equals("")) {
+            numString = num;
+        } else {
+            numString = numString + "/" + num;
+        }
+
+        ContextUtils.setRecentSearchNum(context, numString);
+    }
+
+    public static List<String> getRecentNumList(Context context) {
+        List<String> numList = new ArrayList<>();
+
+        String numString = ContextUtils.getRecentSearchNum(context);
+        Log.d("numString", numString);
+
+        if (numString.contains("/")) {
+            String[] numArray = numString.split("/");
+            for (int i = numArray.length - 1; i >= 0; i--) {
+                numList.add(numArray[i]);
+            }
+        } else {
+            numList.add(numString);
+        }
+
+        return numList;
     }
 }

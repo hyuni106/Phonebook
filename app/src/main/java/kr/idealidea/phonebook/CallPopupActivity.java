@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
 import kr.idealidea.phonebook.utils.GlobalData;
@@ -55,6 +56,9 @@ public class CallPopupActivity extends BaseActivity {
         call_number = getIntent().getStringExtra(EXTRA_CALL_NUMBER);
         shopName = getIntent().getStringExtra(EXTRA_SHOP_NAME);
         count = getIntent().getIntExtra(EXTRA_COUNT, 0);
+        bindViews();
+        setupEvents();
+        setValues();
     }
 
     @Override
@@ -67,6 +71,7 @@ public class CallPopupActivity extends BaseActivity {
         txtvPopupPhone.setText(call_number);
         txtvPopupShopName.setText(shopName);
         txtvPopupCount.setText(String.format("%d 건", count));
+        AppUtils.setRecentNumArrayString(mContext, call_number);
 
         contacts();
         callLog();

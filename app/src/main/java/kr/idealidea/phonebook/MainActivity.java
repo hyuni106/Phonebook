@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,18 +32,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import kr.idealidea.phonebook.adapter.RecentAdapter;
 import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
 import kr.idealidea.phonebook.utils.GlobalData;
 
 public class MainActivity extends BaseActivity {
-    TextView txtvMainPeriod;
     Button phoneBookBtn;
     Button callListBtn;
     Button smsListBtn;
+    TextView txtvMainPeriod;
     TextView txtvMainSearch;
     EditText editMainSearch;
+    ListView listMainRecentNum;
+    LinearLayout layoutMainNoItem;
+
+    List<String> recentList = new ArrayList<>();
+    RecentAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +108,12 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setValues() {
         txtvMainPeriod.setText(String.format("서비스 이용 만료일은 %s 입니다.", GlobalData.loginUser.getUserPeriod().getEnd()));
+        listMainRecentNum.setEmptyView(layoutMainNoItem);
+
+        recentList.clear();
+        recentList = AppUtils.getRecentNumList(mContext);
+        mAdapter = new RecentAdapter(mContext, recentList);
+        listMainRecentNum.setAdapter(mAdapter);
     }
 
     @Override
@@ -110,5 +124,7 @@ public class MainActivity extends BaseActivity {
         txtvMainPeriod = findViewById(R.id.txtvMainPeriod);
         txtvMainSearch = findViewById(R.id.txtvMainSearch);
         editMainSearch = findViewById(R.id.editMainSearch);
+        listMainRecentNum = findViewById(R.id.listMainRecentNum);
+        layoutMainNoItem = findViewById(R.id.layoutMainNoItem);
     }
 }

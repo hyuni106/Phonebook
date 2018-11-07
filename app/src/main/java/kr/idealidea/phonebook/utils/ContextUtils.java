@@ -10,6 +10,7 @@ public class ContextUtils {
     private final static String START_APP = "START_APP";
 
     private final static String LAST_SAVE_DATE = "LAST_SAVE_DATE";
+    private final static String RECENT_SEARCH_NUM = "RECENT_SEARCH_NUM";
 
     public static void setUserToken(Context context, String token) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
@@ -43,5 +44,16 @@ public class ContextUtils {
     public static Long getLastSaveDate(Context context) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return pref.getLong(LAST_SAVE_DATE, 0);
+    }
+
+    public static void setRecentSearchNum(Context context, String numArray) {
+        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+
+        pref.edit().putString(RECENT_SEARCH_NUM, numArray).commit();
+    }
+
+    public static String getRecentSearchNum(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        return pref.getString(RECENT_SEARCH_NUM, "");
     }
 }
