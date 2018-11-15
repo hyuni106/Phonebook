@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,17 +20,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="누가 저장했는지"
-                android:textColor="@color/black_dark" />
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="#4B8477" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_marginLeft="5dp"/>
 
             <TextView
                 android:id="@+id/txtvTimeStamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="13sp"
                 android:text="날짜"
                 android:textColor="@color/black_dark" />
 
@@ -47,12 +50,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="메시지"
-                android:textSize="12sp"
-                android:textColor="@color/black_dark" />
+                android:textSize="13sp"
+                android:textColor="#808080" />
 
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:background="#dcdcdc"/>
 
 </LinearLayout>

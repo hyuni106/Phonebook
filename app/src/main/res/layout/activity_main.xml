@@ -36,19 +36,24 @@
         android:paddingRight="15dp">
 
         <EditText
+            android:padding="10dp"
             android:id="@+id/editMainSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:inputType="phone"
+            android:background="@drawable/gray_boader_shadow_box"
             android:hint="검색할 번호를 입력해주세요('-' 제외)"
             android:textSize="16sp" />
 
         <TextView
+            android:padding="10dp"
             android:id="@+id/txtvMainSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="검색"
+            android:background="@drawable/gray_boader_shadow_box"
             android:textSize="16sp"
             android:textColor="@color/black_dark" />
 

@@ -11,16 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp"
-        android:gravity="center">
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/txtvPopupPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="010-1234-5678"
+            android:textStyle="bold"
             android:textColor="@color/black_dark"
-            android:textSize="20sp"/>
+            android:textSize="25sp"/>
 
         <TextView
             android:id="@+id/txtvPopupShopName"
@@ -29,16 +29,33 @@
             android:text="저장된 내역"
             android:textColor="@color/black_dark"
             android:layout_marginTop="10dp"
-            android:textSize="16sp"/>
+            android:textSize="20sp"/>
 
-        <TextView
-            android:id="@+id/txtvPopupCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="총 00명 저장"
-            android:textColor="@color/black_dark"
+        <LinearLayout
             android:layout_marginTop="10dp"
-            android:textSize="16sp"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtvPopupCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00명"
+                android:textStyle="bold"
+                android:textColor="#dd0000"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 저장"
+                android:textStyle="bold"
+                android:textColor="#dd0000"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

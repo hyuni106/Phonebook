@@ -37,17 +37,20 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="인증번호"
-            android:textColor="@color/black_dark" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="인증번호"-->
+            <!--android:textColor="@color/black_dark" />-->
 
         <EditText
             android:id="@+id/editLoginAuth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="번호를 입력해주세요"
+            android:padding="15dp"
+            android:inputType="phone"
+            android:hint="인증 번호를 입력해주세요"
+            android:background="@drawable/gray_boader_shadow_box"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -57,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/round_btn"
         android:text="로그인"/>
 
 </LinearLayout>

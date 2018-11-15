@@ -8,13 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/txtvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_dark"
+            android:textColor="#4B8477"
+            android:textStyle="bold"
+            android:textSize="15dp"
             android:text="저장된 이름" />
 
         <LinearLayout
@@ -27,23 +29,36 @@
                 android:id="@+id/txtvPhoneNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black_dark"
+                android:textColor="#808080"
+                android:textSize="13dp"
+                android:textStyle="bold"
                 android:text="누가 저장했는지" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <TextView
+                android:paddingLeft="10dp"
                 android:id="@+id/txtvTimeStamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_dark"
+                android:textSize="13dp"
                 android:text="날짜" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:background="#dcdcdc"/>
+
+
 
 </LinearLayout>

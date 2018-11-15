@@ -3,13 +3,62 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp">
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/txtvRecentPhoneNum"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black_dark"
-        android:text="번호"/>
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtvRecentPhoneNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#4B8477"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:text="010-1234-5678"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_dark"
+                android:textStyle="bold"
+                android:textSize="13dp"
+                android:text="악성스팸으로신고하기전에전화그만해"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#808080"
+                android:textSize="13dp"
+                android:text="[ShopName] 외 24명 저장"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/phone"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>

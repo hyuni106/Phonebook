@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-        txtvMainPeriod.setText(String.format("서비스 이용 만료일은 %s 입니다.", GlobalData.loginUser.getUserPeriod().getEnd()));
+        txtvMainPeriod.setText(String.format("만료일 : %s ", GlobalData.loginUser.getUserPeriod().getEnd()));
         listMainRecentNum.setEmptyView(layoutMainNoItem);
 
         if (GlobalData.loginUser.isAdmin()) {

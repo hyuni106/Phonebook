@@ -162,7 +162,7 @@ public class SearchActivity extends BaseActivity {
             TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
             TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
 
-            txtvName.setText("저장명 : " + contact.getName());
+            txtvName.setText(contact.getName());
             txtvPhoneNum.setText(contact.getShop_name());
             txtvTimeStamp.setText(myDateFormat.format(contact.getCreated_at().getTime()));
 
