@@ -76,6 +76,13 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 //                                    context.startService(serviceIntent);
 //                                }
 
+                            } else if (json.getInt("code") == 400) {
+                                Intent serviceIntent = new Intent(context, CallPopupActivity.class);
+                                serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
+                                serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, "저장된 내역 없음");
+                                serviceIntent.putExtra(CallingService.EXTRA_COUNT, 0);
+                                serviceIntent.putExtra("isCall", true);
+                                context.startActivity(serviceIntent);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

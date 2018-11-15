@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -35,6 +37,7 @@ public class CallPopupActivity extends BaseActivity {
     TextView txtvPopupPhone;
     TextView txtvPopupShopName;
     TextView txtvPopupCount;
+    LinearLayout layoutPopupCount;
 
     String call_number = "";
     String shopName = "";
@@ -72,7 +75,12 @@ public class CallPopupActivity extends BaseActivity {
     public void setValues() {
         txtvPopupPhone.setText(call_number);
         txtvPopupShopName.setText(shopName);
-        txtvPopupCount.setText(String.format("%d 건", count));
+        if (count > 0) {
+            layoutPopupCount.setVisibility(View.VISIBLE);
+            txtvPopupCount.setText(String.format("%d 건", count));
+        } else {
+            layoutPopupCount.setVisibility(View.GONE);
+        }
         AppUtils.setRecentNumArrayString(mContext, call_number);
 
         if (isCall) {
@@ -304,6 +312,7 @@ public class CallPopupActivity extends BaseActivity {
 
     @Override
     public void bindViews() {
+        layoutPopupCount = findViewById(R.id.layoutPopupCount);
         txtvPopupPhone = findViewById(R.id.txtvPopupPhone);
         txtvPopupShopName = findViewById(R.id.txtvPopupShopName);
         txtvPopupCount = findViewById(R.id.txtvPopupCount);
