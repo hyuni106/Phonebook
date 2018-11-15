@@ -65,33 +65,41 @@ public class RecentAdapter extends BaseAdapter {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (GlobalData.loginUser.isAdmin()) {
-                    Intent intent = new Intent(mContext, SearchActivity.class);
-                    intent.putExtra("phone", number);
-                    mContext.startActivity(intent);
-                } else {
-                    ConnectServer.postRequestCallNumInfo(mContext, number.replaceAll("-", ""), new ConnectServer.JsonResponseHandler() {
-                        @Override
-                        public void onResponse(JSONObject json) {
-                            try {
-                                if (json.getInt("code") == 200) {
-                                    String shopName = json.getJSONObject("data").getString("name");
-                                    int count = json.getJSONObject("data").getInt("total");
+                Intent intent = new Intent(mContext, SearchActivity.class);
+                intent.putExtra("phone", number);
+                mContext.startActivity(intent);
 
-                                    Intent serviceIntent = new Intent(mContext, CallPopupActivity.class);
-                                    serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, number);
-                                    serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, shopName);
-                                    serviceIntent.putExtra(CallingService.EXTRA_COUNT, count);
-                                    serviceIntent.putExtra("isCall", false);
-                                    mContext.startActivity(serviceIntent);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-                }
+//                ConnectServer.postRequestCallNumInfo(mContext, number.replaceAll("-", ""), new ConnectServer.JsonResponseHandler() {
+//                    @Override
+//                    public void onResponse(JSONObject json) {
+//                        try {
+//                            if (json.getInt("code") == 200) {
+//                                Intent intent = new Intent(mContext, SearchActivity.class);
+//                                intent.putExtra("phone", number);
+//                                mContext.startActivity(intent);
+//
+////                                String shopName = json.getJSONObject("data").getString("name");
+////                                int count = json.getJSONObject("data").getInt("total");
+////
+////                                Intent serviceIntent = new Intent(mContext, CallPopupActivity.class);
+////                                serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, number);
+////                                serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, shopName);
+////                                serviceIntent.putExtra(CallingService.EXTRA_COUNT, count);
+////                                serviceIntent.putExtra("isCall", false);
+////                                mContext.startActivity(serviceIntent);
+//                            } else if (json.getInt("code") == 400) {
+//                                Intent serviceIntent = new Intent(mContext, CallPopupActivity.class);
+//                                serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, number);
+//                                serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, "저장된 내역 없음");
+//                                serviceIntent.putExtra(CallingService.EXTRA_COUNT, 0);
+//                                serviceIntent.putExtra("isCall", true);
+//                                mContext.startActivity(serviceIntent);
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
             }
         });
 

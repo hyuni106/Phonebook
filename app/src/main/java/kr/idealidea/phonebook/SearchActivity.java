@@ -24,6 +24,7 @@ import kr.idealidea.phonebook.data.Contact;
 import kr.idealidea.phonebook.data.Message;
 import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
+import kr.idealidea.phonebook.utils.GlobalData;
 
 public class SearchActivity extends BaseActivity {
     String search = "";
@@ -115,6 +116,14 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+        if (GlobalData.loginUser.isAdmin()) {
+            frameSearchTab2.setVisibility(View.VISIBLE);
+            frameSearchTab3.setVisibility(View.VISIBLE);
+        } else {
+            frameSearchTab2.setVisibility(View.GONE);
+            frameSearchTab3.setVisibility(View.GONE);
+        }
+
         txtvSearchPhone.setText(search);
         AppUtils.setRecentNumArrayString(mContext, search);
         getSearchContact();
@@ -139,7 +148,7 @@ public class SearchActivity extends BaseActivity {
                             if (contactList.size() > 0) {
                                 txtvSearchShopName.setText(contactList.get(contactList.size() - 1).getName());
                             } else {
-                                txtvSearchShopName.setText("");
+                                txtvSearchShopName.setText("저장 내역 없음");
                             }
                             txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
                             drawCallList();
