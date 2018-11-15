@@ -21,6 +21,7 @@ import java.util.Locale;
 import kr.idealidea.phonebook.CallPopupActivity;
 import kr.idealidea.phonebook.R;
 import kr.idealidea.phonebook.SearchActivity;
+import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.CallingService;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
@@ -60,7 +61,7 @@ public class RecentAdapter extends BaseAdapter {
 
         final String number = mList.get(position);
 
-        txtvRecentPhoneNum.setText(number);
+        txtvRecentPhoneNum.setText(AppUtils.makePhoneNumber(number));
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -124,7 +124,7 @@ public class SearchActivity extends BaseActivity {
             frameSearchTab3.setVisibility(View.GONE);
         }
 
-        txtvSearchPhone.setText(search);
+        txtvSearchPhone.setText(AppUtils.makePhoneNumber(search));
         AppUtils.setRecentNumArrayString(mContext, search);
         getSearchContact();
     }
