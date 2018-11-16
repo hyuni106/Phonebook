@@ -3,6 +3,12 @@ package kr.idealidea.phonebook.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
+
+import kr.idealidea.phonebook.data.Recent;
 
 public class AppUtils {
     /**
@@ -95,50 +103,81 @@ public class AppUtils {
         return res;
     }
 
-    public static void setRecentNumArrayString(Context context, String num) {
+    public static void setRecentNumArrayString(Context context, Recent newData) {
         String numString = ContextUtils.getRecentSearchNum(context);
 
-        if (numString.contains("/")) {
-            if (numString.contains(num)) {
-                if (numString.contains(num + "/")) {
-                    numString = numString.replace(num + "/", "");
-                } else {
-                    numString = numString.replace("/" + num, "");
+        if (!numString.contains(newData.getNum())) {
+            List<Recent> recents = new ArrayList<>();
+            JSONObject list = makeJsonObject(numString);
+            if (list != null) {
+                try {
+                    JSONArray data = list.getJSONArray("data");
+
+                    for (int i = 0; i < data.length(); i++) {
+                        Recent r = Recent.getRecentFromJson(data.getJSONObject(i));
+                        recents.add(r);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-            numString = numString + "/" + num;
-        } else if (numString.equals("")) {
-            numString = num;
-        } else {
-            numString = numString + "/" + num;
-        }
 
-        if (numString.contains("//")) {
-            numString = numString.replace("//", "/");
-        }
+            recents.add(newData);
+            String jsonString = makeDeliveryUrlJsonObject(recents);
 
-        ContextUtils.setRecentSearchNum(context, numString);
+            ContextUtils.setRecentSearchNum(context, jsonString);
+        }
     }
 
-    public static List<String> getRecentNumList(Context context) {
-        List<String> numList = new ArrayList<>();
-
+    public static List<Recent> getRecentNumList(Context context) {
         String numString = ContextUtils.getRecentSearchNum(context);
-        if (numString.contains("//")) {
-            numString = numString.replace("//", "/");
-        }
-        Log.d("numString", numString);
+        List<Recent> recents = new ArrayList<>();
+        JSONObject list = makeJsonObject(numString);
+        if (list != null) {
+            Log.d("jsonArray", list.toString());
+            try {
+                JSONArray data = list.getJSONArray("data");
 
-        if (numString.contains("/")) {
-            String[] numArray = numString.split("/");
-            for (int i = numArray.length - 1; i >= 0; i--) {
-                numList.add(numArray[i]);
+                for (int i = 0; i < data.length(); i++) {
+                    Recent r = Recent.getRecentFromJson(data.getJSONObject(i));
+                    recents.add(r);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } else {
-            numList.add(numString);
         }
 
-        return numList;
+        return recents;
+    }
+
+    public static String makeDeliveryUrlJsonObject(List<Recent> list) {
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray jArray = new JSONArray();
+            for (int i = 0; i < list.size(); i++) {
+                JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
+                sObject.put("num", list.get(i).getNum());
+                sObject.put("name", list.get(i).getName());
+                sObject.put("shop_name", list.get(i).getShop_name());
+                jArray.put(sObject);
+            }
+            obj.put("data", jArray);//배열을 넣음
+
+            return obj.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static JSONObject makeJsonObject(String jsonString) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     public static String makePhoneNumber(String phoneNumber) {

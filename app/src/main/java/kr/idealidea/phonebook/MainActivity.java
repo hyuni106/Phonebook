@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 import kr.idealidea.phonebook.adapter.RecentAdapter;
+import kr.idealidea.phonebook.data.Recent;
 import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity {
     LinearLayout layoutMainNoItem;
     LinearLayout layoutMainSearch;
 
-    List<String> recentList = new ArrayList<>();
+    List<Recent> recentList = new ArrayList<>();
     RecentAdapter mAdapter;
 
     @Override

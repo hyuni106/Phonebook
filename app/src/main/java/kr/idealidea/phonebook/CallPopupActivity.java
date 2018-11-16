@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import kr.idealidea.phonebook.data.Recent;
 import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.ContextUtils;
@@ -39,6 +40,7 @@ public class CallPopupActivity extends BaseActivity {
     TextView txtvPopupCount;
     LinearLayout layoutPopupCount;
 
+    Recent call = new Recent();
     String call_number = "";
     String shopName = "";
     Boolean isCall = true;
@@ -73,6 +75,7 @@ public class CallPopupActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+//                TODO - Name 다시 설정
         txtvPopupPhone.setText(call_number);
         txtvPopupShopName.setText(shopName);
         if (count > 0) {
@@ -81,7 +84,9 @@ public class CallPopupActivity extends BaseActivity {
         } else {
             layoutPopupCount.setVisibility(View.GONE);
         }
-        AppUtils.setRecentNumArrayString(mContext, call_number);
+        call.setNum(call_number);
+        call.setShop_name(shopName);
+        AppUtils.setRecentNumArrayString(mContext, call);
 
         if (isCall) {
             contacts();

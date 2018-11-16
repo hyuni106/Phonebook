@@ -22,12 +22,13 @@ import java.util.Locale;
 import kr.idealidea.phonebook.data.CallLog;
 import kr.idealidea.phonebook.data.Contact;
 import kr.idealidea.phonebook.data.Message;
+import kr.idealidea.phonebook.data.Recent;
 import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.ConnectServer;
 import kr.idealidea.phonebook.utils.GlobalData;
 
 public class SearchActivity extends BaseActivity {
-    String search = "";
+    Recent search = new Recent();
 
     TextView txtvSearchPhone;
     TextView lineSearchTab1;
@@ -53,7 +54,8 @@ public class SearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        search = getIntent().getStringExtra("phone").replaceAll("-", "");
+        String num = getIntent().getStringExtra("phone").replaceAll("-", "");
+        search.setNum(num);
         bindViews();
         setupEvents();
         setValues();
@@ -124,13 +126,13 @@ public class SearchActivity extends BaseActivity {
             frameSearchTab3.setVisibility(View.GONE);
         }
 
-        txtvSearchPhone.setText(AppUtils.makePhoneNumber(search));
+        txtvSearchPhone.setText(AppUtils.makePhoneNumber(search.getNum()));
         AppUtils.setRecentNumArrayString(mContext, search);
         getSearchContact();
     }
 
     private void getSearchContact() {
-        ConnectServer.getRequestAllContact(SearchActivity.this, search, new ConnectServer.JsonResponseHandler() {
+        ConnectServer.getRequestAllContact(SearchActivity.this, search.getNum(), new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
                 try {
@@ -150,6 +152,8 @@ public class SearchActivity extends BaseActivity {
                             } else {
                                 txtvSearchShopName.setText("저장 내역 없음");
                             }
+                            search.setShop_name(txtvSearchShopName.getText().toString());
+                            search.setName(txtvSearchShopName.getText().toString());
                             txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
                             drawCallList();
                         }
@@ -180,7 +184,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void getSearchCallLog() {
-        ConnectServer.getRequestAllCallLogs(SearchActivity.this, search, new ConnectServer.JsonResponseHandler() {
+        ConnectServer.getRequestAllCallLogs(SearchActivity.this, search.getNum(), new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
                 try {
@@ -234,7 +238,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void getSearchMessage() {
-        ConnectServer.getRequestAllMessage(SearchActivity.this, search, new ConnectServer.JsonResponseHandler() {
+        ConnectServer.getRequestAllMessage(SearchActivity.this, search.getNum(), new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
                 try {

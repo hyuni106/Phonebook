@@ -55,6 +55,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 
                 final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
 
+//                TODO - Name 다시 설정
                 ConnectServer.postRequestCallNumInfo(context, phone_number.replaceAll("-", ""), new ConnectServer.JsonResponseHandler() {
                     @Override
                     public void onResponse(JSONObject json) {
@@ -62,6 +63,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
                             if (json.getInt("code") == 200) {
                                 String shopName = json.getJSONObject("data").getString("name");
                                 int count = json.getJSONObject("data").getInt("total");
+                                int name = json.getJSONObject("data").getInt("name");
 
                                 Intent serviceIntent = new Intent(context, CallPopupActivity.class);
                                 serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);

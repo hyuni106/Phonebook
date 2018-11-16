@@ -21,6 +21,7 @@ import java.util.Locale;
 import kr.idealidea.phonebook.CallPopupActivity;
 import kr.idealidea.phonebook.R;
 import kr.idealidea.phonebook.SearchActivity;
+import kr.idealidea.phonebook.data.Recent;
 import kr.idealidea.phonebook.utils.AppUtils;
 import kr.idealidea.phonebook.utils.CallingService;
 import kr.idealidea.phonebook.utils.ConnectServer;
@@ -30,10 +31,10 @@ import kr.idealidea.phonebook.utils.GlobalData;
 public class RecentAdapter extends BaseAdapter {
 
     Context mContext;
-    List<String> mList;
+    List<Recent> mList;
     LayoutInflater inf;
 
-    public RecentAdapter(Context context, List<String> list) {
+    public RecentAdapter(Context context, List<Recent> list) {
         mContext = context;
         mList = list;
         inf = LayoutInflater.from(mContext);
@@ -59,9 +60,9 @@ public class RecentAdapter extends BaseAdapter {
         View row = inf.inflate(R.layout.recent_list_item, viewGroup, false);
         TextView txtvRecentPhoneNum = row.findViewById(R.id.txtvRecentPhoneNum);
 
-        final String number = mList.get(position);
+        final Recent number = mList.get(position);
 
-        txtvRecentPhoneNum.setText(AppUtils.makePhoneNumber(number));
+        txtvRecentPhoneNum.setText(AppUtils.makePhoneNumber(number.getNum()));
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +108,7 @@ public class RecentAdapter extends BaseAdapter {
         return row;
     }
 
-    public void updateList(List<String> list) {
+    public void updateList(List<Recent> list) {
         this.mList = list;
         notifyDataSetChanged();
     }
