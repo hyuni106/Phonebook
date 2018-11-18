@@ -86,7 +86,7 @@ public class CallPopupActivity extends BaseActivity {
         }
         call.setNum(call_number);
         call.setName(shopName);
-        call.setShop_name(shopName);
+        call.setShop_name("");
         call.setCount(count);
         AppUtils.setRecentNumArrayString(mContext, call);
 
