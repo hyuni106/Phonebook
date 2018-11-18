@@ -2,6 +2,7 @@ package kr.idealidea.phonebook;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -118,6 +119,9 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         if (GlobalData.loginUser.isAdmin()) {
             frameSearchTab2.setVisibility(View.VISIBLE);
             frameSearchTab3.setVisibility(View.VISIBLE);
@@ -230,7 +234,16 @@ public class SearchActivity extends BaseActivity {
             TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
             TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
 
-            txtvType.setText(callLog.getLog_type());
+            String type = "";
+            if (callLog.getLog_type().equals("IN")) {
+                type = "수신";
+            } else if (callLog.getLog_type().equals("OUT")) {
+                type = "발신";
+            } else {
+                type = "부재중";
+            }
+
+            txtvType.setText(type);
             txtvDuration.setText(callLog.getTime());
             txtvPhoneNum.setText(callLog.getShop_name());
             txtvTimeStamp.setText(myDateFormat.format(callLog.getCreated_at().getTime()));

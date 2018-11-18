@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -132,7 +133,8 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 
     @Override

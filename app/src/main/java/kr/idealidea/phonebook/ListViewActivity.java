@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,9 @@ public class ListViewActivity extends AppCompatActivity {
 
         intent = getIntent().getStringExtra("intent");
         layoutListView = findViewById(R.id.layoutListView);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         if (intent.equals("book")) {
             contacts();

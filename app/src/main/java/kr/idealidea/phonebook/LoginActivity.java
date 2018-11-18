@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,6 +101,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         if (ContextUtils.isFirstStart(mContext).equals("")) {
             contacts();
         }
