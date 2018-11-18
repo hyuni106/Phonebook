@@ -61,14 +61,15 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
                     public void onResponse(JSONObject json) {
                         try {
                             if (json.getInt("code") == 200) {
-                                String shopName = json.getJSONObject("data").getString("name");
+                                String shopName = json.getJSONObject("data").getString("shopname");
                                 int count = json.getJSONObject("data").getInt("total");
-//                                String name = json.getJSONObject("data").getString("name");
+                                String name = json.getJSONObject("data").getString("name");
 
                                 Intent serviceIntent = new Intent(context, CallPopupActivity.class);
-                                serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
-                                serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, shopName);
-                                serviceIntent.putExtra(CallingService.EXTRA_COUNT, count);
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_CALL_NUMBER, phone_number);
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_SHOP_NAME, shopName);
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_NAME, name);
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_COUNT, count);
                                 serviceIntent.putExtra("isCall", true);
 //                context.startService(serviceIntent);
                                 context.startActivity(serviceIntent);
@@ -80,9 +81,10 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 
                             } else if (json.getInt("code") == 400) {
                                 Intent serviceIntent = new Intent(context, CallPopupActivity.class);
-                                serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
-                                serviceIntent.putExtra(CallingService.EXTRA_SHOP_NAME, "저장된 내역 없음");
-                                serviceIntent.putExtra(CallingService.EXTRA_COUNT, 0);
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_CALL_NUMBER, phone_number);
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_SHOP_NAME, "저장된 내역 없음");
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_NAME, "저장된 내역 없음");
+                                serviceIntent.putExtra(CallPopupActivity.EXTRA_COUNT, 0);
                                 serviceIntent.putExtra("isCall", true);
                                 context.startActivity(serviceIntent);
                             }

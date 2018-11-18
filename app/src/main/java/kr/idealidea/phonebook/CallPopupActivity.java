@@ -33,6 +33,7 @@ public class CallPopupActivity extends BaseActivity {
 
     public static final String EXTRA_CALL_NUMBER = "call_number";
     public static final String EXTRA_SHOP_NAME = "shop_name";
+    public static final String EXTRA_NAME = "name";
     public static final String EXTRA_COUNT = "count";
 
     TextView txtvPopupPhone;
@@ -43,6 +44,7 @@ public class CallPopupActivity extends BaseActivity {
     Recent call = new Recent();
     String call_number = "";
     String shopName = "";
+    String name = "";
     Boolean isCall = true;
     int count = 0;
 
@@ -61,6 +63,7 @@ public class CallPopupActivity extends BaseActivity {
         setContentView(R.layout.activity_call_popup);
         call_number = getIntent().getStringExtra(EXTRA_CALL_NUMBER);
         shopName = getIntent().getStringExtra(EXTRA_SHOP_NAME);
+        name = getIntent().getStringExtra(EXTRA_NAME);
         count = getIntent().getIntExtra(EXTRA_COUNT, 0);
         isCall = getIntent().getBooleanExtra("isCall", true);
         bindViews();
@@ -77,7 +80,7 @@ public class CallPopupActivity extends BaseActivity {
     public void setValues() {
 //                TODO - Name 다시 설정
         txtvPopupPhone.setText(call_number);
-        txtvPopupShopName.setText(shopName);
+        txtvPopupShopName.setText(name);
         if (count > 0) {
             layoutPopupCount.setVisibility(View.VISIBLE);
             txtvPopupCount.setText(String.format("%d 건", count));
@@ -85,8 +88,8 @@ public class CallPopupActivity extends BaseActivity {
             layoutPopupCount.setVisibility(View.GONE);
         }
         call.setNum(call_number);
-        call.setName(shopName);
-        call.setShop_name("");
+        call.setName(name);
+        call.setShop_name(shopName);
         call.setCount(count);
         AppUtils.setRecentNumArrayString(mContext, call);
 
@@ -253,7 +256,13 @@ public class CallPopupActivity extends BaseActivity {
                 int i = 0;
 
 //                TODO - 최대 수 수정
-                while (i < 49) {
+                int count = 0;
+                if (curCallLog.getCount() > 49) {
+                    count = 49;
+                } else {
+                    count = curCallLog.getCount();
+                }
+                while (i < count) {
                     int callcount = 0;
                     String callname = "";
                     String calltype = "";
