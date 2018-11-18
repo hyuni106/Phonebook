@@ -59,6 +59,8 @@ public class RecentAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
         View row = inf.inflate(R.layout.recent_list_item, viewGroup, false);
         TextView txtvRecentPhoneNum = row.findViewById(R.id.txtvRecentPhoneNum);
+        TextView txtvRecentName = row.findViewById(R.id.txtvRecentName);
+        TextView txtvRecentShopName = row.findViewById(R.id.txtvRecentShopName);
 
         final Recent number = mList.get(position);
 
@@ -68,7 +70,7 @@ public class RecentAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SearchActivity.class);
-                intent.putExtra("phone", number);
+                intent.putExtra("phone", number.getNum());
                 mContext.startActivity(intent);
 
 //                ConnectServer.postRequestCallNumInfo(mContext, number.replaceAll("-", ""), new ConnectServer.JsonResponseHandler() {

@@ -31,6 +31,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+//        ContextUtils.setRecentSearchNum(mContext, "");
         bindViews();
         setupEvents();
         setValues();

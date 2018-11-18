@@ -26,13 +26,16 @@
                 android:text="010-1234-5678"/>
 
             <TextView
+                android:id="@+id/txtvRecentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_dark"
                 android:textStyle="bold"
                 android:textSize="13dp"
                 android:text="악성스팸으로신고하기전에전화그만해"/>
+
             <TextView
+                android:id="@+id/txtvRecentShopName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#808080"

@@ -85,7 +85,9 @@ public class CallPopupActivity extends BaseActivity {
             layoutPopupCount.setVisibility(View.GONE);
         }
         call.setNum(call_number);
+        call.setName(shopName);
         call.setShop_name(shopName);
+        call.setCount(count);
         AppUtils.setRecentNumArrayString(mContext, call);
 
         if (isCall) {

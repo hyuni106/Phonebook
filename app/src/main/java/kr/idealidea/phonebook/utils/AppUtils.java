@@ -106,27 +106,27 @@ public class AppUtils {
     public static void setRecentNumArrayString(Context context, Recent newData) {
         String numString = ContextUtils.getRecentSearchNum(context);
 
-        if (!numString.contains(newData.getNum())) {
-            List<Recent> recents = new ArrayList<>();
-            JSONObject list = makeJsonObject(numString);
-            if (list != null) {
-                try {
-                    JSONArray data = list.getJSONArray("data");
+        List<Recent> recents = new ArrayList<>();
+        JSONObject list = makeJsonObject(numString);
+        if (list != null) {
+            try {
+                JSONArray data = list.getJSONArray("jsonArray");
 
-                    for (int i = 0; i < data.length(); i++) {
-                        Recent r = Recent.getRecentFromJson(data.getJSONObject(i));
-                        recents.add(r);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                for (int i = data.length() - 1; i >= 0; i--) {
+                    Recent r = Recent.getRecentFromJson(data.getJSONObject(i));
+                    recents.add(r);
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-            recents.add(newData);
-            String jsonString = makeDeliveryUrlJsonObject(recents);
-
-            ContextUtils.setRecentSearchNum(context, jsonString);
         }
+        if (!numString.contains(newData.getNum())) {
+            recents.add(newData);
+        }
+        String jsonString = makeDeliveryUrlJsonObject(recents);
+        Log.d("jsonArray", jsonString);
+
+        ContextUtils.setRecentSearchNum(context, jsonString);
     }
 
     public static List<Recent> getRecentNumList(Context context) {
@@ -136,9 +136,9 @@ public class AppUtils {
         if (list != null) {
             Log.d("jsonArray", list.toString());
             try {
-                JSONArray data = list.getJSONArray("data");
+                JSONArray data = list.getJSONArray("jsonArray");
 
-                for (int i = 0; i < data.length(); i++) {
+                for (int i = data.length() - 1; i >= 0; i--) {
                     Recent r = Recent.getRecentFromJson(data.getJSONObject(i));
                     recents.add(r);
                 }
@@ -154,14 +154,15 @@ public class AppUtils {
         JSONObject obj = new JSONObject();
         try {
             JSONArray jArray = new JSONArray();
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = list.size() - 1; i >= 0; i--) {
                 JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
                 sObject.put("num", list.get(i).getNum());
                 sObject.put("name", list.get(i).getName());
                 sObject.put("shop_name", list.get(i).getShop_name());
+                sObject.put("count", list.get(i).getCount());
                 jArray.put(sObject);
             }
-            obj.put("data", jArray);//배열을 넣음
+            obj.put("jsonArray", jArray);//배열을 넣음
 
             return obj.toString();
         } catch (JSONException e) {

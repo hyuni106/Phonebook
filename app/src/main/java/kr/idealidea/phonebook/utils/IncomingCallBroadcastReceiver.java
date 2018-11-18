@@ -63,7 +63,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
                             if (json.getInt("code") == 200) {
                                 String shopName = json.getJSONObject("data").getString("name");
                                 int count = json.getJSONObject("data").getInt("total");
-                                int name = json.getJSONObject("data").getInt("name");
+//                                String name = json.getJSONObject("data").getString("name");
 
                                 Intent serviceIntent = new Intent(context, CallPopupActivity.class);
                                 serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);

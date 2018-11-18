@@ -127,7 +127,6 @@ public class SearchActivity extends BaseActivity {
         }
 
         txtvSearchPhone.setText(AppUtils.makePhoneNumber(search.getNum()));
-        AppUtils.setRecentNumArrayString(mContext, search);
         getSearchContact();
     }
 
@@ -149,11 +148,14 @@ public class SearchActivity extends BaseActivity {
                         public void run() {
                             if (contactList.size() > 0) {
                                 txtvSearchShopName.setText(contactList.get(contactList.size() - 1).getName());
+                                search.setShop_name(contactList.get(contactList.size() - 1).getShop_name());
                             } else {
                                 txtvSearchShopName.setText("저장 내역 없음");
+                                search.setShop_name("저장 내역 없음");
                             }
-                            search.setShop_name(txtvSearchShopName.getText().toString());
+                            search.setCount(contactList.size());
                             search.setName(txtvSearchShopName.getText().toString());
+                            AppUtils.setRecentNumArrayString(mContext, search);
                             txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
                             drawCallList();
                         }

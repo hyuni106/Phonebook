@@ -11,6 +11,7 @@ public class Recent implements Serializable {
     private String num;
     private String name;
     private String shop_name;
+    private int count;
 
     public static Recent getRecentFromJson(JSONObject json) {
         Recent r = new Recent();
@@ -19,6 +20,7 @@ public class Recent implements Serializable {
             r.setNum(json.getString("num"));
             r.setName(json.getString("name"));
             r.setShop_name(json.getString("shop_name"));
+            r.setCount(json.getInt("count"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -57,5 +59,13 @@ public class Recent implements Serializable {
 
     public void setShop_name(String shop_name) {
         this.shop_name = shop_name;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
