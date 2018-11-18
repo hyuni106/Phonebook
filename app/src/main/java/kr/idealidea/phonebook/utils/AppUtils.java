@@ -121,7 +121,7 @@ public class AppUtils {
             }
         }
         if (!numString.contains(newData.getNum())) {
-            recents.add(newData);
+            recents.add(0, newData);
         }
         String jsonString = makeDeliveryUrlJsonObject(recents);
         Log.d("jsonArray", jsonString);
