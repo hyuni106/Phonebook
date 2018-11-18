@@ -65,6 +65,8 @@ public class RecentAdapter extends BaseAdapter {
         final Recent number = mList.get(position);
 
         txtvRecentPhoneNum.setText(AppUtils.makePhoneNumber(number.getNum()));
+        txtvRecentName.setText(number.getName());
+        txtvRecentShopName.setText(String.format("%s 외 %d명 저장", number.getShop_name(), number.getCount() - 1));
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override
