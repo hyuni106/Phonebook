@@ -1,5 +1,6 @@
 package kr.idealidea.phonebook;
 
+import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -37,6 +38,9 @@ public class SearchActivity extends BaseActivity {
     TextView lineSearchTab3;
     TextView txtvSearchShopName;
     TextView txtvSearchCount;
+    TextView txtvSearchTab1;
+    TextView txtvSearchTab2;
+    TextView txtvSearchTab3;
     FrameLayout frameSearchTab1;
     FrameLayout frameSearchTab2;
     FrameLayout frameSearchTab3;
@@ -65,11 +69,15 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void setupEvents() {
         frameSearchTab1.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab1.setVisibility(View.VISIBLE);
-                lineSearchTab2.setVisibility(View.GONE);
-                lineSearchTab3.setVisibility(View.GONE);
+                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
+                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
+                txtvSearchTab1.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                txtvSearchTab2.setTextColor(getResources().getColor(R.color.text_color_gray));
+                txtvSearchTab3.setTextColor(getResources().getColor(R.color.text_color_gray));
 
                 if (contactList.size() > 0) {
                     txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
@@ -82,11 +90,15 @@ public class SearchActivity extends BaseActivity {
         });
 
         frameSearchTab2.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab2.setVisibility(View.VISIBLE);
-                lineSearchTab1.setVisibility(View.GONE);
-                lineSearchTab3.setVisibility(View.GONE);
+                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
+                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
+                txtvSearchTab2.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                txtvSearchTab1.setTextColor(getResources().getColor(R.color.text_color_gray));
+                txtvSearchTab3.setTextColor(getResources().getColor(R.color.text_color_gray));
 
                 if (callLogList.size() > 0) {
                     txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건, 부재중 %d건", incoming, outcalling, miss));
@@ -99,11 +111,15 @@ public class SearchActivity extends BaseActivity {
         });
 
         frameSearchTab3.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab3.setVisibility(View.VISIBLE);
-                lineSearchTab2.setVisibility(View.GONE);
-                lineSearchTab1.setVisibility(View.GONE);
+                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
+                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
+                txtvSearchTab3.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                txtvSearchTab2.setTextColor(getResources().getColor(R.color.text_color_gray));
+                txtvSearchTab1.setTextColor(getResources().getColor(R.color.text_color_gray));
 
                 if (messagesList.size() > 0) {
                     txtvSearchCount.setText(String.format(Locale.KOREA, "문자메시지 %d건", messagesList.size()));
@@ -299,6 +315,9 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void bindViews() {
+        txtvSearchTab3 = findViewById(R.id.txtvSearchTab3);
+        txtvSearchTab2 = findViewById(R.id.txtvSearchTab2);
+        txtvSearchTab1 = findViewById(R.id.txtvSearchTab1);
         txtvSearchPhone = findViewById(R.id.txtvSearchPhone);
         frameSearchTab1 = findViewById(R.id.frameSearchTab1);
         frameSearchTab2 = findViewById(R.id.frameSearchTab2);

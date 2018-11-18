@@ -51,18 +51,17 @@
 
         <FrameLayout
             android:layout_marginLeft="1dp"
-            android:background="#4B8477"
             android:id="@+id/frameSearchTab1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <TextView
-                android:background="#4B8477"
+                android:id="@+id/txtvSearchTab1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="연락처"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -77,51 +76,49 @@
         <FrameLayout
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
-            android:background="#4B8477"
             android:id="@+id/frameSearchTab2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/txtvSearchTab2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="통화기록"
-                android:textColor="#ffffff"
+                android:textColor="@color/text_color_gray"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:id="@+id/lineSearchTab2"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_gravity="bottom"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/text_color_gray"/>
 
         </FrameLayout>
 
         <FrameLayout
             android:layout_marginRight="1dp"
-            android:background="#4B8477"
             android:id="@+id/frameSearchTab3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/txtvSearchTab3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="메시지"
-                android:textColor="#ffffff"
+                android:textColor="@color/text_color_gray"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:id="@+id/lineSearchTab3"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_gravity="bottom"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/text_color_gray"/>
 
         </FrameLayout>
 
@@ -129,7 +126,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:id="@+id/layoutSearchList"
