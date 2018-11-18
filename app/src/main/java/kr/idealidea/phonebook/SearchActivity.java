@@ -1,6 +1,7 @@
 package kr.idealidea.phonebook;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -72,10 +73,11 @@ public class SearchActivity extends BaseActivity {
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.blue));
                 lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
                 lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab1.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                txtvSearchTab1.setTextColor(getResources().getColor(R.color.blue));
                 txtvSearchTab2.setTextColor(getResources().getColor(R.color.text_color_gray));
                 txtvSearchTab3.setTextColor(getResources().getColor(R.color.text_color_gray));
 
@@ -93,10 +95,10 @@ public class SearchActivity extends BaseActivity {
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.blue));
                 lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
                 lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab2.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                txtvSearchTab2.setTextColor(getResources().getColor(R.color.blue));
                 txtvSearchTab1.setTextColor(getResources().getColor(R.color.text_color_gray));
                 txtvSearchTab3.setTextColor(getResources().getColor(R.color.text_color_gray));
 
@@ -114,10 +116,10 @@ public class SearchActivity extends BaseActivity {
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.blue));
                 lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
                 lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab3.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                txtvSearchTab3.setTextColor(getResources().getColor(R.color.blue));
                 txtvSearchTab2.setTextColor(getResources().getColor(R.color.text_color_gray));
                 txtvSearchTab1.setTextColor(getResources().getColor(R.color.text_color_gray));
 
