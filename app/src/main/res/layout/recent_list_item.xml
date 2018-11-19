@@ -82,6 +82,7 @@
     <!--</LinearLayout>-->
 
     <LinearLayout
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -115,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textColor="#3880c9"
+                android:textColor="#73CB78"
                 android:text="010-1111-1111"/>
 
             <TextView
