@@ -6,82 +6,156 @@
     android:orientation="vertical"
     android:padding="10dp">
 
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:background="@drawable/shadow"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="2dp"-->
+            <!--android:layout_marginTop="2dp"-->
+            <!--android:layout_marginRight="3dp"-->
+            <!--android:layout_marginBottom="3dp"-->
+            <!--android:background="@drawable/white_round_box"-->
+            <!--android:orientation="vertical"-->
+            <!--android:padding="10dp">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtvRecentPhoneNum"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="#3880c9"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textSize="25dp"-->
+                <!--android:text="010-1234-5678"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtvRecentName"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/black_dark"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textSize="13dp"-->
+                <!--android:text="악성스팸으로신고하기전에전화그만해"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtvRecentShopName"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="#808080"-->
+                <!--android:textSize="13dp"-->
+                <!--android:text="[ShopName] 외 24명 저장"/>-->
+
+
+
+        <!--</LinearLayout>-->
+
+
+        <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:orientation="horizontal">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textSize="13sp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="전화걸기"/>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginLeft="20dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="문자보내기"/>&ndash;&gt;-->
+
+           <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
+
+
+    <!--</LinearLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/shadow"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="@drawable/round"
+            android:gravity="center"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:textSize="25dp"
+            android:textColor="#dddddd"
+            android:textStyle="bold"
+            android:text="악"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginBottom="3dp"
-            android:background="@drawable/white_round_box"
-            android:orientation="vertical"
-            android:padding="10dp">>
-
-            <TextView
-                android:id="@+id/txtvRecentPhoneNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#3880c9"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:text="010-1234-5678"/>
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtvRecentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black_dark"
                 android:textStyle="bold"
-                android:textSize="13dp"
-                android:text="악성스팸으로신고하기전에전화그만해"/>
+                android:textColor="#000000"
+                android:text="악성 스팸 전화"/>
+
+            <TextView
+                android:id="@+id/txtvRecentPhoneNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#3880c9"
+                android:text="010-1111-1111"/>
 
             <TextView
                 android:id="@+id/txtvRecentShopName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:textColor="#808080"
-                android:textSize="13dp"
-                android:text="[ShopName] 외 24명 저장"/>
+                android:text="[누구누구] 외 20명 저장"/>
+
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
         <LinearLayout
-            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="3dp">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TextView
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:textColor="#ffffff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="전화걸기"/>
-
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:textColor="#ffffff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="문자보내기"/>
-
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/phone1"/>
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/sms"/>
 
         </LinearLayout>
 
     </LinearLayout>
+
+
+
 
 
 
