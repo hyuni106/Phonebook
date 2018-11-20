@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#ffffff"
     tools:context=".SplashActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/boyoung"
-        android:scaleType="centerCrop"/>
+        android:scaleType="fitEnd"
+        android:src="@drawable/logo1"/>
 
 </LinearLayout>
