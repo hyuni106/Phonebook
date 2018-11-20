@@ -1,6 +1,7 @@
 package kr.idealidea.phonebook;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -301,7 +302,7 @@ public class SearchActivity extends BaseActivity {
         layoutSearchList.removeAllViews();
         final LayoutInflater inf = LayoutInflater.from(this);
 
-        for (Message message : messagesList) {
+        for (final Message message : messagesList) {
             final View v = inf.inflate(R.layout.search_message_list_item, null);
             TextView txtvMessage = v.findViewById(R.id.txtvMessage);
             TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
@@ -310,6 +311,15 @@ public class SearchActivity extends BaseActivity {
             txtvMessage.setText(message.getContent());
             txtvPhoneNum.setText(message.getShop_name());
             txtvTimeStamp.setText(myDateFormat.format(message.getCreated_at().getTime()));
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, MessageDetailActivity.class);
+                    intent.putExtra("message", message);
+                    startActivity(intent);
+                }
+            });
 
             layoutSearchList.addView(v);
         }

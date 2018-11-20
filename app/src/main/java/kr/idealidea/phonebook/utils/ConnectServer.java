@@ -31,7 +31,7 @@ import okio.ByteString;
 
 
 public class ConnectServer {
-    private final static String BASE_URL = "http://172.30.1.14:5000/";
+    private final static String BASE_URL = "http://172.30.1.29:5000/";
 //    private final static String BASE_URL = "http://192.168.0.149:5000/";
 //    private final static String BASE_URL = "http://172.30.1.11:5000/";
 
@@ -290,6 +290,49 @@ public class ConnectServer {
         //작성한 Request Body와 데이터를 보낼 url을 Request에 붙임
         Request request = new Request.Builder()
                 .url(BASE_URL + "auth")
+                .post(requestBody)
+                .build();
+
+        //request를 Client에 세팅하고 Server로 부터 온 Response를 처리할 Callback 작성
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("error", "Connect Server Error is " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                Log.d("aaaa", "Response Body is " + response.body().string());
+                String body = response.body().string();
+                Log.d("log", "서버에서 응답한 Body:" + body);
+                try {
+                    JSONObject json = new JSONObject(body);
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void postRequestMessageDetail(Context context, String uid, String phone, final JsonResponseHandler handler) {
+        if (!checkIntenetSetting(context)) {
+            return;
+        }
+
+        OkHttpClient client = new OkHttpClient();
+
+        //Request Body에 서버에 보낼 데이터 작성
+        RequestBody requestBody = new FormBody.Builder()
+                .add("uid", uid)
+                .add("phone", phone)
+                .build();
+
+        //작성한 Request Body와 데이터를 보낼 url을 Request에 붙임
+        Request request = new Request.Builder()
+                .header("X-Http-Token", ContextUtils.getUserToken(context))
+                .url(BASE_URL + "message")
                 .post(requestBody)
                 .build();
 

@@ -24,11 +24,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ListViewActivity" />
-        <activity android:name=".LoginActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -51,8 +53,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".CallPopupActivity"
+        <activity
+            android:name=".CallPopupActivity"
             android:theme="@style/mytheme" />
+        <activity android:name=".MessageDetailActivity"
+            android:theme="@style/mytheme"></activity>
     </application>
 
 </manifest>

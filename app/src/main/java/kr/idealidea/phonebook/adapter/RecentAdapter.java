@@ -61,9 +61,11 @@ public class RecentAdapter extends BaseAdapter {
         TextView txtvRecentPhoneNum = row.findViewById(R.id.txtvRecentPhoneNum);
         TextView txtvRecentName = row.findViewById(R.id.txtvRecentName);
         TextView txtvRecentShopName = row.findViewById(R.id.txtvRecentShopName);
+        TextView txtvRecentNameFirst = row.findViewById(R.id.txtvRecentNameFirst);
 
         final Recent number = mList.get(position);
 
+        txtvRecentNameFirst.setText(number.getName().substring(0, 1));
         txtvRecentPhoneNum.setText(AppUtils.makePhoneNumber(number.getNum()));
         txtvRecentName.setText(number.getName());
         if (number.getCount() > 0) {

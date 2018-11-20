@@ -11,6 +11,7 @@ import java.util.Calendar;
 public class Message implements Serializable {
     private int id;
     private int uid;
+    private String type;
     private String phone;
     private String content;
     private String shop_name;
@@ -22,6 +23,7 @@ public class Message implements Serializable {
         try {
             m.setId(json.getInt("id"));
             m.setUid(json.getInt("uid"));
+            m.setType(json.getString("type"));
             m.setPhone(json.getString("phone"));
             m.setContent(json.getString("content"));
             m.setShop_name(json.getString("shop_name"));
@@ -64,6 +66,14 @@ public class Message implements Serializable {
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPhone() {
