@@ -74,12 +74,12 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.blue));
-                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab1.setTextColor(getResources().getColor(R.color.blue));
-                txtvSearchTab2.setTextColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab3.setTextColor(getResources().getColor(R.color.text_color_gray));
+                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.new_green));
+                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                txtvSearchTab1.setTextColor(getResources().getColor(R.color.new_green));
+                txtvSearchTab2.setTextColor(getResources().getColor(R.color.light_gray));
+                txtvSearchTab3.setTextColor(getResources().getColor(R.color.light_gray));
 
                 if (contactList.size() > 0) {
                     txtvSearchCount.setText(String.format(Locale.KOREA, "연락처 저장 %d명", contactList.size()));
@@ -95,12 +95,12 @@ public class SearchActivity extends BaseActivity {
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.blue));
-                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab2.setTextColor(getResources().getColor(R.color.blue));
-                txtvSearchTab1.setTextColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab3.setTextColor(getResources().getColor(R.color.text_color_gray));
+                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.new_green));
+                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                txtvSearchTab2.setTextColor(getResources().getColor(R.color.new_green));
+                txtvSearchTab1.setTextColor(getResources().getColor(R.color.light_gray));
+                txtvSearchTab3.setTextColor(getResources().getColor(R.color.light_gray));
 
                 if (callLogList.size() > 0) {
                     txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건, 부재중 %d건", incoming, outcalling, miss));
@@ -116,12 +116,12 @@ public class SearchActivity extends BaseActivity {
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.blue));
-                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab3.setTextColor(getResources().getColor(R.color.blue));
-                txtvSearchTab2.setTextColor(getResources().getColor(R.color.text_color_gray));
-                txtvSearchTab1.setTextColor(getResources().getColor(R.color.text_color_gray));
+                lineSearchTab3.setBackgroundColor(getResources().getColor(R.color.new_green));
+                lineSearchTab2.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                lineSearchTab1.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                txtvSearchTab3.setTextColor(getResources().getColor(R.color.new_green));
+                txtvSearchTab2.setTextColor(getResources().getColor(R.color.light_gray));
+                txtvSearchTab1.setTextColor(getResources().getColor(R.color.light_gray));
 
                 if (messagesList.size() > 0) {
                     txtvSearchCount.setText(String.format(Locale.KOREA, "문자메시지 %d건", messagesList.size()));

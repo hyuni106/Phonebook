@@ -10,7 +10,7 @@
     <color name="black">#000000</color>
     <color name="black_70">#7d000000</color>
 
-    <color name="light_gray">#f2f2f2</color>
+    <color name="light_gray">#dddddd</color>
     <color name="black_dark">#222222</color>
     <color name="divide_line">#d8d8d8</color>
 
@@ -21,4 +21,5 @@
 
     <color name="green">#4B8477</color>
     <color name="blue">#3880c9</color>
+    <color name="new_green">#73CB78</color>
 </resources>
