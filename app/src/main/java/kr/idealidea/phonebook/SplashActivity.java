@@ -48,38 +48,42 @@ public class SplashActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 getPhoneNum();
-                                if (ContextUtils.getUserToken(mContext).equals("")) {
-                                    Intent intent = new Intent(mContext, LoginActivity.class);
-                                    intent.putExtra("phone", finalPhoneNum);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    ConnectServer.getRequestUserInfo(mContext, new ConnectServer.JsonResponseHandler() {
-                                        @Override
-                                        public void onResponse(JSONObject json) {
-                                            try {
-                                                if (json.getInt("code") == 200) {
-                                                    JSONObject user = json.getJSONObject("data").getJSONObject("user");
-                                                    GlobalData.loginUser = User.getUserFromJson(user);
-                                                    JSONObject period = user.getJSONObject("period");
-                                                    GlobalData.loginUser.setUserPeriod(Period.getPeriodFromJson(period));
-                                                    GlobalData.loginUser.setAdmin(json.getJSONObject("data").getBoolean("is_admin"));
-//                                                    GlobalData.userPeriod = Period.getPeriodFromJson(period);
-                                                    Intent intent = new Intent(mContext, MainActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                } else {
-                                                    Intent intent = new Intent(mContext, LoginActivity.class);
-                                                    intent.putExtra("phone", finalPhoneNum);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    });
-                                }
+                                Intent intent = new Intent(mContext, LoginActivity.class);
+                                intent.putExtra("phone", finalPhoneNum);
+                                startActivity(intent);
+                                finish();
+//                                if (ContextUtils.getUserToken(mContext).equals("")) {
+//                                    Intent intent = new Intent(mContext, LoginActivity.class);
+//                                    intent.putExtra("phone", finalPhoneNum);
+//                                    startActivity(intent);
+//                                    finish();
+//                                } else {
+//                                    ConnectServer.getRequestUserInfo(mContext, new ConnectServer.JsonResponseHandler() {
+//                                        @Override
+//                                        public void onResponse(JSONObject json) {
+//                                            try {
+//                                                if (json.getInt("code") == 200) {
+//                                                    JSONObject user = json.getJSONObject("data").getJSONObject("user");
+//                                                    GlobalData.loginUser = User.getUserFromJson(user);
+//                                                    JSONObject period = user.getJSONObject("period");
+//                                                    GlobalData.loginUser.setUserPeriod(Period.getPeriodFromJson(period));
+//                                                    GlobalData.loginUser.setAdmin(json.getJSONObject("data").getBoolean("is_admin"));
+////                                                    GlobalData.userPeriod = Period.getPeriodFromJson(period);
+//                                                    Intent intent = new Intent(mContext, MainActivity.class);
+//                                                    startActivity(intent);
+//                                                    finish();
+//                                                } else {
+//                                                    Intent intent = new Intent(mContext, LoginActivity.class);
+//                                                    intent.putExtra("phone", finalPhoneNum);
+//                                                    startActivity(intent);
+//                                                    finish();
+//                                                }
+//                                            } catch (JSONException e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//                                    });
+//                                }
                             }
                         }, 1000);
                     }
