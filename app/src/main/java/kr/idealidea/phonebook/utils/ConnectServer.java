@@ -31,6 +31,7 @@ import okio.ByteString;
 
 
 public class ConnectServer {
+//    private final static String BASE_URL = "http://52.79.86.109/"; //TEST LIVE SERVER
     private final static String BASE_URL = "http://172.30.1.29:5000/";
 //    private final static String BASE_URL = "http://192.168.0.149:5000/";
 //    private final static String BASE_URL = "http://172.30.1.11:5000/";
