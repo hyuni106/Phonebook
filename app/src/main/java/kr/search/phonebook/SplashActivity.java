@@ -113,7 +113,7 @@ public class SplashActivity extends BaseActivity {
             }
             phoneNum = phoneNum.replace("-", "");
         } else {
-            phoneNum = "01099918387";
+            phoneNum = "";
         }
         finalPhoneNum = phoneNum;
 
