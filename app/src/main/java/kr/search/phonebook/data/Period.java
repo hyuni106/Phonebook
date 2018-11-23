@@ -4,20 +4,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Period implements Serializable {
     private int id;
-    private String start;
-    private String end;
+    private Calendar start;
+    private Calendar end;
 
     public static Period getPeriodFromJson(JSONObject json) {
         Period p = new Period();
 
         try {
             p.setId(json.getInt("id"));
-            p.setStart(json.getString("start"));
-            p.setEnd(json.getString("end"));
+
+            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar start = Calendar.getInstance();
+            start.setTime(myDateFormat.parse(json.getString("start")));
+            p.setStart(start);
+
+            Calendar end = Calendar.getInstance();
+            end.setTime(myDateFormat.parse(json.getString("end")));
+            p.setStart(end);
+
+//            p.setStart(json.getString("start"));
+//            p.setEnd(json.getString("end"));
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -27,7 +42,7 @@ public class Period implements Serializable {
     public Period() {
     }
 
-    public Period(int id, String start, String end) {
+    public Period(int id, Calendar start, Calendar end) {
         this.id = id;
         this.start = start;
         this.end = end;
@@ -41,19 +56,19 @@ public class Period implements Serializable {
         this.id = id;
     }
 
-    public String getStart() {
+    public Calendar getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Calendar start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public Calendar getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(Calendar end) {
         this.end = end;
     }
 }
