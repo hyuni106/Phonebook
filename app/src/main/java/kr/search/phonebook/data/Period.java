@@ -26,7 +26,7 @@ public class Period implements Serializable {
 
             Calendar end = Calendar.getInstance();
             end.setTime(myDateFormat.parse(json.getString("end")));
-            p.setStart(end);
+            p.setEnd(end);
 
 //            p.setStart(json.getString("start"));
 //            p.setEnd(json.getString("end"));

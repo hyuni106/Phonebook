@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class MainActivity extends BaseActivity {
 
     List<Recent> recentList = new ArrayList<>();
     RecentAdapter mAdapter;
+
+    SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +96,7 @@ public class MainActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        txtvMainPeriod.setText(String.format("만료일 : %s ", GlobalData.loginUser.getUserPeriod().getEnd()));
+        txtvMainPeriod.setText(String.format("만료일 : %s ", myDateFormat.format(GlobalData.loginUser.getUserPeriod().getEnd().getTime())));
         listMainRecentNum.setEmptyView(layoutMainNoItem);
 
         if (GlobalData.loginUser.isAdmin()) {
