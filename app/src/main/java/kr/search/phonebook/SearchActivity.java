@@ -248,14 +248,18 @@ public class SearchActivity extends BaseActivity {
             TextView txtvDuration = v.findViewById(R.id.txtvDuration);
             TextView txtvPhoneNum = v.findViewById(R.id.txtvPhoneNum);
             TextView txtvTimeStamp = v.findViewById(R.id.txtvTimeStamp);
+            TextView txtvCallLogType = v.findViewById(R.id.txtvCallLogType);
 
             String type = "";
             if (callLog.getLog_type().equals("IN")) {
                 type = "수신";
+                txtvCallLogType.setText("수");
             } else if (callLog.getLog_type().equals("OUT")) {
                 type = "발신";
+                txtvCallLogType.setText("발");
             } else {
                 type = "부재중";
+                txtvCallLogType.setText("부");
             }
 
             txtvType.setText(type);
