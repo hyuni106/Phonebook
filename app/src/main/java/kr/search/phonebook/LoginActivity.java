@@ -9,6 +9,7 @@ import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,8 @@ public class LoginActivity extends BaseActivity {
     EditText editLoginAuth;
 
     String phone = "";
+    int contactIndex = 200;
+    int index = 0;
 
     List<String> contacts = new ArrayList<>();
     List<String> callLogs = new ArrayList<>();
@@ -155,27 +158,81 @@ public class LoginActivity extends BaseActivity {
         );
 
         contacts.clear();
+        Log.d("cursor Size", cursor.getCount()+"");
+        if (cursor.getCount() > 200) {
+            int cursorSize = cursor.getCount() / 200;
+            int cursorElse = cursor.getCount() % 200;
 
-        while (cursor.moveToNext()){
-            try {
-                String v_id = cursor.getString(0);
-                String v_display_name = cursor.getString(1);
-                String v_phone = contactsPhone(v_id).replaceAll("-", "");
-                if (v_phone.startsWith("+82")) {
-                    v_phone = v_phone.replace("+82", "0");
+            for (int j = 0; j < cursorSize; j++) {
+                for (int i = index; i < contactIndex; i++) {
+                    cursor.moveToPosition(i);
+
+                    try {
+                        String v_id = cursor.getString(0);
+                        String v_display_name = cursor.getString(1);
+                        String v_phone = contactsPhone(v_id).replaceAll("-", "");
+                        if (v_phone.startsWith("+82")) {
+                            v_phone = v_phone.replace("+82", "0");
+                        }
+                        String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
+
+                        if (v_phone != null && !v_phone.equals("")) {
+                            String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
+                            contacts.add(contact);
+
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
                 }
-                String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
-
-                if (v_phone != null && !v_phone.equals("")) {
-                    String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
-                    contacts.add(contact);
-
-                }
-            }catch(Exception e) {
-                System.out.println(e.toString());
+                putContact();
+                index += 200;
+                contactIndex += 200;
             }
+            for (int i = 0; i < cursorElse; i++) {
+                cursor.moveToPosition(i);
+
+                try {
+                    String v_id = cursor.getString(0);
+                    String v_display_name = cursor.getString(1);
+                    String v_phone = contactsPhone(v_id).replaceAll("-", "");
+                    if (v_phone.startsWith("+82")) {
+                        v_phone = v_phone.replace("+82", "0");
+                    }
+                    String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
+
+                    if (v_phone != null && !v_phone.equals("")) {
+                        String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
+                        contacts.add(contact);
+
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+            putContact();
+        } else {
+            while (cursor.moveToNext()) {
+                try {
+                    String v_id = cursor.getString(0);
+                    String v_display_name = cursor.getString(1);
+                    String v_phone = contactsPhone(v_id).replaceAll("-", "");
+                    if (v_phone.startsWith("+82")) {
+                        v_phone = v_phone.replace("+82", "0");
+                    }
+                    String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
+
+                    if (v_phone != null && !v_phone.equals("")) {
+                        String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
+                        contacts.add(contact);
+
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+            putContact();
         }
-        putContact();
         cursor.close();
     }
 
@@ -256,8 +313,7 @@ public class LoginActivity extends BaseActivity {
                 callLogs.clear();
                 int i = 0;
 
-//                TODO - 최대 수 수정
-                while (i < 49) {
+                while (i < 499) {
                     int callcount = 0;
                     String callname = "";
                     String calltype = "";
