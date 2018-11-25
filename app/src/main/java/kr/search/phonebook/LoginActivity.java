@@ -307,7 +307,7 @@ public class LoginActivity extends BaseActivity {
                         System.out.println(e.toString());
                     }
                 }
-                putContact();
+                putMessage();
                 index += 200;
                 messageIndex += 200;
             }
@@ -335,6 +335,7 @@ public class LoginActivity extends BaseActivity {
                     System.out.println(e.toString());
                 }
             }
+            putMessage();
         } else {
             while (c.moveToNext()) {
                 long messageId = c.getLong(0);
