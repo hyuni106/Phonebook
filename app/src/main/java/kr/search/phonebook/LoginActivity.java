@@ -168,6 +168,8 @@ public class LoginActivity extends BaseActivity {
 
             for (int j = 0; j < cursorSize; j++) {
                 for (int i = index; i < contactIndex; i++) {
+                    Log.d("index", index+"");
+                    Log.d("contactIndex", contactIndex+"");
                     cursor.moveToPosition(i);
 
                     try {
