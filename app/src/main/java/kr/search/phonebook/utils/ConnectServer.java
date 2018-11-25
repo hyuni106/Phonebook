@@ -25,7 +25,7 @@ import okhttp3.Response;
 
 
 public class ConnectServer {
-    private final static String BASE_URL = "http://ec2-13-209-68-90.ap-northeast-2.compute.amazonaws.com/"; //TEST LIVE SERVER
+    private final static String BASE_URL = "http://ec2-13-209-47-150.ap-northeast-2.compute.amazonaws.com/"; //TEST LIVE SERVER
 //    private final static String BASE_URL = "http://172.30.1.29:5000/";
 //    private final static String BASE_URL = "http://192.168.0.149:5000/";
 //    private final static String BASE_URL = "http://172.30.1.11:5000/";
