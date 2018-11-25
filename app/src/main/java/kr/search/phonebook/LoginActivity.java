@@ -168,8 +168,8 @@ public class LoginActivity extends BaseActivity {
 
             for (int j = 0; j < cursorSize; j++) {
                 Log.d("index", index+"");
+                Log.d("contact index", contactIndex+"");
                 for (int i = index; i < contactIndex; i++) {
-                    Log.d("contact index", contactIndex+"");
                     cursor.moveToPosition(i);
 
                     try {
@@ -194,7 +194,9 @@ public class LoginActivity extends BaseActivity {
                 index += 200;
                 contactIndex += 200;
             }
-            for (int i = 0; i < cursorElse; i++) {
+            Log.d("else index", cursorElse+"");
+            int elsePosition = (200 * cursorSize) + 1;
+            for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
                 cursor.moveToPosition(i);
 
                 try {
@@ -314,7 +316,8 @@ public class LoginActivity extends BaseActivity {
                 index += 200;
                 messageIndex += 200;
             }
-            for (int i = 0; i < cursorElse; i++) {
+            int elsePosition = (200 * cursorSize) + 1;
+            for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
                 c.moveToPosition(i);
                 try {
                     long messageId = c.getLong(0);
