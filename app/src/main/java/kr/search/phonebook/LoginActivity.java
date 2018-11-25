@@ -194,6 +194,7 @@ public class LoginActivity extends BaseActivity {
                 putContact();
                 index += 200;
                 contactIndex += 200;
+                contacts.clear();
             }
             int elsePosition = (200 * cursorSize) + 1;
             Log.d("else index", elsePosition+"");
@@ -317,6 +318,7 @@ public class LoginActivity extends BaseActivity {
                 putMessage();
                 index += 200;
                 messageIndex += 200;
+                messages.clear();
             }
             int elsePosition = (200 * cursorSize) + 1;
             for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
