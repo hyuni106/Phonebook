@@ -167,9 +167,9 @@ public class LoginActivity extends BaseActivity {
             int cursorElse = cursor.getCount() % 200;
 
             for (int j = 0; j < cursorSize; j++) {
+                Log.d("index", index+"");
                 for (int i = index; i < contactIndex; i++) {
-                    Log.d("index", index+"");
-                    Log.d("contactIndex", contactIndex+"");
+                    Log.d("contact index", contactIndex+"");
                     cursor.moveToPosition(i);
 
                     try {
