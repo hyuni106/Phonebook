@@ -105,11 +105,9 @@ public class LoginActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        if (ContextUtils.isFirstStart(mContext).equals("")) {
-            contacts();
-//            callLog();
-//            readSMSMessage();
-        }
+//        if (ContextUtils.isFirstStart(mContext).equals("")) {
+//            contacts();
+//        }
         ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
         ContextUtils.setFirstStart(LoginActivity.this);
         editLoginPhone.setText(phone);
