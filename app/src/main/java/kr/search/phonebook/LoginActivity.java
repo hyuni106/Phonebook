@@ -390,22 +390,18 @@ public class LoginActivity extends BaseActivity {
                     String calllog = "";
                     String callDuration = "";
                     String phone = "";
-                    Boolean isTypeNotError = false;
 
                     StringBuffer sb = new StringBuffer();
 
                     if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.INCOMING_TYPE) {
                         calltype = "수신";
-                        isTypeNotError = true;
                     } else if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.OUTGOING_TYPE) {
                         calltype = "발신";
-                        isTypeNotError = true;
                     } else if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.MISSED_TYPE) {
                         calltype = "부재중";
-                        isTypeNotError = true;
                     } else {
-                        isTypeNotError = false;
-                        calltype = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE));
+//                        calltype = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE));
+                        calltype = "알수없음";
                     }
 
                     if (curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.CACHED_NAME)) == null) {
@@ -420,7 +416,7 @@ public class LoginActivity extends BaseActivity {
 
                     callcount++;
 
-                    if (phone != null && isTypeNotError) {
+                    if (phone != null) {
                         String list = callname + "|" + calltype + "|" + phone + "|" + getStringTime(Integer.parseInt(callDuration)) + "|" + createTime;
                         callLogs.add(list);
                     }

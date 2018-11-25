@@ -47,6 +47,7 @@ public class SearchActivity extends BaseActivity {
     int incoming = 0;
     int outcalling = 0;
     int miss = 0;
+    int unknown = 0;
 
     List<Contact> contactList = new ArrayList<>();
     List<CallLog> callLogList = new ArrayList<>();
@@ -100,7 +101,7 @@ public class SearchActivity extends BaseActivity {
                 txtvSearchTab3.setTextColor(getResources().getColor(R.color.light_gray));
 
                 if (callLogList.size() > 0) {
-                    txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건, 부재중 %d건", incoming, outcalling, miss));
+                    txtvSearchCount.setText(String.format(Locale.KOREA, "수신 %d건, 발신 %d건, 부재중 %d건, 알수없음 %d건", incoming, outcalling, miss, unknown));
                     drawCallLogList();
                 } else {
                     layoutSearchList.removeAllViews();
@@ -221,6 +222,8 @@ public class SearchActivity extends BaseActivity {
                                 outcalling++;
                             } else if (c.getLog_type().equals("MISS")) {
                                 miss++;
+                            } else {
+                                unknown++;
                             }
                         }
                     }
@@ -257,9 +260,12 @@ public class SearchActivity extends BaseActivity {
             } else if (callLog.getLog_type().equals("OUT")) {
                 type = "발신";
                 txtvCallLogType.setText("발");
-            } else {
+            } else if (callLog.getLog_type().equals("MISS")) {
                 type = "부재중";
                 txtvCallLogType.setText("부");
+            } else {
+                type = "알수없음";
+                txtvCallLogType.setText("알");
             }
 
             txtvType.setText(type);
