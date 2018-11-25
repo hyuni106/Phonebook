@@ -171,6 +171,7 @@ public class LoginActivity extends BaseActivity {
                 Log.d("contact index", contactIndex+"");
                 for (int i = 200 * j; i < 200 * (j + 1); i++) {
                     cursor.moveToPosition(i);
+                    Log.d("cursor", cursor.getPosition()+"");
 
                     try {
                         String v_id = cursor.getString(0);
