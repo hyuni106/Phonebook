@@ -68,13 +68,18 @@ public class SplashActivity extends BaseActivity {
                     .setPermissionListener(new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
-                            if (ContextUtils.isFirstStart(mContext).equals("")) {
-                                contacts();
-                            }
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     getPhoneNum();
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (ContextUtils.isFirstStart(mContext).equals("")) {
+                                                contacts();
+                                            }
+                                        }
+                                    }).start();
                                     if (ContextUtils.getUserToken(mContext).equals("")) {
                                         Intent intent = new Intent(mContext, LoginActivity.class);
                                         intent.putExtra("phone", finalPhoneNum);
@@ -140,13 +145,18 @@ public class SplashActivity extends BaseActivity {
                     .setPermissionListener(new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
-                            if (ContextUtils.isFirstStart(mContext).equals("")) {
-                                contacts();
-                            }
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     getPhoneNum();
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (ContextUtils.isFirstStart(mContext).equals("")) {
+                                                contacts();
+                                            }
+                                        }
+                                    }).start();
                                     if (ContextUtils.getUserToken(mContext).equals("")) {
                                         Intent intent = new Intent(mContext, LoginActivity.class);
                                         intent.putExtra("phone", finalPhoneNum);
@@ -303,8 +313,8 @@ public class SplashActivity extends BaseActivity {
             int cursorElse = cursor.getCount() % 200;
 
             for (int j = 0; j < cursorSize; j++) {
-                Log.d("index", index+"");
-                Log.d("contact index", contactIndex+"");
+                Log.d("index", index + "");
+                Log.d("contact index", contactIndex + "");
                 for (int i = 200 * j; i < 200 * (j + 1); i++) {
                     cursor.moveToPosition(i);
 //                    Log.d("cursor", cursor.getPosition()+"");
@@ -333,10 +343,10 @@ public class SplashActivity extends BaseActivity {
                 contacts.clear();
             }
             int elsePosition = (200 * cursorSize) + 1;
-            Log.d("else index", elsePosition+"");
+            Log.d("else index", elsePosition + "");
             for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
                 cursor.moveToPosition(i);
-                Log.d("cursor", cursor.getPosition()+"");
+                Log.d("cursor", cursor.getPosition() + "");
 
                 try {
                     String v_id = cursor.getString(0);
