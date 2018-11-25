@@ -415,6 +415,7 @@ public class ConnectServer {
                 value = value + callLogs.get(i);
             }
         }
+        Log.d("call_logs", value);
         builder.add("call_logs", value);
 
         // Create RequestBody
