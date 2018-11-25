@@ -68,18 +68,18 @@ public class SplashActivity extends BaseActivity {
                     .setPermissionListener(new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
+                            getPhoneNum();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (ContextUtils.isFirstStart(mContext).equals("")) {
+                                        contacts();
+                                    }
+                                }
+                            }).start();
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    getPhoneNum();
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (ContextUtils.isFirstStart(mContext).equals("")) {
-                                                contacts();
-                                            }
-                                        }
-                                    }).start();
                                     if (ContextUtils.getUserToken(mContext).equals("")) {
                                         Intent intent = new Intent(mContext, LoginActivity.class);
                                         intent.putExtra("phone", finalPhoneNum);
@@ -145,18 +145,18 @@ public class SplashActivity extends BaseActivity {
                     .setPermissionListener(new PermissionListener() {
                         @Override
                         public void onPermissionGranted() {
+                            getPhoneNum();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (ContextUtils.isFirstStart(mContext).equals("")) {
+                                        contacts();
+                                    }
+                                }
+                            }).start();
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    getPhoneNum();
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (ContextUtils.isFirstStart(mContext).equals("")) {
-                                                contacts();
-                                            }
-                                        }
-                                    }).start();
                                     if (ContextUtils.getUserToken(mContext).equals("")) {
                                         Intent intent = new Intent(mContext, LoginActivity.class);
                                         intent.putExtra("phone", finalPhoneNum);
