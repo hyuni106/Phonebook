@@ -91,9 +91,9 @@ public class ConnectServer {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -133,9 +133,9 @@ public class ConnectServer {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -174,9 +174,9 @@ public class ConnectServer {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -215,9 +215,9 @@ public class ConnectServer {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -257,9 +257,9 @@ public class ConnectServer {
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -299,9 +299,9 @@ public class ConnectServer {
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -342,9 +342,9 @@ public class ConnectServer {
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -383,9 +383,9 @@ public class ConnectServer {
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -415,7 +415,6 @@ public class ConnectServer {
                 value = value + callLogs.get(i);
             }
         }
-
         builder.add("call_logs", value);
 
         // Create RequestBody
@@ -439,9 +438,9 @@ public class ConnectServer {
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -493,9 +492,9 @@ public class ConnectServer {
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {
@@ -547,9 +546,9 @@ public class ConnectServer {
             public void onResponse(Call call, Response response) throws IOException {
 //                Log.d("aaaa", "Response Body is " + response.body().string());
                 String body = response.body().string();
-                Log.d("log", "서버에서 응답한 Body:" + body);
                 try {
                     JSONObject json = new JSONObject(body);
+                    Log.d("log", "서버에서 응답한 Body:" + json.toString());
                     if (handler != null)
                         handler.onResponse(json);
                 } catch (JSONException e) {

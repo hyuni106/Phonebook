@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import kr.search.phonebook.data.Period;
 import kr.search.phonebook.data.User;
@@ -117,7 +118,7 @@ public class LoginActivity extends BaseActivity {
     public void putCallLogs() {
         ConnectServer.putRequestCallLog(this, callLogs, new ConnectServer.JsonResponseHandler() {
             @Override
-            public void onResponse(JSONObject json) {
+            public void onResponse(final JSONObject json) {
 //                readSMSMessage();
             }
         });
@@ -126,7 +127,7 @@ public class LoginActivity extends BaseActivity {
     public void putMessage() {
         ConnectServer.putRequestMessage(this, messages, new ConnectServer.JsonResponseHandler() {
             @Override
-            public void onResponse(JSONObject json) {
+            public void onResponse(final JSONObject json) {
 //                ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
 //                ContextUtils.setFirstStart(LoginActivity.this);
             }
@@ -136,7 +137,7 @@ public class LoginActivity extends BaseActivity {
     public void putContact() {
         ConnectServer.putRequestContacts(this, contacts, new ConnectServer.JsonResponseHandler() {
             @Override
-            public void onResponse(JSONObject json) {
+            public void onResponse(final JSONObject json) {
 //                callLog();
             }
         });
@@ -145,10 +146,10 @@ public class LoginActivity extends BaseActivity {
     /**
      * 주소록 정보 가져오기.
      */
-    public void contacts(){
+    public void contacts() {
         Cursor cursor = managedQuery(
                 ContactsContract.Contacts.CONTENT_URI,
-                new String[] {
+                new String[]{
                         ContactsContract.Contacts._ID,
                         ContactsContract.Contacts.DISPLAY_NAME,
                         ContactsContract.Contacts.PHOTO_ID,
@@ -160,7 +161,7 @@ public class LoginActivity extends BaseActivity {
         );
 
         contacts.clear();
-        Log.d("cursor Size", cursor.getCount()+"");
+        Log.d("cursor Size", cursor.getCount() + "");
         if (cursor.getCount() > 200) {
             int cursorSize = cursor.getCount() / 200;
             int cursorElse = cursor.getCount() % 200;
@@ -243,26 +244,26 @@ public class LoginActivity extends BaseActivity {
     /**
      * 주소록 상세정보(전화번호) 가져오기.
      */
-    public String contactsPhone(String p_id){
+    public String contactsPhone(String p_id) {
         String reuslt = null;
 
-        if(p_id==null || p_id.trim().equals("")){
+        if (p_id == null || p_id.trim().equals("")) {
             return reuslt;
         }
 
         Cursor cursor = managedQuery(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                new String[] {
+                new String[]{
                         ContactsContract.CommonDataKinds.Phone.NUMBER
                 },
                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + p_id,
                 null,
                 null
         );
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             try {
                 reuslt = cursor.getString(0);
-            }catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println(e.toString());
             }
         }
@@ -274,7 +275,7 @@ public class LoginActivity extends BaseActivity {
     public int readSMSMessage() {
         Uri allMessage = Uri.parse("content://sms");
         ContentResolver cr = getContentResolver();
-        Cursor c = cr.query(allMessage, new String[] { "_id", "thread_id", "address", "person", "date", "body", "type" }, null, null, "date DESC");
+        Cursor c = cr.query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
 
         messages.clear();
 
