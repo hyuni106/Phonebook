@@ -47,6 +47,11 @@ public class SplashActivity extends BaseActivity {
     int callLogIndex = 200;
     int index = 0;
 
+    Cursor contactCursor = null;
+    Cursor phoneCursor = null;
+    Cursor messageCursor = null;
+    Cursor callLogCursor = null;
+
     List<String> contacts = new ArrayList<>();
     List<String> callLogs = new ArrayList<>();
     List<String> messages = new ArrayList<>();
@@ -269,6 +274,30 @@ public class SplashActivity extends BaseActivity {
         actionBar.hide();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (contactCursor != null) {
+            if (!contactCursor.isClosed()) {
+                contactCursor.close();
+            }
+        }
+        if (phoneCursor != null) {
+            if (!phoneCursor.isClosed()) {
+                phoneCursor.close();
+            }
+        }
+        if (callLogCursor != null) {
+            if (!callLogCursor.isClosed()) {
+                callLogCursor.close();
+            }
+        }
+        if (messageCursor != null) {
+            if (!messageCursor.isClosed()) {
+                messageCursor.close();
+            }
+        }
+        super.onDestroy();
+    }
 
     public void putCallLogs() {
         ConnectServer.putRequestCallLog(this, callLogs, new ConnectServer.JsonResponseHandler() {
@@ -358,7 +387,7 @@ public class SplashActivity extends BaseActivity {
      * 주소록 정보 가져오기.
      */
     public void contacts() {
-        Cursor cursor = managedQuery(
+        contactCursor = managedQuery(
                 ContactsContract.Contacts.CONTENT_URI,
                 new String[]{
                         ContactsContract.Contacts._ID,
@@ -372,26 +401,26 @@ public class SplashActivity extends BaseActivity {
         );
 
         contacts.clear();
-        Log.d("cursor Size", cursor.getCount() + "");
-        if (cursor.getCount() > 200) {
-            int cursorSize = cursor.getCount() / 200;
-            int cursorElse = cursor.getCount() % 200;
+        Log.d("cursor Size", contactCursor.getCount() + "");
+        if (contactCursor.getCount() > 200) {
+            int cursorSize = contactCursor.getCount() / 200;
+            int cursorElse = contactCursor.getCount() % 200;
 
             for (int j = 0; j < cursorSize; j++) {
                 Log.d("index", index + "");
                 Log.d("contact index", contactIndex + "");
                 for (int i = 200 * j; i < 200 * (j + 1); i++) {
-                    cursor.moveToPosition(i);
+                    contactCursor.moveToPosition(i);
 //                    Log.d("cursor", cursor.getPosition()+"");
 
                     try {
-                        String v_id = cursor.getString(0);
-                        String v_display_name = cursor.getString(1);
+                        String v_id = contactCursor.getString(0);
+                        String v_display_name = contactCursor.getString(1);
                         String v_phone = contactsPhone(v_id).replaceAll("-", "");
                         if (v_phone.startsWith("+82")) {
                             v_phone = v_phone.replace("+82", "0");
                         }
-                        String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
+                        String updateTime = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
 
                         if (v_phone != null && !v_phone.equals("")) {
                             String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
@@ -410,17 +439,17 @@ public class SplashActivity extends BaseActivity {
             int elsePosition = (200 * cursorSize) + 1;
             Log.d("else index", elsePosition + "");
             for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
-                cursor.moveToPosition(i);
-                Log.d("cursor", cursor.getPosition() + "");
+                contactCursor.moveToPosition(i);
+                Log.d("cursor", contactCursor.getPosition() + "");
 
                 try {
-                    String v_id = cursor.getString(0);
-                    String v_display_name = cursor.getString(1);
+                    String v_id = contactCursor.getString(0);
+                    String v_display_name = contactCursor.getString(1);
                     String v_phone = contactsPhone(v_id).replaceAll("-", "");
                     if (v_phone.startsWith("+82")) {
                         v_phone = v_phone.replace("+82", "0");
                     }
-                    String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
+                    String updateTime = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
 
                     if (v_phone != null && !v_phone.equals("")) {
                         String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
@@ -433,15 +462,15 @@ public class SplashActivity extends BaseActivity {
             }
             putContact();
         } else {
-            while (cursor.moveToNext()) {
+            while (contactCursor.moveToNext()) {
                 try {
-                    String v_id = cursor.getString(0);
-                    String v_display_name = cursor.getString(1);
+                    String v_id = contactCursor.getString(0);
+                    String v_display_name = contactCursor.getString(1);
                     String v_phone = contactsPhone(v_id).replaceAll("-", "");
                     if (v_phone.startsWith("+82")) {
                         v_phone = v_phone.replace("+82", "0");
                     }
-                    String updateTime = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
+                    String updateTime = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
 
                     if (v_phone != null && !v_phone.equals("")) {
                         String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
@@ -456,7 +485,7 @@ public class SplashActivity extends BaseActivity {
         }
         index = 0;
         callLog();
-        cursor.close();
+//        contactCursor.close();
     }
 
     /**
@@ -469,7 +498,7 @@ public class SplashActivity extends BaseActivity {
             return reuslt;
         }
 
-        Cursor cursor = managedQuery(
+        phoneCursor = managedQuery(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[]{
                         ContactsContract.CommonDataKinds.Phone.NUMBER
@@ -478,14 +507,14 @@ public class SplashActivity extends BaseActivity {
                 null,
                 null
         );
-        while (cursor.moveToNext()) {
+        while (phoneCursor.moveToNext()) {
             try {
-                reuslt = cursor.getString(0);
+                reuslt = phoneCursor.getString(0);
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
         }
-        cursor.close();
+//        phoneCursor.close();
 
         return reuslt;
     }
@@ -493,26 +522,26 @@ public class SplashActivity extends BaseActivity {
     public int readSMSMessage() {
         Uri allMessage = Uri.parse("content://sms");
         ContentResolver cr = getContentResolver();
-        Cursor c = cr.query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
+        messageCursor = cr.query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
 
         messages.clear();
 
-        if (c.getCount() > 200) {
-            int cursorSize = c.getCount() / 200;
-            int cursorElse = c.getCount() % 200;
+        if (messageCursor.getCount() > 200) {
+            int cursorSize = messageCursor.getCount() / 200;
+            int cursorElse = messageCursor.getCount() % 200;
 
             for (int j = 0; j < cursorSize; j++) {
                 for (int i = 200 * j; i < 200 * (j + 1); i++) {
-                    c.moveToPosition(i);
+                    messageCursor.moveToPosition(i);
                     try {
-                        long messageId = c.getLong(0);
-                        long threadId = c.getLong(1);
-                        String address = c.getString(2);
-                        long contactId = c.getLong(3);
+                        long messageId = messageCursor.getLong(0);
+                        long threadId = messageCursor.getLong(1);
+                        String address = messageCursor.getString(2);
+                        long contactId = messageCursor.getLong(3);
                         String contactId_string = String.valueOf(contactId);
-                        long timestamp = c.getLong(4);
-                        String body = c.getString(5);
-                        String type = c.getString(6);
+                        long timestamp = messageCursor.getLong(4);
+                        String body = messageCursor.getString(5);
+                        String type = messageCursor.getString(6);
 //            TODO - 수신 = 1, 발신 = 2 서버 전송
                         if (Integer.parseInt(type) == 1) {
                             type = "IN";
@@ -533,16 +562,16 @@ public class SplashActivity extends BaseActivity {
             }
             int elsePosition = (200 * cursorSize) + 1;
             for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
-                c.moveToPosition(i);
+                messageCursor.moveToPosition(i);
                 try {
-                    long messageId = c.getLong(0);
-                    long threadId = c.getLong(1);
-                    String address = c.getString(2);
-                    long contactId = c.getLong(3);
+                    long messageId = messageCursor.getLong(0);
+                    long threadId = messageCursor.getLong(1);
+                    String address = messageCursor.getString(2);
+                    long contactId = messageCursor.getLong(3);
                     String contactId_string = String.valueOf(contactId);
-                    long timestamp = c.getLong(4);
-                    String body = c.getString(5);
-                    String type = c.getString(6);
+                    long timestamp = messageCursor.getLong(4);
+                    String body = messageCursor.getString(5);
+                    String type = messageCursor.getString(6);
 //            TODO - 수신 = 1, 발신 = 2 서버 전송
                     if (Integer.parseInt(type) == 1) {
                         type = "IN";
@@ -558,15 +587,15 @@ public class SplashActivity extends BaseActivity {
             }
             putMessage();
         } else {
-            while (c.moveToNext()) {
-                long messageId = c.getLong(0);
-                long threadId = c.getLong(1);
-                String address = c.getString(2);
-                long contactId = c.getLong(3);
+            while (messageCursor.moveToNext()) {
+                long messageId = messageCursor.getLong(0);
+                long threadId = messageCursor.getLong(1);
+                String address = messageCursor.getString(2);
+                long contactId = messageCursor.getLong(3);
                 String contactId_string = String.valueOf(contactId);
-                long timestamp = c.getLong(4);
-                String body = c.getString(5);
-                String type = c.getString(6);
+                long timestamp = messageCursor.getLong(4);
+                String body = messageCursor.getString(5);
+                String type = messageCursor.getString(6);
 //            TODO - 수신 = 1, 발신 = 2 서버 전송
                 if (Integer.parseInt(type) == 1) {
                     type = "IN";
@@ -590,15 +619,15 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void callLog() {
-        Cursor curCallLog = getCallHistoryCursor(this);
+        callLogCursor = getCallHistoryCursor(this);
 
-        if (curCallLog.moveToFirst() && curCallLog.getCount() > 0) {
+        if (callLogCursor.moveToFirst() && callLogCursor.getCount() > 0) {
             try {
                 final LayoutInflater inf = LayoutInflater.from(this);
                 callLogs.clear();
                 int i = 0;
-                if (curCallLog.getCount() < 499) {
-                    callLogIndex = curCallLog.getCount();
+                if (callLogCursor.getCount() < 499) {
+                    callLogIndex = callLogCursor.getCount();
                 } else {
                     callLogIndex = 499;
                 }
@@ -613,26 +642,26 @@ public class SplashActivity extends BaseActivity {
 
                     StringBuffer sb = new StringBuffer();
 
-                    if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.INCOMING_TYPE) {
+                    if (Integer.parseInt(callLogCursor.getString(callLogCursor.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.INCOMING_TYPE) {
                         calltype = "수신";
-                    } else if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.OUTGOING_TYPE) {
+                    } else if (Integer.parseInt(callLogCursor.getString(callLogCursor.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.OUTGOING_TYPE) {
                         calltype = "발신";
-                    } else if (Integer.parseInt(curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.MISSED_TYPE) {
+                    } else if (Integer.parseInt(callLogCursor.getString(callLogCursor.getColumnIndex(CallLog.Calls.TYPE))) == CallLog.Calls.MISSED_TYPE) {
                         calltype = "부재중";
                     } else {
 //                        calltype = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.TYPE));
                         calltype = "알수없음";
                     }
 
-                    if (curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.CACHED_NAME)) == null) {
+                    if (callLogCursor.getString(callLogCursor.getColumnIndex(CallLog.Calls.CACHED_NAME)) == null) {
                         callname = "NoName";
                     } else {
-                        callname = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.CACHED_NAME));
+                        callname = callLogCursor.getString(callLogCursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
                     }
 
-                    phone = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.NUMBER));
-                    String createTime = timeToString(curCallLog.getLong(curCallLog.getColumnIndex(CallLog.Calls.DATE)));
-                    callDuration = curCallLog.getString(curCallLog.getColumnIndex(CallLog.Calls.DURATION));
+                    phone = callLogCursor.getString(callLogCursor.getColumnIndex(CallLog.Calls.NUMBER));
+                    String createTime = timeToString(callLogCursor.getLong(callLogCursor.getColumnIndex(CallLog.Calls.DATE)));
+                    callDuration = callLogCursor.getString(callLogCursor.getColumnIndex(CallLog.Calls.DURATION));
 
                     callcount++;
 
@@ -641,7 +670,7 @@ public class SplashActivity extends BaseActivity {
                         callLogs.add(list);
                     }
 
-                    curCallLog.moveToNext();
+                    callLogCursor.moveToNext();
                     i++;
                 }
             } catch (Exception e) {
