@@ -274,6 +274,57 @@ public class SplashActivity extends BaseActivity {
                     }
                 }
             });
+        } else {
+            if (ContextUtils.isFirstStart(mContext).equals("")) {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                intent.putExtra("phone", finalPhoneNum);
+                startActivity(intent);
+                finish();
+            } else if (ContextUtils.getUserToken(mContext).equals("")) {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                intent.putExtra("phone", finalPhoneNum);
+                startActivity(intent);
+                finish();
+            } else {
+                ConnectServer.getRequestUserInfo(mContext, new ConnectServer.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+                        try {
+                            if (json.getInt("code") == 200) {
+                                JSONObject user = json.getJSONObject("data").getJSONObject("user");
+                                GlobalData.loginUser = User.getUserFromJson(user);
+                                GlobalData.loginUser.setAdmin(json.getJSONObject("data").getBoolean("is_admin"));
+                                if (!user.isNull("period")) {
+                                    JSONObject period = user.getJSONObject("period");
+                                    GlobalData.loginUser.setUserPeriod(Period.getPeriodFromJson(period));
+                                    if (GlobalData.loginUser.getUserPeriod().getEnd().getTimeInMillis() > Calendar.getInstance().getTimeInMillis()) {
+                                        Intent intent = new Intent(mContext, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Intent intent = new Intent(mContext, LoginActivity.class);
+                                        intent.putExtra("phone", finalPhoneNum);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                } else {
+                                    Intent intent = new Intent(mContext, LoginActivity.class);
+                                    intent.putExtra("phone", finalPhoneNum);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            } else {
+                                Intent intent = new Intent(mContext, LoginActivity.class);
+                                intent.putExtra("phone", finalPhoneNum);
+                                startActivity(intent);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
         }
     }
 
