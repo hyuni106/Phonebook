@@ -136,7 +136,7 @@ public class CallPopupActivity extends BaseActivity {
      * 주소록 정보 가져오기.
      */
     public void contacts(){
-        contactsCursor = managedQuery(
+        contactsCursor = getContentResolver().query(
                 ContactsContract.Contacts.CONTENT_URI,
                 new String[] {
                         ContactsContract.Contacts._ID,
@@ -184,7 +184,7 @@ public class CallPopupActivity extends BaseActivity {
             return reuslt;
         }
 
-        phoneCursor = managedQuery(
+        phoneCursor = getContentResolver().query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[] {
                         ContactsContract.CommonDataKinds.Phone.NUMBER
