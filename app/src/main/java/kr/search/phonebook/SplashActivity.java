@@ -86,7 +86,7 @@ public class SplashActivity extends BaseActivity {
                     .setDeniedMessage("어플을 사용하려면 권한을 허용해야 합니다.")
                     .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG
                             , Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_SMS, Manifest.permission.SYSTEM_ALERT_WINDOW
-                            , Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.WAKE_LOCK, Manifest.permission.PROCESS_OUTGOING_CALLS)
+                            , Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.WAKE_LOCK, Manifest.permission.PROCESS_OUTGOING_CALLS, Manifest.permission.RECEIVE_SMS)
                     .check();
         } else {
             TedPermission.with(this)
@@ -105,7 +105,7 @@ public class SplashActivity extends BaseActivity {
                     .setDeniedMessage("어플을 사용하려면 권한을 허용해야 합니다.")
                     .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS, Manifest.permission.READ_CALL_LOG
                             , Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_SMS, Manifest.permission.SYSTEM_ALERT_WINDOW
-                            , Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.WAKE_LOCK, Manifest.permission.PROCESS_OUTGOING_CALLS)
+                            , Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.WAKE_LOCK, Manifest.permission.PROCESS_OUTGOING_CALLS, Manifest.permission.RECEIVE_SMS)
                     .check();
         }
 

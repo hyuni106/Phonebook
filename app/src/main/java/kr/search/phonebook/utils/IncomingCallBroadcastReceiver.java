@@ -20,39 +20,14 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-//        Log.d(TAG, "onReceive()"); /** * http://mmarvick.github.io/blog/blog/lollipop-multiple-broadcastreceiver-call-state/ * 2번 호출되는 문제 해결 */
-//        String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
-//        if (state.equals(mLastState)) {
-//            return;
-//        } else {
-//            mLastState = state;
-//        }
-//        if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
-//            String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-//            final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
-//            Intent serviceIntent = new Intent(context, CallingService.class);
-//            serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
-//            context.startService(serviceIntent);
-//        }
         try {
             System.out.println("Receiver start");
             String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
             final String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
-
-//            User user = (User) intent.getSerializableExtra("user");
-
             if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-//                if (incomingNumber.equals(user.getUserPhoneNum())) {
-//                    Toast.makeText(context, "전화한사람 이름" + user.getUserName(), Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(context, "모르는 번호 입니다.", Toast.LENGTH_SHORT).show();
-//                }
-
                 final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
 
-//                TODO - Name 다시 설정
                 ConnectServer.postRequestCallNumInfo(context, phone_number.replaceAll("-", ""), new ConnectServer.JsonResponseHandler() {
                     @Override
                     public void onResponse(JSONObject json) {
@@ -68,14 +43,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
                                 serviceIntent.putExtra(CallPopupActivity.EXTRA_NAME, name);
                                 serviceIntent.putExtra(CallPopupActivity.EXTRA_COUNT, count);
                                 serviceIntent.putExtra("isCall", true);
-//                context.startService(serviceIntent);
                                 context.startActivity(serviceIntent);
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                    context.startForegroundService(serviceIntent);
-//                                } else {
-//                                    context.startService(serviceIntent);
-//                                }
-
                             } else if (json.getInt("code") == 400) {
                                 Intent serviceIntent = new Intent(context, CallPopupActivity.class);
                                 serviceIntent.putExtra(CallPopupActivity.EXTRA_CALL_NUMBER, phone_number);
