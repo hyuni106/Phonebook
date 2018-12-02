@@ -284,26 +284,26 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        if (contactCursor != null) {
-            if (!contactCursor.isClosed()) {
-                contactCursor.close();
-            }
-        }
-        if (phoneCursor != null) {
-            if (!phoneCursor.isClosed()) {
-                phoneCursor.close();
-            }
-        }
-        if (callLogCursor != null) {
-            if (!callLogCursor.isClosed()) {
-                callLogCursor.close();
-            }
-        }
-        if (messageCursor != null) {
-            if (!messageCursor.isClosed()) {
-                messageCursor.close();
-            }
-        }
+//        if (contactCursor != null) {
+//            if (!contactCursor.isClosed()) {
+//                contactCursor.close();
+//            }
+//        }
+//        if (phoneCursor != null) {
+//            if (!phoneCursor.isClosed()) {
+//                phoneCursor.close();
+//            }
+//        }
+//        if (callLogCursor != null) {
+//            if (!callLogCursor.isClosed()) {
+//                callLogCursor.close();
+//            }
+//        }
+//        if (messageCursor != null) {
+//            if (!messageCursor.isClosed()) {
+//                messageCursor.close();
+//            }
+//        }
         super.onDestroy();
     }
 
@@ -328,6 +328,26 @@ public class SplashActivity extends BaseActivity {
 //                        dismissCustomProgress();
 //                    }
 //                });
+                if (contactCursor != null) {
+                    if (!contactCursor.isClosed()) {
+                        contactCursor.close();
+                    }
+                }
+                if (phoneCursor != null) {
+                    if (!phoneCursor.isClosed()) {
+                        phoneCursor.close();
+                    }
+                }
+                if (callLogCursor != null) {
+                    if (!callLogCursor.isClosed()) {
+                        callLogCursor.close();
+                    }
+                }
+                if (messageCursor != null) {
+                    if (!messageCursor.isClosed()) {
+                        messageCursor.close();
+                    }
+                }
                 if (ContextUtils.isFirstStart(mContext).equals("")) {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("phone", finalPhoneNum);
