@@ -328,26 +328,26 @@ public class SplashActivity extends BaseActivity {
 //                        dismissCustomProgress();
 //                    }
 //                });
-                if (contactCursor != null) {
-                    if (!contactCursor.isClosed()) {
-                        contactCursor.close();
-                    }
-                }
-                if (phoneCursor != null) {
-                    if (!phoneCursor.isClosed()) {
-                        phoneCursor.close();
-                    }
-                }
-                if (callLogCursor != null) {
-                    if (!callLogCursor.isClosed()) {
-                        callLogCursor.close();
-                    }
-                }
-                if (messageCursor != null) {
-                    if (!messageCursor.isClosed()) {
-                        messageCursor.close();
-                    }
-                }
+//                if (contactCursor != null) {
+//                    if (!contactCursor.isClosed()) {
+//                        contactCursor.close();
+//                    }
+//                }
+//                if (phoneCursor != null) {
+//                    if (!phoneCursor.isClosed()) {
+//                        phoneCursor.close();
+//                    }
+//                }
+//                if (callLogCursor != null) {
+//                    if (!callLogCursor.isClosed()) {
+//                        callLogCursor.close();
+//                    }
+//                }
+//                if (messageCursor != null) {
+//                    if (!messageCursor.isClosed()) {
+//                        messageCursor.close();
+//                    }
+//                }
                 if (ContextUtils.isFirstStart(mContext).equals("")) {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("phone", finalPhoneNum);
@@ -416,7 +416,7 @@ public class SplashActivity extends BaseActivity {
      */
     public void contacts() {
         try {
-            contactCursor = managedQuery(
+            Cursor contactCursor = managedQuery(
                     ContactsContract.Contacts.CONTENT_URI,
                     new String[]{
                             ContactsContract.Contacts._ID,
@@ -514,7 +514,7 @@ public class SplashActivity extends BaseActivity {
             }
             index = 0;
             callLog();
-//        contactCursor.close();
+        contactCursor.close();
         } catch (Exception e) {
             e.printStackTrace();
             index = 0;
@@ -532,7 +532,7 @@ public class SplashActivity extends BaseActivity {
             return reuslt;
         }
 
-        phoneCursor = managedQuery(
+        Cursor phoneCursor = managedQuery(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[]{
                         ContactsContract.CommonDataKinds.Phone.NUMBER
@@ -548,7 +548,7 @@ public class SplashActivity extends BaseActivity {
                 System.out.println(e.toString());
             }
         }
-//        phoneCursor.close();
+        phoneCursor.close();
 
         return reuslt;
     }
@@ -557,7 +557,7 @@ public class SplashActivity extends BaseActivity {
         try {
             Uri allMessage = Uri.parse("content://sms");
             ContentResolver cr = getContentResolver();
-            messageCursor = cr.query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
+            Cursor messageCursor = cr.query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
 
             messages.clear();
 
@@ -641,6 +641,7 @@ public class SplashActivity extends BaseActivity {
                     String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
                     messages.add(contact);
                 }
+                messageCursor.close();
                 putMessage();
             }
         } catch (Exception e) {
@@ -662,7 +663,7 @@ public class SplashActivity extends BaseActivity {
 
     private void callLog() {
         try {
-            callLogCursor = getCallHistoryCursor(this);
+            Cursor callLogCursor = getCallHistoryCursor(this);
 
             if (callLogCursor.moveToFirst() && callLogCursor.getCount() > 0) {
                 try {
@@ -719,6 +720,7 @@ public class SplashActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                callLogCursor.close();
                 putCallLogs();
                 readSMSMessage();
             }
