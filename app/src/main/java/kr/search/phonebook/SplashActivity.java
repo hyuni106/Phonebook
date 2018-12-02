@@ -48,7 +48,6 @@ public class SplashActivity extends BaseActivity {
     int index = 0;
 
     Cursor contactCursor = null;
-    Cursor phoneCursor = null;
     Cursor messageCursor = null;
     Cursor callLogCursor = null;
 
@@ -283,27 +282,50 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        if (contactCursor == null) {
+            contactCursor = managedQuery(
+                    ContactsContract.Contacts.CONTENT_URI,
+                    new String[]{
+                            ContactsContract.Contacts._ID,
+                            ContactsContract.Contacts.DISPLAY_NAME,
+                            ContactsContract.Contacts.PHOTO_ID,
+                            ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP
+                    },
+                    null,
+                    null,
+                    ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC"
+            );
+        }
+        if (callLogCursor == null) {
+            callLogCursor = getContentResolver().query(
+                    CallLog.Calls.CONTENT_URI, CALL_PROJECTION,
+                    null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
+        }
+        if (messageCursor == null) {
+            Uri allMessage = Uri.parse("content://sms");
+            messageCursor = getContentResolver().query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
+        }
+        super.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
-//        if (contactCursor != null) {
-//            if (!contactCursor.isClosed()) {
-//                contactCursor.close();
-//            }
-//        }
-//        if (phoneCursor != null) {
-//            if (!phoneCursor.isClosed()) {
-//                phoneCursor.close();
-//            }
-//        }
-//        if (callLogCursor != null) {
-//            if (!callLogCursor.isClosed()) {
-//                callLogCursor.close();
-//            }
-//        }
-//        if (messageCursor != null) {
-//            if (!messageCursor.isClosed()) {
-//                messageCursor.close();
-//            }
-//        }
+        if (contactCursor != null) {
+            if (!contactCursor.isClosed()) {
+                contactCursor.close();
+            }
+        }
+        if (callLogCursor != null) {
+            if (!callLogCursor.isClosed()) {
+                callLogCursor.close();
+            }
+        }
+        if (messageCursor != null) {
+            if (!messageCursor.isClosed()) {
+                messageCursor.close();
+            }
+        }
         super.onDestroy();
     }
 
@@ -416,7 +438,7 @@ public class SplashActivity extends BaseActivity {
      */
     public void contacts() {
         try {
-            Cursor contactCursor = managedQuery(
+            contactCursor = managedQuery(
                     ContactsContract.Contacts.CONTENT_URI,
                     new String[]{
                             ContactsContract.Contacts._ID,
@@ -557,7 +579,7 @@ public class SplashActivity extends BaseActivity {
         try {
             Uri allMessage = Uri.parse("content://sms");
             ContentResolver cr = getContentResolver();
-            Cursor messageCursor = cr.query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
+            messageCursor = cr.query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
 
             messages.clear();
 
@@ -654,16 +676,11 @@ public class SplashActivity extends BaseActivity {
         return 0;
     }
 
-    private Cursor getCallHistoryCursor(Context context) {
-        Cursor cursor = context.getContentResolver().query(
-                CallLog.Calls.CONTENT_URI, CALL_PROJECTION,
-                null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
-        return cursor;
-    }
-
     private void callLog() {
         try {
-            Cursor callLogCursor = getCallHistoryCursor(this);
+            callLogCursor = getContentResolver().query(
+                    CallLog.Calls.CONTENT_URI, CALL_PROJECTION,
+                    null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
 
             if (callLogCursor.moveToFirst() && callLogCursor.getCount() > 0) {
                 try {
