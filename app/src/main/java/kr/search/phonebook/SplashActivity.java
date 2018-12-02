@@ -284,42 +284,6 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        int readContact = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS);
-        int writeContact = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS);
-
-        if(readContact == PackageManager.PERMISSION_DENIED && writeContact == PackageManager.PERMISSION_DENIED) {
-            // 권한 없음
-        } else {
-            // 권한 있음
-            if (contactCursor == null) {
-                contactCursor = managedQuery(
-                        ContactsContract.Contacts.CONTENT_URI,
-                        new String[]{
-                                ContactsContract.Contacts._ID,
-                                ContactsContract.Contacts.DISPLAY_NAME,
-                                ContactsContract.Contacts.PHOTO_ID,
-                                ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP
-                        },
-                        null,
-                        null,
-                        ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC"
-                );
-            }
-            if (callLogCursor == null) {
-                callLogCursor = getContentResolver().query(
-                        CallLog.Calls.CONTENT_URI, CALL_PROJECTION,
-                        null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
-            }
-            if (messageCursor == null) {
-                Uri allMessage = Uri.parse("content://sms");
-                messageCursor = getContentResolver().query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
-            }
-        }
-        super.onResume();
-    }
-
-    @Override
     protected void onDestroy() {
         if (contactCursor != null) {
             if (!contactCursor.isClosed()) {
@@ -448,7 +412,7 @@ public class SplashActivity extends BaseActivity {
      */
     public void contacts() {
         try {
-            contactCursor = managedQuery(
+            contactCursor = getContentResolver().query(
                     ContactsContract.Contacts.CONTENT_URI,
                     new String[]{
                             ContactsContract.Contacts._ID,
@@ -546,7 +510,7 @@ public class SplashActivity extends BaseActivity {
             }
             index = 0;
             callLog();
-        contactCursor.close();
+//          contactCursor.close();
         } catch (Exception e) {
             e.printStackTrace();
             index = 0;
@@ -564,7 +528,7 @@ public class SplashActivity extends BaseActivity {
             return reuslt;
         }
 
-        Cursor phoneCursor = managedQuery(
+        Cursor phoneCursor = getContentResolver().query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[]{
                         ContactsContract.CommonDataKinds.Phone.NUMBER
