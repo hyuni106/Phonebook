@@ -285,9 +285,10 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
+        int readContact = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS);
+        int writeContact = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS);
 
-        if(permissionCheck == PackageManager.PERMISSION_DENIED) {
+        if(readContact == PackageManager.PERMISSION_DENIED && writeContact == PackageManager.PERMISSION_DENIED) {
             // 권한 없음
         } else {
             // 권한 있음
