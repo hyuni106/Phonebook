@@ -161,10 +161,14 @@ public class CallPopupActivity extends BaseActivity {
                 }
                 String updateTime = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
 
-                if (v_phone != null && !v_phone.equals("") && Long.parseLong(updateTime) > ContextUtils.getLastSaveDate(CallPopupActivity.this)) {
-                    String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
-                    contacts.add(contact);
+                if (Long.parseLong(updateTime) > ContextUtils.getLastSaveDate(CallPopupActivity.this)) {
+                    if (v_phone != null && !v_phone.equals("")) {
+                        String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
+                        contacts.add(contact);
 
+                    }
+                } else {
+                    break;
                 }
             }catch(Exception e) {
                 System.out.println(e.toString());
@@ -231,6 +235,8 @@ public class CallPopupActivity extends BaseActivity {
 
                 String contact = address + "|" + body.replaceAll("[\\r\\n]+", " ") + "|" + type + "|" + timeToString(timestamp);
                 messages.add(contact);
+            } else {
+                break;
             }
         }
         putMessage();
@@ -293,9 +299,13 @@ public class CallPopupActivity extends BaseActivity {
 
                     callcount++;
 
-                    if (phone != null && callTime > ContextUtils.getLastSaveDate(CallPopupActivity.this)) {
-                        String list = callname + "|" + calltype + "|" + phone + "|" + getStringTime(Integer.parseInt(callDuration)) + "|" + createTime;
-                        callLogs.add(list);
+                    if (callTime > ContextUtils.getLastSaveDate(CallPopupActivity.this)) {
+                        if (phone != null) {
+                            String list = callname + "|" + calltype + "|" + phone + "|" + getStringTime(Integer.parseInt(callDuration)) + "|" + createTime;
+                            callLogs.add(list);
+                        }
+                    } else {
+                        break;
                     }
 
                     curCallLog.moveToNext();
