@@ -5,12 +5,14 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -283,28 +285,35 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        if (contactCursor == null) {
-            contactCursor = managedQuery(
-                    ContactsContract.Contacts.CONTENT_URI,
-                    new String[]{
-                            ContactsContract.Contacts._ID,
-                            ContactsContract.Contacts.DISPLAY_NAME,
-                            ContactsContract.Contacts.PHOTO_ID,
-                            ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP
-                    },
-                    null,
-                    null,
-                    ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC"
-            );
-        }
-        if (callLogCursor == null) {
-            callLogCursor = getContentResolver().query(
-                    CallLog.Calls.CONTENT_URI, CALL_PROJECTION,
-                    null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
-        }
-        if (messageCursor == null) {
-            Uri allMessage = Uri.parse("content://sms");
-            messageCursor = getContentResolver().query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
+
+        if(permissionCheck == PackageManager.PERMISSION_DENIED) {
+            // 권한 없음
+        } else {
+            // 권한 있음
+            if (contactCursor == null) {
+                contactCursor = managedQuery(
+                        ContactsContract.Contacts.CONTENT_URI,
+                        new String[]{
+                                ContactsContract.Contacts._ID,
+                                ContactsContract.Contacts.DISPLAY_NAME,
+                                ContactsContract.Contacts.PHOTO_ID,
+                                ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP
+                        },
+                        null,
+                        null,
+                        ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC"
+                );
+            }
+            if (callLogCursor == null) {
+                callLogCursor = getContentResolver().query(
+                        CallLog.Calls.CONTENT_URI, CALL_PROJECTION,
+                        null, null, CallLog.Calls.DEFAULT_SORT_ORDER);
+            }
+            if (messageCursor == null) {
+                Uri allMessage = Uri.parse("content://sms");
+                messageCursor = getContentResolver().query(allMessage, new String[]{"_id", "thread_id", "address", "person", "date", "body", "type"}, null, null, "date DESC");
+            }
         }
         super.onResume();
     }
