@@ -232,6 +232,7 @@ public class SplashActivity extends BaseActivity {
         }
         finalPhoneNum = phoneNum;
 
+
         if (ContextUtils.isFirstStart(this).equals("")) {
             ConnectServer.putRequestSignUp(this, phoneNum, new ConnectServer.JsonResponseHandler() {
                 @Override
@@ -240,14 +241,20 @@ public class SplashActivity extends BaseActivity {
                         if (json.getInt("code") == 200) {
                             ContextUtils.setUserToken(mContext, json.getJSONObject("data").getString("token"));
                         }
-                        new Thread(new Runnable() {
+                        runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (ContextUtils.isFirstStart(mContext).equals("")) {
-                                    contacts();
-                                }
+                                showCustomProgress();
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (ContextUtils.isFirstStart(mContext).equals("")) {
+                                            contacts();
+                                        }
+                                    }
+                                }).start();
                             }
-                        }).start();
+                        });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -278,6 +285,12 @@ public class SplashActivity extends BaseActivity {
             public void onResponse(final JSONObject json) {
 //                ContextUtils.setLastSaveDate(LoginActivity.this, Calendar.getInstance().getTimeInMillis());
 //                ContextUtils.setFirstStart(LoginActivity.this);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismissCustomProgress();
+                    }
+                });
                 if (ContextUtils.isFirstStart(mContext).equals("")) {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("phone", finalPhoneNum);
