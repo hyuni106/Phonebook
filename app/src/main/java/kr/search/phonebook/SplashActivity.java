@@ -44,9 +44,9 @@ public class SplashActivity extends BaseActivity {
     String finalPhoneNum;
 
     String phone = "";
-    int contactIndex = 200;
-    int messageIndex = 200;
-    int callLogIndex = 200;
+    int contactIndex = 1000;
+    int messageIndex = 1000;
+    int callLogIndex = 1000;
     int index = 0;
 
     Cursor contactCursor = null;
@@ -359,14 +359,14 @@ public class SplashActivity extends BaseActivity {
 
             contacts.clear();
             Log.d("cursor Size", contactCursor.getCount() + "");
-            if (contactCursor.getCount() > 200) {
-                int cursorSize = contactCursor.getCount() / 200;
-                int cursorElse = contactCursor.getCount() % 200;
+            if (contactCursor.getCount() > 1000) {
+                int cursorSize = contactCursor.getCount() / 1000;
+                int cursorElse = contactCursor.getCount() % 1000;
 
                 for (int j = 0; j < cursorSize; j++) {
                     Log.d("index", index + "");
                     Log.d("contact index", contactIndex + "");
-                    for (int i = 200 * j; i < 200 * (j + 1); i++) {
+                    for (int i = 1000 * j; i < 1000 * (j + 1); i++) {
                         contactCursor.moveToPosition(i);
 //                    Log.d("cursor", cursor.getPosition()+"");
 
@@ -389,11 +389,11 @@ public class SplashActivity extends BaseActivity {
                         }
                     }
                     putContact();
-                    index += 200;
-                    contactIndex += 200;
+                    index += 1000;
+                    contactIndex += 1000;
                     contacts.clear();
                 }
-                int elsePosition = (200 * cursorSize) + 1;
+                int elsePosition = (1000 * cursorSize) + 1;
                 Log.d("else index", elsePosition + "");
                 for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
                     contactCursor.moveToPosition(i);
@@ -489,12 +489,12 @@ public class SplashActivity extends BaseActivity {
 
             messages.clear();
 
-            if (messageCursor.getCount() > 200) {
-                int cursorSize = messageCursor.getCount() / 200;
-                int cursorElse = messageCursor.getCount() % 200;
+            if (messageCursor.getCount() > 1000) {
+                int cursorSize = messageCursor.getCount() / 1000;
+                int cursorElse = messageCursor.getCount() % 1000;
 
                 for (int j = 0; j < cursorSize; j++) {
-                    for (int i = 200 * j; i < 200 * (j + 1); i++) {
+                    for (int i = 1000 * j; i < 1000 * (j + 1); i++) {
                         messageCursor.moveToPosition(i);
                         try {
                             long messageId = messageCursor.getLong(0);
@@ -519,11 +519,11 @@ public class SplashActivity extends BaseActivity {
                         }
                     }
                     putMessage();
-                    index += 200;
-                    messageIndex += 200;
+                    index += 1000;
+                    messageIndex += 1000;
                     messages.clear();
                 }
-                int elsePosition = (200 * cursorSize) + 1;
+                int elsePosition = (1000 * cursorSize) + 1;
                 for (int i = elsePosition; i < elsePosition + cursorElse; i++) {
                     messageCursor.moveToPosition(i);
                     try {
