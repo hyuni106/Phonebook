@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -161,14 +162,16 @@ public class CallPopupActivity extends BaseActivity {
                 }
                 String updateTime = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP));
 
+                Log.d("save", v_display_name + " . " + updateTime + " / " + ContextUtils.getLastSaveDate(CallPopupActivity.this));
                 if (Long.parseLong(updateTime) > ContextUtils.getLastSaveDate(CallPopupActivity.this)) {
-                    if (v_phone != null && !v_phone.equals("")) {
+                    if (v_phone != null && !v_phone.equals("") && Long.parseLong(updateTime) > ContextUtils.getLastSaveDate(CallPopupActivity.this)) {
                         String contact = v_display_name + "|" + v_phone + "|" + timeToString(Long.parseLong(updateTime));
                         contacts.add(contact);
 
                     }
                 } else {
-                    break;
+                    Log.d("save", "연락처 없");
+//                    break;
                 }
             }catch(Exception e) {
                 System.out.println(e.toString());
