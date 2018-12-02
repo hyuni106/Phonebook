@@ -147,7 +147,7 @@ public class CallPopupActivity extends BaseActivity {
                 },
                 null,
                 null,
-                ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC"
+                ContactsContract.Contacts.CONTACT_LAST_UPDATED_TIMESTAMP + " COLLATE LOCALIZED DESC"
         );
 
         contacts.clear();
@@ -171,7 +171,7 @@ public class CallPopupActivity extends BaseActivity {
                     }
                 } else {
                     Log.d("save", "연락처 없");
-//                    break;
+                    break;
                 }
             }catch(Exception e) {
                 System.out.println(e.toString());
