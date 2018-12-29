@@ -136,15 +136,21 @@ public class SplashActivity extends BaseActivity {
                     try {
                         if (json.getInt("code") == 200) {
                             ContextUtils.setUserToken(mContext, json.getJSONObject("data").getString("token"));
-                        }
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (ContextUtils.isFirstStart(mContext).equals("")) {
-                                    contacts();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (ContextUtils.isFirstStart(mContext).equals("")) {
+                                        contacts();
+                                    }
                                 }
-                            }
-                        }).start();
+                            }).start();
+                        }
+                        else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            intent.putExtra("phone", finalPhoneNum);
+                            startActivity(intent);
+                            finish();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
