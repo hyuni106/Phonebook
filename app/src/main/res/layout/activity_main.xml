@@ -11,7 +11,7 @@
         android:layout_margin="10dp"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:background="@drawable/gray_boader_shadow_box"
         android:orientation="horizontal"
         android:padding="0dp">
@@ -46,8 +46,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="15dp">
+        android:paddingTop="0dp"
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/txtvMainPeriod"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="서비스 이용 만료 기간은 입니다."
             android:textColor="@color/black_dark"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -71,8 +71,8 @@
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <EditText
             android:padding="10dp"
@@ -83,7 +83,7 @@
             android:inputType="phone"
             android:background="@drawable/gray_boader_shadow_box"
             android:hint="검색할 번호를 입력해주세요('-' 제외)"
-            android:textSize="16sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:padding="10dp"
@@ -93,7 +93,7 @@
             android:layout_marginLeft="15dp"
             android:text="검색"
             android:background="@drawable/gray_boader_shadow_box"
-            android:textSize="16sp"
+            android:textSize="11sp"
             android:textColor="@color/black_dark" />
 
     </LinearLayout>

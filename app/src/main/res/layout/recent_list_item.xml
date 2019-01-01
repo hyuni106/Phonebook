@@ -94,6 +94,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txtvRecentNameFirst"
                 android:background="@drawable/round"
                 android:gravity="center"
@@ -120,6 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:textSize="12sp"
                 android:textColor="#000000"
                 android:text="악성 스팸 전화"/>
 
@@ -128,7 +130,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textColor="#73CB78"
+                android:textSize="12sp"
+                android:textColor="#019eef"
                 android:text="010-1111-1111"/>
 
             <TextView
@@ -136,6 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="10sp"
                 android:textColor="#808080"
                 android:text="[누구누구] 외 20명 저장"/>
 
@@ -148,16 +152,25 @@
             android:layout_weight="1"/>
 
         <LinearLayout
-            android:gravity="center"
+
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/phone"/>
+
+            <ImageView
+                android:visibility="gone"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/phone1"/>
             <ImageView
+                android:visibility="gone"
                 android:layout_marginLeft="15dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

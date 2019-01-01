@@ -52,7 +52,7 @@ public class RecentAdapter extends BaseAdapter {
 
         final Recent number = mList.get(position);
 
-        txtvRecentNameFirst.setText(number.getName().substring(0, 1));
+//        txtvRecentNameFirst.setText(number.getName().substring(0, 1));
         txtvRecentPhoneNum.setText(AppUtils.makePhoneNumber(number.getNum()));
         txtvRecentName.setText(number.getName());
         if (number.getCount() > 0) {
