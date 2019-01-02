@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:visibility="gone"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -26,7 +27,7 @@
             android:orientation="vertical"
             android:padding="0dp">
 
-            <TextView
+            <!--<TextView-->
                 android:id="@+id/txtvSearchShopName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
         <LinearLayout
             android:gravity="center|left"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="150dp"
             android:layout_marginLeft="1dp"
             android:layout_marginTop="1dp"
             android:layout_marginRight="1dp"
@@ -73,20 +74,27 @@
                         android:id="@+id/txtvSearchPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textColor="@color/new_green"
-                        android:textSize="20dp"
+                        android:textColor="#333333"
+                        android:textSize="20sp"
                         android:text="010-1234-1234"/>
+
+                    <TextView
+                        android:id="@+id/txtvSearchShopName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#333333"
+                        android:textSize="18sp"
+                        android:text="정보 없음"/>
+
 
                     <TextView
                         android:id="@+id/txtvSearchCount"
                         android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textColor="#333333"
-                        android:textSize="13dp"
-                        android:text="총 00명 저장"/>
+                        android:textColor="#FF0000"
+                        android:textSize="13sp"
+                        android:text="00명 저장"/>
 
 
                 </LinearLayout>
@@ -98,6 +106,7 @@
                     android:layout_weight="1"/>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -191,12 +200,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="연락처"
-                android:textSize="16sp"
-                android:letterSpacing="-0.1"
-                android:textColor="@color/new_green"
+                android:textSize="11sp"
+                android:textColor="@color/new_blue"
                 android:layout_gravity="center"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/lineSearchTab1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -206,11 +215,11 @@
         </FrameLayout>
 
         <TextView
-            android:layout_width="1dp"
+            android:layout_width="1sp"
             android:layout_height="match_parent"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="12dp"
-            android:background="#dddddd"/>
+            android:background="#FCFCFC"/>
 
         <FrameLayout
             android:layout_marginLeft="1dp"
@@ -225,12 +234,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="통화기록"
-                android:textSize="16sp"
-                android:letterSpacing="-0.1"
-                android:textColor="#dddddd"
+                android:textSize="11sp"
+                android:textColor="@color/new_blue"
                 android:layout_gravity="center"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/lineSearchTab2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -244,7 +253,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="12dp"
-            android:background="#dddddd"/>
+            android:background="#FCFCFC"/>
 
         <FrameLayout
             android:layout_marginRight="1dp"
@@ -258,12 +267,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="메시지"
-                android:textSize="16sp"
-                android:letterSpacing="-0.1"
-                android:textColor="#dddddd"
+                android:textSize="11sp"
+                android:textColor="@color/new_blue"
                 android:layout_gravity="center"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/lineSearchTab3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
