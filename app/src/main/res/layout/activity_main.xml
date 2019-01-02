@@ -8,12 +8,12 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/gray_boader_shadow_box"
         android:orientation="horizontal"
+        android:background="#FFFFFF"
         android:padding="0dp">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
             android:layout_weight="1"
             android:inputType="phone"
             android:background="@drawable/gray_boader_shadow_box"
-            android:hint="검색할 번호를 입력해주세요('-' 제외)"
+            android:hint="검색할 번호를 입력해주세요.."
             android:textSize="11sp" />
 
         <TextView
@@ -101,7 +101,8 @@
     <ListView
         android:id="@+id/listMainRecentNum"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:divider="@color/white">
     </ListView>
 
     <LinearLayout
