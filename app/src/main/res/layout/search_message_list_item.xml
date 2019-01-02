@@ -2,7 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:background="#f5f5f5">
 
     <!--<LinearLayout-->
         <!--android:layout_gravity="center"-->
@@ -88,11 +93,13 @@
     <!--</LinearLayout>-->
 
     <LinearLayout
+        android:background="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:layout_width="wrap_content"
@@ -112,7 +119,7 @@
 
 
         <LinearLayout
-            android:padding="5dp"
+            android:padding="15dp"
             android:gravity="center|left"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -122,14 +129,13 @@
                 android:id="@+id/txtvMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="#73CB78"
+                android:textColor="@color/new_blue"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="메시지"/>
 
             <LinearLayout
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,8 +145,8 @@
                     android:id="@+id/txtvPhoneNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="11sp"
                     android:text="누가 저장했는지"/>
 
                 <TextView
@@ -150,16 +156,19 @@
 
                 <TextView
                     android:gravity="right"
-                    android:id="@+id/txtvTimeStamp"                    android:layout_width="wrap_content"
+                    android:id="@+id/txtvTimeStamp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#808080"
+                    android:textSize="11sp"
                     android:text="2018-11-02 00:00:00"/>
 
 
             </LinearLayout>
 
             <TextView
+                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

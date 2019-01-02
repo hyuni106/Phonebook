@@ -74,7 +74,8 @@
                         android:id="@+id/txtvSearchPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#333333"
+                        android:textColor="@color/new_blue"
+                        android:textStyle="bold"
                         android:textSize="20sp"
                         android:text="010-1234-1234"/>
 
@@ -93,7 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#FF0000"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:text="00명 저장"/>
 
 
@@ -215,11 +216,9 @@
         </FrameLayout>
 
         <TextView
-            android:layout_width="1sp"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="12dp"
-            android:background="#FCFCFC"/>
+            android:background="#F5F5F5"/>
 
         <FrameLayout
             android:layout_marginLeft="1dp"
@@ -249,11 +248,9 @@
         </FrameLayout>
 
         <TextView
-            android:layout_width="1dp"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="12dp"
-            android:background="#FCFCFC"/>
+            android:background="#F5F5F5"/>
 
         <FrameLayout
             android:layout_marginRight="1dp"
@@ -286,7 +283,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="10dp">
+        android:paddingTop="5dp">
 
         <LinearLayout
             android:id="@+id/layoutSearchList"
